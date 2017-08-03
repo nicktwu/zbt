@@ -6,11 +6,25 @@ class Zebe(db.Model):
     kerberos = db.Column(db.String(30))
     name = db.Column(db.String(100))
     current = db.Column(db.Boolean)
+    midnight = db.Column(db.Boolean)
+    house = db.Column(db.Boolean)
+    workweek = db.Column(db.Boolean)
+    dev = db.Column(db.Boolean)
+    social = db.Column(db.Boolean)
+    rush = db.Column(db.Boolean)
+    password = db.Column(db.String(200))
 
-    def __init__(self, username, name, current):
+    def __init__(self, username, name, current, midnight, house, workweek, dev, social, rush, password):
         self.kerberos = username
         self.name = name
         self.current = current
+        self.midnight = midnight
+        self.house = house
+        self.workweek = workweek
+        self.dev = dev
+        self.social = social
+        self.rush = rush
+        self.password = password
 
     def to_dict(self):
         return {
@@ -18,6 +32,12 @@ class Zebe(db.Model):
             'kerberos': self.kerberos,
             'name': self.name,
             'current': self.current,
+            'midnight': self.midnight,
+            'house': self.house,
+            'workweek': self.workweek,
+            'dev': self.dev,
+            'rush': self.rush,
+            'social': self.social
         }
 
 

@@ -1,16 +1,9 @@
 from flask import Blueprint, request, jsonify, abort
 from models import WorkweekTicket
-from permissions import workweek_devs as devs
 from database import db
-import os
+from authentication import token_required
 
 workweek_page = Blueprint('workweek_page', __name__)
-email = os.environ.get("SSL_CLIENT_S_DN_Email")
-
-kerberos = ""
-if email is not None:
-    i = email.find("@")
-    kerberos = email[:i]
 
 ALL_HEADERS = {
     'Access-Control-Allow-Origin': '*',
@@ -23,38 +16,42 @@ CORS_HEADER = {
 }
 
 
+@token_required
 @workweek_page.route('/')
 def all_tickets():
     tickets = WorkweekTicket.query.all()
     return jsonify(
-        {'tickets': [ticket.to_dict() for ticket in tickets], 'authorized': kerberos in devs}), 200, CORS_HEADER
+        {'tickets': [ticket.to_dict() for ticket in tickets], 'authorized': request.zebe.dev }), 200, CORS_HEADER
 
 
+@token_required
 @workweek_page.route('/take/<int:id>')
 def take_ticket(id):
-    if kerberos not in devs:
+    if not request.zebe.dev:
         return jsonify({'authorized': False}), 200, CORS_HEADER
     else:
         ticket = WorkweekTicket.query.get_or_404(id)
         if ticket.taker is not None:
-            ticket.taker = kerberos
+            ticket.taker = request.kerberos
         db.session.commit()
     tickets = WorkweekTicket.query.all()
     return jsonify(
-        {'tickets': [ticket.to_dict() for ticket in tickets], 'authorized': kerberos in DEVS}), 200, CORS_HEADER
+        {'tickets': [ticket.to_dict() for ticket in tickets], 'authorized': request.zebe.dev}), 200, CORS_HEADER
 
 
+@token_required
 @workweek_page.route('/admin')
 def admin_info():
-    if not kerberos == "nwu":
+    if not request.zebe.workweek:
         return jsonify({'authorized': False}), 200, CORS_HEADER
     tickets = WorkweekTicket.query.all()
     return jsonify({'authorized': True, 'tickets': [ticket.to_dict() for ticket in tickets]}), 200, CORS_HEADER
 
 
+@token_required
 @workweek_page.route('/admin/ticket/create', methods=["POST", "OPTIONS"])
 def create_ticket():
-    if not kerberos == "nwu":
+    if not request.zebe.workweek:
         abort(401)
     if request.method == "OPTIONS":
         return jsonify({'status': 'ok'}), 200, ALL_HEADERS
@@ -66,9 +63,10 @@ def create_ticket():
     return jsonify({'status': 'ok'}), 201, ALL_HEADERS
 
 
+@token_required
 @workweek_page.route('/admin/ticket/edit', methods=["POST", "OPTIONS"])
 def edit_ticket():
-    if not kerberos == "nwu":
+    if not request.zebe.workweek:
         abort(401)
     if request.method == "OPTIONS":
         return jsonify({'status': 'ok'}), 200, ALL_HEADERS
