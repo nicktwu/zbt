@@ -7,6 +7,7 @@ The JWT should indicate a time of assignment and a time of expiry, as well as th
 The token should be checked for being valid and unexpired, as coming from the indicated IP address, and as bearing a valid signature. 
 >This is done in the token_required decorater implemented in `authentication.py`.
 The token_required decorator will provide the decorated route handler with a request.kerberos option to get the kerberos of the token bearer.
+
 ##Models
 These are the specifications for the types of objects that this backend manages. 
 ### General Utility Models
