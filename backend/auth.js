@@ -10,7 +10,6 @@ var jwt_opts = {
 
 var jwt_strategy = new JwtStrategy(jwt_opts, function(payload, done) {
   console.log(payload);
-  done(null, null);
 });
 
 passport.use(jwt_strategy);

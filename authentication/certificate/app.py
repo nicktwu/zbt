@@ -22,8 +22,8 @@ def generate_token(kerberos, ip_addr):
     payload = {
         "kerberos": kerberos,
         "ip": str(ip_addr),
-        "iat": str(datetime.datetime.utcnow()),
-        "exp": str(datetime.datetime.utcnow() + datetime.timedelta(minutes=30)),
+        "iat": datetime.datetime.utcnow(),
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30),
     }
     return jwt.encode(payload, crypto_key, algorithm='HS256')
 
@@ -39,7 +39,6 @@ def get_token():
     if len(kerberos) < 1:
         abort(401)
     token = generate_token(kerberos, ip)
-    print token
     return jsonify({"token": token}), 200, CORS_HEADER
 
 
