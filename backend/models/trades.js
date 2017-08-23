@@ -28,7 +28,6 @@ var MidnightTrade = mongoose.model('MidnightTrade', midnightTradeSchema);
 var WorkdayForMidnightTrade = mongoose.model('WorkdayForMidnightTrade', workdayForMidnightTradeSchema);
 var WorkdayForWorkdayTrade = mongoose.model('WorkdayForWorkdayTrade', workdayForWorkdayTradeSchema);
 
-
 module.exports = {
   MidnightTrade: MidnightTrade,
   WorkdayForMidnightTrade: WorkdayForMidnightTrade,
