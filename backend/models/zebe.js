@@ -16,6 +16,15 @@ var zebeSchema = new Schema({
   tech_chair: Boolean,
 });
 
+zebeSchema.methods.isPresident = function() {
+  return this.president === true;
+};
+
+zebeSchema.methods.isRushChair = function() {
+  return this.rush_chair === true;
+};
+
+
 var Zebe = mongoose.model('Zebe', zebeSchema);
 
 module.exports = Zebe;
