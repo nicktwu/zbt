@@ -25,6 +25,7 @@ var midnightTypeSchema = new Schema({
   desc: String,
 });
 
+
 var Midnight = mongoose.model('Midnight', midnightSchema);
 var MidnightAccount = mongoose.model('MidnightAccount', midnightAccountSchema);
 var MidnightType = mongoose.model('MidnightType', midnightTypeSchema);
