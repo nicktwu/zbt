@@ -25,22 +25,20 @@ var midnightTypeSchema = new Schema({
   desc: String,
 });
 
-var midnightPrefSchema = new Schema({
+var midnightPrefsSchema = new Schema({
   zebe: String,
   daysPreferred: [String], // Days that this zebe prefers to work, ex: ['Monday', 'Thursday']
   tasksPreferred: [String], // Tasks that this zebe prefers to do, ex: ['Dinings', 'Waitings', 'Commons']
 });
   
-
 var Midnight = mongoose.model('Midnight', midnightSchema);
 var MidnightAccount = mongoose.model('MidnightAccount', midnightAccountSchema);
 var MidnightType = mongoose.model('MidnightType', midnightTypeSchema);
-
-
-// TODO: implement midnight prefs
+var MidnightPrefs = mongoose.model('MidnightPrefs', midnightPrefsSchema);
 
 module.exports = {
   Midnight: Midnight,
   MidnightAccount: MidnightAccount,
   MidnightType: MidnightType,
+  MidnightPrefs: MidnightPrefs,
 };
