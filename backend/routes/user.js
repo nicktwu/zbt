@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   res.json(req.user);
 });
 
-router.post('/', function(req, res, next) {
+router.post('/create', function(req, res, next) {
   if (req.user.isPresident() || req.user.isRushChair()) {
     Zebe.create(req.body, function(err) {
       if (err) return next(err);

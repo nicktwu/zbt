@@ -149,7 +149,7 @@ Routes should belong to seven groups. Special case note: any route that accepts 
 General Cross-Origin Resource Sharing (CORS) protocols initialized by browsers will send OPTIONS requests before ever making any other call; the OPTIONS requests should be just handled by returning status code 200 and specifying the Methods, Origins, and Headers permitted.
 ### General
 * `/user GET`: return the [Zebe](#zebe) whose kerberos matches the token bearer
-* `/user POST`: Require rush chair or presidential permissions. Create new [Zebes](#zebe) from the POST body (should be a list).
+* `/user/create POST`: Require rush chair or presidential permissions. Create new [Zebes](#zebe) from the POST body (should be a list).
 * `/user/update/<string:kerberos> PUT`: Require presidential permissions. Update [Zebe](#zebe) identified by id.
 * `/user/current GET`: return a list of [Zebe](#zebe) objects who are currently in ZBT.
 * `/semester GET`: return the current [Semester](#semester)
