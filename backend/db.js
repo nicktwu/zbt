@@ -9,7 +9,8 @@ var Zebe = require('./models/zebe');
 function init() {
   if (utils.is_prod()) {
     console.log('Connecting to prod db');
-    throw 'Prod db connections not implemented';
+    // MONGODB_URI already contains username, pass, and db
+    mongoose.connect(process.env.MONGODB_URI);
   } else {
     console.log('Connecting to dev db');
     mongoose.connect(config.mongodb_server_dev + config.db_name);
