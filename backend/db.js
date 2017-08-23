@@ -13,7 +13,7 @@ function init() {
     mongoose.connect(process.env.MONGODB_URI);
   } else {
     console.log('Connecting to dev db');
-    mongoose.connect(config.mongodb_server_dev + config.db_name);
+    mongoose.connect(config.mongodb_server_dev + config.db_name_dev);
   }
 
   var db = mongoose.connection;

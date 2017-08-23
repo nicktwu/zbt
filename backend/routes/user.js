@@ -14,7 +14,7 @@ router.post('/create', function(req, res, next) {
     Zebe.create(req.body, function(err) {
       if (err) return next(err);
       // return created zebes
-      return res.send(_.slice(arguments, 1));
+      return res.json(_.slice(arguments, 1));
     });
   } else {
     return res.sendStatus(403);
@@ -24,14 +24,14 @@ router.post('/create', function(req, res, next) {
 router.put('/update/:kerberos', function(req, res, next) {
   Zebe.update({ kerberos: req.params.kerberos }, req.body, function(err, raw) {
     if (err) next(err);
-    return res.send(raw);
+    return res.json(raw);
   });
 });
 
 router.get('/current', function(req, res, next) {
   Zebe.find({ current: true }, function(err, zebes) {
     if (err) return next(err);
-    return res.send(zebes);
+    return res.json(zebes);
   });
 });
 

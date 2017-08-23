@@ -4,7 +4,7 @@ var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 var _ = require('lodash');
 
-var Zebe = require('./models/zebe.js');
+var Zebe = require('./models/zebe');
 
 var jwt_opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
