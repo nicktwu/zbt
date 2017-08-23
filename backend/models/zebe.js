@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var zebeSchema = new Schema({
-  kerberos: { type: String, index: true },
+  kerberos: { type: String, index: { unique: true } },
   name: String,
   password: String,
   current: Boolean,

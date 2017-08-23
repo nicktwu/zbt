@@ -22,9 +22,19 @@ function init() {
 function populate_test_data() {
   var test = new Zebe({
     kerberos: 'testuser',
+    name: 'Rick Rick',
+    current: true,
+    president: false,
+    midnight_maker: false,
+    house_chair: false,
+    workweek_chair: false,
+    dev: false,
+    rush_chair: false,
+    social_chair: false,
+    tech_chair: false,
   });
   test.save(function(err) {
-    if (err) throw err;
+    if (err) console.log(err);
   });
 }
 

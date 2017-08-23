@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 
 var auth = require('./auth');
 var db = require('./db');
-var users = require('./routes/users');
+var user = require('./routes/user');
 var utils = require('./utils');
 
 if (utils.is_prod()) {
@@ -33,8 +33,10 @@ if (!utils.is_prod()) {
 
 app.use(auth.RequireLoggedIn);
 
+// ****************************
 // PUT SECURE ROUTES AFTER THIS
+// ****************************
 
-app.use('/api/v1/users', users);
+app.use('/api/v1/user', user);
 
 module.exports = app;
