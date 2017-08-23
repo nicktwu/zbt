@@ -3,13 +3,13 @@
 The backend expects a file named `config.py` inside it, which sets the SQLAlchemy config values. In addition, it expects a 256-bit/32-byte key string called `crypto_key` in a `secret.py` file.
 ## Security
 In general, all API endpoints should require presentation of a JWT, that should be signed by a 32-byte key shared with the authentication module.
-The JWT should indicate a time of assignment and a time of expiry, as well as the client kerberos and IP address. 
-The token should be checked for being valid and unexpired, as coming from the indicated IP address, and as bearing a valid signature. 
+The JWT should indicate a time of assignment and a time of expiry, as well as the client kerberos and IP address.
+The token should be checked for being valid and unexpired, as coming from the indicated IP address, and as bearing a valid signature.
 >This is done in the token_required decorater implemented in `authentication.py`.
 The token_required decorator will provide the decorated route handler with a request.kerberos option to get the kerberos of the token bearer.
 
 ##Models
-These are the specifications for the types of objects that this backend manages. 
+These are the specifications for the types of objects that this backend manages.
 ### General Utility Models
 #### Zebe
 A data model representing a Zebe.
@@ -145,12 +145,12 @@ A structure that describes the basic types of party jobs
 * `value` -_float_: a default value that this type of party job is worth
 * `description` -_string_: a description of how this type of party job should be performed
 ##Routes
-Routes should belong to seven groups. Special case note: any route that accepts a non-GET method should also accept an OPTIONS method. 
-General Cross-Origin Resource Sharing (CORS) protocols initialized by browsers will send OPTIONS requests before ever making any other call; the OPTIONS requests should be just handled by returning status code 200 and specifying the Methods, Origins, and Headers permitted. 
+Routes should belong to seven groups. Special case note: any route that accepts a non-GET method should also accept an OPTIONS method.
+General Cross-Origin Resource Sharing (CORS) protocols initialized by browsers will send OPTIONS requests before ever making any other call; the OPTIONS requests should be just handled by returning status code 200 and specifying the Methods, Origins, and Headers permitted.
 ### General
 * `/user GET`: return the [Zebe](#zebe) whose kerberos matches the token bearer
 * `/user POST`: Require rush chair or presidential permissions. Create new [Zebes](#zebe) from the POST body (should be a list).
-* `/user/<int:id> PUT`: Require presidential permissions. Update [Zebe](#zebe) identified by id.
+* `/user/update/<string:kerberos> PUT`: Require presidential permissions. Update [Zebe](#zebe) identified by id.
 * `/user/current GET`: return a list of [Zebe](#zebe) objects who are currently in ZBT.
 * `/semester GET`: return the current [Semester](#semester)
 * `/semester POST`: Require presidential/tech chair permissions. Create new [Semesters](#semester) from the POST body (should be a list).
