@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 
-var Zebe = require('../models/zebe.js');
+var Zebe = require('../models/zebe');
 
 // Retrieve current user.
 router.get('/', function(req, res, next) {

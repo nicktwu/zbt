@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 
-var Semester = require('../models/semester.js');
+var Semester = require('../models/semester');
 
 // get current semester
 router.get('/', function(req, res, next) {
@@ -13,10 +13,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/create', function(req, res, next) {
-  Semester.getCurrent(function(err, cur) {
-    if (err) return next(err);
-    return res.json(cur);
-  });
+  // TODO
 });
 
 module.exports = router;
