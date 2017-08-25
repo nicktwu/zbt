@@ -91,7 +91,7 @@ router.put('/workday/update/:id', function(req, res, next) {
 router.get('/incomplete', function(req, res, next) {
   House.WorkdayAssignment.find({
     date: {
-      $lt: moment(),
+      $lt: moment().toDate(),
     },
     completed: false,
   }, function(err, ass) {

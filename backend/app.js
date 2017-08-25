@@ -7,6 +7,7 @@ var auth = require('./auth');
 var db = require('./db');
 var user = require('./routes/user');
 var semester = require('./routes/semester');
+var house = require('./routes/house');
 var utils = require('./utils');
 
 if (utils.is_prod()) {
@@ -40,5 +41,6 @@ app.use(auth.RequireLoggedIn);
 
 app.use('/api/v1/user', user);
 app.use('/api/v1/semester', semester);
+app.use('/api/v1/house', house);
 
 module.exports = app;
