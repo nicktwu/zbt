@@ -180,12 +180,12 @@ The main API routes necessary are:
 * `/trades/workday/execute/<int:id> GET`: have the user/token bearer complete the [WorkdayForWorkdayTrade](#workdayforworkdaytrade) with the given id. **Check that the user actually has the workday necessary to complete the trade.**
 ### House
 * `/house/user GET`: return a list of the user/token bearer's [WorkdayAssignments](#workdayassignment).
-* `/house/workday GET`: return a list of all Zebes assigned to the next coming workday.
-* `/house/workday POST`: Require house-chair permissions. Create [WorkdayAssignment](#workdayassignment) objects from the POST body (should be a list).
-* `/house/workday/<int:id> PUT`: Require house-chair permissions. Update the id'd [WorkdayAssignment](#workdayassignment) object from the PUT body.
+* `/house/workday/:date_unixtime GET`: return a list of all Zebes assigned to the workday on date_unixtime.
+* `/house/workday/create POST`: Require house-chair permissions. Create [WorkdayAssignment](#workdayassignment) objects from the POST body (should be a list).
+* `/house/workday/create/<string:id> PUT`: Require house-chair permissions. Update the id'd [WorkdayAssignment](#workdayassignment) object from the PUT body.
 * `/house/accounts GET`: return a list of all [HouseAccount](#houseaccount) objects for the current semester.
-* `/house/accounts POST`: Require house-chair permissions. Create [HouseAccount](#houseaccount) objects from the POST body (should be a list).
-* `/house/accounts/<int:id> PUT`: Require house-chair permissions. Update id'd [HouseAccount](#houseaccount) with PUT body.
+* `/house/accounts/create POST`: Require house-chair permissions. Create [HouseAccount](#houseaccount) objects from the POST body (should be a list).
+* `/house/accounts/update/<string:id> PUT`: Require house-chair permissions. Update id'd [HouseAccount](#houseaccount) with PUT body.
 * `/house/incomplete GET`: Returns all incomplete [WorkdayAssignment](#workdayassignment) assignments for workdays that have passed.
 ### Workweek
 * `/workweek/user GET`: return a list of the user/token bearer's [WorkweekShiftAssignment](#workweekshiftassignment).

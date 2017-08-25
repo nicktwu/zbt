@@ -24,6 +24,21 @@ zebeSchema.methods.isRushChair = function() {
   return this.rush_chair === true;
 };
 
+zebeSchema.methods.isHouseChair = function() {
+  return this.house_chair === true;
+};
+
+zebeSchema.methods.isMidnightMaker = function() {
+  return this.midnight_maker === true;
+};
+
+zebeSchema.methods.isTechChair = function() {
+  return this.tech_chair === true;
+};
+
+zebeSchema.methods.isWorkweekChair = function() {
+  return this.workweek_chair === true;
+};
 
 var Zebe = mongoose.model('Zebe', zebeSchema);
 
