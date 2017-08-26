@@ -120,11 +120,14 @@ A data model representing a software ticket for workweek
 ### Rush Models
 ?????????
 ### Social/Risk Models
+#### SocialEvent
+* `name` string
+* `start_time` date
 #### PartyJob
 Data about a party job
 * `id` -_int_: unique integer identifying this party job
-* `date` -_date_: the date of this party job
-* `shift` -_time_: the start time of this party job (party jobs are always 1 hour)
+* `social_event` objectid: of socialevent
+* `date_and_time` -_date_: the date of this party job includes the time
 * `zebe` -_string_: the kerberos of the Zebe this party job was taken by
 * `task` -_string_: the name of the party job
 * `note` -_string_: any note Risk/Social might leave for the Zebe doing this party job
@@ -158,26 +161,26 @@ General Cross-Origin Resource Sharing (CORS) protocols initialized by browsers w
 The main API routes necessary are:
 * `/midnights/accounts GET`: return a list of all [MidnightAccount](#midnightaccount) objects for the current Semester.
 * `/midnights/accounts POST`: Require midnight-maker permissions on the [Zebe](#zebe). Creates [MidnightAccount](#midnightaccount) objects using the POST body (should be a list).
-* `/midnights/accounts/<int:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightAccount](#midnightaccount).
+* `/midnights/accounts/<string:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightAccount](#midnightaccount).
 * `/midnights/types GET`: return a list of all [MidnightTypeDefault](#midnighttypedefault) objects (get the midnight type defaults)
 * `/midnights/types POST`: Require midnight-maker permissions on the [Zebe](#zebe). Create [MidnightTypeDefault](#midnighttypedefault) objects from the POST body (should be a list).
-* `/midnights/types/<int:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightTypeDefault](#midnighttypedefault).
+* `/midnights/types/<string:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightTypeDefault](#midnighttypedefault).
 * `/midnights/midnight GET`: return all [Midnight](#midnight) assignments during the current week (Sunday-Saturday)
 * `/midnights/midnight POST`: Require midnight-maker permissions. Create [Midnight](#midnight) assignments in the POST body (should be a list).
-* `/midnights/midnight/<int:id> PUT`: Require midnight-maker permissions. Update the [Midnight](#midnight) with the given id using the PUT body.
+* `/midnights/midnight/<string:id> PUT`: Require midnight-maker permissions. Update the [Midnight](#midnight) with the given id using the PUT body.
 * `/midnights/unreviewed GET`: Returns all unreviewed [Midnight](#midnight) assignments.
 * `/midnights/reviewed GET`: Returns all reviewed [Midnight](#midnight) assignments from the past week.
 ### Trades
 * `/trades/user GET`: return a list of all [MidnightTrades](#midnighttrade) the user was involved in
 * `/trades/midnight GET`: return a list of all incomplete [MidnightTrade](#midnighttrade) objects for midnights that have not passed
 * `/trades/midnight POST`: create a new [MidnightTrade](#midnighttrade) offer from POST body. **Check that the user actually has this midnight to give away.**
-* `/trades/midnight/execute/<int:id> GET`: have the user/token bearer complete the [MidnightTrade](#midnighttrade) with the given id.
+* `/trades/midnight/execute/<string:id> GET`: have the user/token bearer complete the [MidnightTrade](#midnighttrade) with the given id.
 * `/trades/workday_for_midnight GET`: return a list of all incomplete [WorkdayForMidnightTrade](#workdayformidnighttrade) objects for workdays that have not passed
 * `/trades/workday_for_midnight POST`: create a new [WorkdayForMidnightTrade](#workdayformidnighttrade) offer from POST body. **Check that the user actually has this workday to give away.**
-* `/trades/workday_for_midnight/execute/<int:id> GET`: have the user/token bearer complete the [WorkdayForMidnightTrade](#workdayformidnighttrade) with the given id.
+* `/trades/workday_for_midnight/execute/<string:id> GET`: have the user/token bearer complete the [WorkdayForMidnightTrade](#workdayformidnighttrade) with the given id.
 * `/trades/workday GET`: return a list of all incomplete [WorkdayForWorkdayTrade](#workdayforworkdaytrade) objects for workdays that have not passed
 * `/trades/workday POST`: create a new [WorkdayForWorkdayTrade](#workdayforworkdaytrade) offer from POST body. **Check that the user actually has this workday to give away.**
-* `/trades/workday/execute/<int:id> GET`: have the user/token bearer complete the [WorkdayForWorkdayTrade](#workdayforworkdaytrade) with the given id. **Check that the user actually has the workday necessary to complete the trade.**
+* `/trades/workday/execute/<string:id> GET`: have the user/token bearer complete the [WorkdayForWorkdayTrade](#workdayforworkdaytrade) with the given id. **Check that the user actually has the workday necessary to complete the trade.**
 ### House
 * `/house/user GET`: return a list of the user/token bearer's [WorkdayAssignments](#workdayassignment).
 * `/house/workday/:date_unixtime GET`: return a list of all Zebes assigned to the workday on date_unixtime.
@@ -193,21 +196,22 @@ The main API routes necessary are:
 * `/workweek/tickets GET`: Require software-dev permissions. Return a list of all [WorkweekTickets](#workweekticket).
 * `/workweek/shift GET`: return a list of all Zebes assigned to the next workweek shift.
 * `/workweek/shift POST`: Require workweek-chair permissions. Create [WorkweekShiftAssignment](#workweekshiftassignment) objects from the POST body (should be a list).
-* `/workweek/shift/<int:id> PUT`: Require workweek-chair permissions. Update the id'd [WorkweekShiftAssignment](#workweekshiftassignment) object from the PUT body.
+* `/workweek/shift/<string:id> PUT`: Require workweek-chair permissions. Update the id'd [WorkweekShiftAssignment](#workweekshiftassignment) object from the PUT body.
 * `/workweek/accounts GET`: return a list of all [WorkweekAccount](#workweekaccount) objects for the current semester.
 * `/workweek/accounts POST`: Require workweek-chair permissions. Create [WorkweekAccount](#workweekaccount) objects from the POST body (should be a list).
-* `/workweek/accounts/<int:id> PUT`: Require workweek-chair permissions. Update id'd [WorkweekAccount](#workweekaccount) with PUT body.
+* `/workweek/accounts/<string:id> PUT`: Require workweek-chair permissions. Update id'd [WorkweekAccount](#workweekaccount) with PUT body.
 * `/workweek/incomplete GET`: Returns all incomplete [WorkweekShiftAssignment](#workweekshiftassignment) for shifts that have passed.
 * `/workweek/incomplete/tickets GET`: Returns all incomplete [WorkweekTickets](#workweekticket)
 ### Rush
 ????
 ### Social/Risk
-* `/social/party GET`: return a list of all [PartyJobs](#partyjob) for the next social event.
-* `/social/party POST`: Require social/risk permissions. Create [PartyJobs](#partyjob) from the POST body (should be a list).
-* `/social/party/<int:id> PUT`: Require social/risk permissions. Update [PartyJob](#partyjob) from the id.
+* `/social/events GET`: return a list of SocialEvent
+* `/social/jobs/<string:id> GET`: return a list of all [PartyJobs](#partyjob) for the  social event referenced by id
+* `/social/jobs/create POST`: Require social/risk permissions. Create [PartyJobs](#partyjob) from the POST body (should be a list).
+* `/social/jobs/update/<string:id> PUT`: Require social/risk permissions. Update [PartyJob](#partyjob) from the id.
 * `/social/accounts GET`: return a list of all [SocialAccount](#socialaccount) objects for the current semester.
-* `/social/accounts POST`: Require social/risk permissions. Create [SocialAccount](#socialaccount) objects from the POST body (should be a list).
-* `/social/accounts/<int:id> PUT`: Require social/risk permissions. Update id'd [SocialAccount](#socialaccount) with PUT body.
+* `/social/accounts/create POST`: Require social/risk permissions. Create [SocialAccount](#socialaccount) objects from the POST body (should be a list).
+* `/social/accounts/update/<string:id> PUT`: Require social/risk permissions. Update id'd [SocialAccount](#socialaccount) with PUT body.
 ## Additional Features
 * Email notifications for tasks through a no-reply bot
 * Potential addition of routes to suit frontend needs
