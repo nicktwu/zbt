@@ -33,6 +33,7 @@ A data model representing a semester.
 * `name` -_string_: human readable name for the semester (ex. Fall 2017)
 * `start` -_date_: the start date of the semester
 * `end` -_date_: the end date of the semester
+* `current` -_bool_: True if this semester is the current semester
 ### Midnight Models
 #### Midnight
 A data model representing a midnight.
@@ -161,10 +162,11 @@ General Cross-Origin Resource Sharing (CORS) protocols initialized by browsers w
 ### General
 * `/user GET`: return the [Zebe](#zebe) whose kerberos matches the token bearer
 * `/user/create POST`: Require rush chair or presidential permissions. Create new [Zebes](#zebe) from the POST body (should be a list).
-* `/user/update/<string:kerberos> PUT`: Require presidential permissions. Update [Zebe](#zebe) identified by id.
+* `/user/update/<string:kerberos> PUT`: Require presidential or Rush Chair(?) permissions. Update [Zebe](#zebe) identified by id.
 * `/user/current GET`: return a list of [Zebe](#zebe) objects who are currently in ZBT.
 * `/semester GET`: return the current [Semester](#semester)
 * `/semester POST`: Require presidential/tech chair permissions. Create new [Semesters](#semester) from the POST body (should be a list).
+* `/semester/update_current/<int:id> PUT`: Require presidential/tech chair permissions. Set [Semester](#semester) with given id as new current semester.
 
 ### Midnights
 The main API routes necessary are:
