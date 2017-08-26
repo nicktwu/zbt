@@ -8,6 +8,7 @@ var db = require('./db');
 var user = require('./routes/user');
 var semester = require('./routes/semester');
 var house = require('./routes/house');
+var social = require('./routes/social');
 var utils = require('./utils');
 
 if (utils.is_prod()) {
@@ -42,5 +43,6 @@ app.use(auth.RequireLoggedIn);
 app.use('/api/v1/user', user);
 app.use('/api/v1/semester', semester);
 app.use('/api/v1/house', house);
+api.use('/api/v1/social', social);
 
 module.exports = app;

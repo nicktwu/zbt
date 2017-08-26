@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var partyJobSchema = new Schema({
-  date: Date,
-  shift: Date,
+  social_event: Schema.Types.ObjectId, // id of corresponding event
+  date_and_time: Date, // includes time
   zebe_taker: String,
   task: String,
   note: String,
@@ -25,12 +25,19 @@ var partyJobTypeSchema = new Schema({
   value: Number,
 });
 
-var PartyJobSchema = mongoose.model('PartyJobSchema', partyJobSchema);
-var SocialAccountSchema = mongoose.model('SocialAccountSchema', socialAccountSchema);
+var socialEventSchema = new Schema({
+  name: String,
+  start_time: Date,
+});
+
+var PartyJob = mongoose.model('PartyJob', partyJobSchema);
+var SocialAccount = mongoose.model('SocialAccount', socialAccountSchema);
 var PartyJobType = mongoose.model('PartyJobType', partyJobTypeSchema);
+var SocialEvent = mongoose.model('SocialEvent', socialEventSchema);
 
 module.exports = {
-  PartyJobSchema: PartyJobSchema,
-  SocialAccountSchema: SocialAccountSchema,
+  PartyJob: PartyJob,
+  SocialAccount: SocialAccount,
   PartyJobType: PartyJobType,
+  SocialEvent: SocialEvent,
 };

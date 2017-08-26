@@ -14,6 +14,7 @@ var zebeSchema = new Schema({
   rush_chair: Boolean,
   social_chair: Boolean,
   tech_chair: Boolean,
+  risk_manager: Boolean,
 });
 
 zebeSchema.methods.isPresident = function() {
@@ -38,6 +39,14 @@ zebeSchema.methods.isTechChair = function() {
 
 zebeSchema.methods.isWorkweekChair = function() {
   return this.workweek_chair === true;
+};
+
+zebeSchema.methods.isSocialChair = function() {
+  return this.social_chair === true;
+};
+
+zebeSchema.methods.isRiskManager = function() {
+  return this.risk_manager === true;
 };
 
 var Zebe = mongoose.model('Zebe', zebeSchema);
