@@ -14,6 +14,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/create', function(req, res, next) {
   // TODO
+  res.sendStatus(501); // 501 not implemented
 });
 
 module.exports = router;
