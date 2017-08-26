@@ -43,7 +43,7 @@ router.put('/workday/update/:id', function(req, res, next) {
     House.WorkdayAssignment.findById(req.params.id, function(err, ass) {
       if (err) return next(err);
       _.assign(ass, req.body);
-      req.save(function(err, new_ass) {
+      ass.save(function(err, new_ass) {
         if (err) return next(err);
         return res.json(new_ass);
       });
@@ -54,9 +54,12 @@ router.put('/workday/update/:id', function(req, res, next) {
 });
 
 router.get('/accounts', function(req, res, next) {
-  House.HouseAccount.find({}, function(err, accounts) {
+  Semester.getCurrent(function(err, cur_sem) {
     if (err) return next(err);
-    return res.json(accounts);
+    House.HouseAccount.find({semester: cur_sem.name}, function(err, accounts) {
+      if (err) return next(err);
+      return res.json(accounts);
+    });
   });
 });
 
@@ -73,7 +76,7 @@ router.post('/accounts/create', function(req, res, next) {
   }
 });
 
-router.put('/workday/update/:id', function(req, res, next) {
+router.put('/accounts/update/:id', function(req, res, next) {
   if (req.user.isHouseChair()) {
     House.HouseAccount.findById(req.params.id, function(err, acct) {
       if (err) return next(err);
