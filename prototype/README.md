@@ -160,6 +160,7 @@ A structure that describes the basic types of party jobs
 Routes should belong to seven groups. Special case note: any route that accepts a non-GET method should also accept an OPTIONS method.
 General Cross-Origin Resource Sharing (CORS) protocols initialized by browsers will send OPTIONS requests before ever making any other call; the OPTIONS requests should be just handled by returning status code 200 and specifying the Methods, Origins, and Headers permitted.
 ### General
+General Routes necessary are:
 * `/user GET`: return the [Zebe](#zebe) whose kerberos matches the token bearer
 * `/user/create POST`: Require rush chair or presidential permissions. Create new [Zebes](#zebe) from the POST body (should be a list).
 * `/user/update/<string:kerberos> PUT`: Require presidential or Rush Chair(?) permissions. Update [Zebe](#zebe) identified by id.
@@ -167,21 +168,21 @@ General Cross-Origin Resource Sharing (CORS) protocols initialized by browsers w
 * `/semester GET`: return the current [Semester](#semester)
 * `/semester POST`: Require presidential/tech chair permissions. Create new [Semesters](#semester) from the POST body (should be a list).
 * `/semester/update_current/<int:id> PUT`: Require presidential/tech chair permissions. Set [Semester](#semester) with given id as new current semester.
-
 ### Midnights
 The main API routes necessary are:
 * `/midnights/accounts GET`: return a list of all [MidnightAccount](#midnightaccount) objects for the current Semester.
-* `/midnights/accounts POST`: Require midnight-maker permissions on the [Zebe](#zebe). Creates [MidnightAccount](#midnightaccount) objects using the POST body (should be a list).
-* `/midnights/accounts/<string:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightAccount](#midnightaccount).
-* `/midnights/types GET`: return a list of all [MidnightTypeDefault](#midnighttypedefault) objects (get the midnight type defaults)
-* `/midnights/types POST`: Require midnight-maker permissions on the [Zebe](#zebe). Create [MidnightTypeDefault](#midnighttypedefault) objects from the POST body (should be a list).
-* `/midnights/types/<string:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightTypeDefault](#midnighttypedefault).
-* `/midnights/midnight GET`: return all [Midnight](#midnight) assignments during the current week (Sunday-Saturday)
-* `/midnights/midnight POST`: Require midnight-maker permissions. Create [Midnight](#midnight) assignments in the POST body (should be a list).
-* `/midnights/midnight/<string:id> PUT`: Require midnight-maker permissions. Update the [Midnight](#midnight) with the given id using the PUT body.
+* `/midnights/accounts/create POST`: Require midnight-maker permissions on the [Zebe](#zebe). Creates [MidnightAccount](#midnightaccount) objects using the POST body (should be a list).
+* `/midnights/accounts/update/<int:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightAccount](#midnightaccount).
+* `/midnights/types GET`: return a list of all [MidnightType](#midnighttype) objects (get the midnight type defaults)
+* `/midnights/types/create POST`: Require midnight-maker permissions on the [Zebe](#zebe). Create [MidnightTypeDefault](#midnighttypedefault) objects from the POST body (should be a list).
+* `/midnights/types/update/<int:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightTypeDefault](#midnighttypedefault).
+* `/midnights/weeklist GET`: return all [Midnight](#midnight) assignments during the current week (Sunday-Saturday)
+* `/midnights/assign POST`: Require midnight-maker permissions. Create [Midnight](#midnight) assignments in the POST body (should be a list).
+* `/midnights/midnight/<int:id> PUT`: Require midnight-maker permissions. Update the [Midnight](#midnight) with the given id using the PUT body.
 * `/midnights/unreviewed GET`: Returns all unreviewed [Midnight](#midnight) assignments.
 * `/midnights/reviewed GET`: Returns all reviewed [Midnight](#midnight) assignments from the past week.
 ### Trades
+The main API routes necessary are:
 * `/trades/user GET`: return a list of all [MidnightTrades](#midnighttrade) the user was involved in
 * `/trades/midnight GET`: return a list of all incomplete [MidnightTrade](#midnighttrade) objects for midnights that have not passed
 * `/trades/midnight POST`: create a new [MidnightTrade](#midnighttrade) offer from POST body. **Check that the user actually has this midnight to give away.**
