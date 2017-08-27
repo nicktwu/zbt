@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Panel, Form, FormGroup, FormControl, ControlLabel, Button, Col, HelpBlock } from 'react-bootstrap';
-import { AuthorizationPanel, LoadingPanel, ErrorPanel } from 'components';
-import { url } from 'urls';
+import { AuthorizationPanel, LoadingPanel, ErrorPanel } from '../../../../components';
+import { url } from '../../../../urls';
 import { Redirect } from 'react-router-dom';
 
 class CreateOne extends Component {

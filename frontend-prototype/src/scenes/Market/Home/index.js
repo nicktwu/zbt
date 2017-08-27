@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { url } from 'urls';
+import { url } from '../../../urls';
 
 class Home extends Component {
 
