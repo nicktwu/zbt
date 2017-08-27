@@ -1,0 +1,21 @@
+.HeaderNav {
+    display: flex;
+    padding: 0 5em;
+}
+
+.HeaderNav a {
+    flex: 1;
+
+    text-align: center;
+    padding: 0.5em 0;
+    background-color: #efefef;
+    color: #999;
+    text-decoration: none;
+    font-size: 1.5em;
+    height: content-fit;
+}
+
+.HeaderNav a.active {
+    background-color: #ddd;
+    color: #5a8dff;
+}

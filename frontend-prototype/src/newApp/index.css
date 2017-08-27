@@ -1,0 +1,30 @@
+html, body, #root, .Site {
+    height: 100%;
+}
+
+#root {
+    overflow: hidden;
+}
+
+
+.Site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+header, footer {
+    flex: 0 0 auto;
+}
+
+.Site-content {
+    flex: 1 1 auto;
+    position: relative;/* need this to position inner content */
+    overflow-y: auto;
+}
+
+footer {
+    color: #ccc;
+    text-align: right;
+    margin: 0.5em;
+}
