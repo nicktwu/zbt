@@ -19,19 +19,21 @@ A data model representing a Zebe.
 * `password` -_string_: the hash of the password that can be used to authenticate this Zebe, if no certificate is available
 * `current` -_bool_: True if this Zebe is currently active (ie, not abroad or on a gap semester)
 * `president` -_bool_: True if this Zebe has presidential permissions
-* `midnight` -_bool_: True if this Zebe has midnight maker permissions
-* `house` -_bool_: True if this Zebe has house chair permissions
-* `workweek` -_bool_: True if this Zebe has workweek administrative permissions
+* `midnight_maker` -_bool_: True if this Zebe has midnight maker permissions
+* `house_chair` -_bool_: True if this Zebe has house chair permissions
+* `workweek_chair` -_bool_: True if this Zebe has workweek administrative permissions
 * `dev` -_bool_: True if this Zebe is a developer
-* `rush` -_bool_: True if this Zebe has rush chair permissions
-* `social` -_bool_: True if this Zebe has risk manager/social chair permissions
-* `tech` -_bool_: True if this Zebe has tech-chair permissions.
+* `rush_chair` -_bool_: True if this Zebe has rush chair permissions
+* `social_chair` -_bool_: True if this Zebe has social chair permissions
+* `tech_chair` -_bool_: True if this Zebe has tech-chair permissions.
+* `risk_manager` -_bool_: True if this Zebe has risk manager permissions
 #### Semester
 A data model representing a semester.
 * `id` -_int_: unique integer identifying semester
 * `name` -_string_: human readable name for the semester (ex. Fall 2017)
 * `start` -_date_: the start date of the semester
 * `end` -_date_: the end date of the semester
+* `current` -_bool_: True if this semester is the current semester
 ### Midnight Models
 #### Midnight
 A data model representing a midnight.
@@ -51,35 +53,41 @@ A structure that saves the number of midnight points completed by a Zebe for a s
 * `zebe` -_string_: the kerberos of the Zebe this account is for
 * `balance` -_float_: the number of points the Zebe has completed thus far
 * `requirement` -_float_: the target midnight requirement for this Zebe
-#### MidnightTypeDefault
+#### MidnightType
 A structure that describes the basic types of midnights
 * `id` -_int_: a unique integer identifying this midnight type
 * `name` -_string_: a name identifying this type of midnight (ex. "Commons")
 * `value` -_float_: a default value that this type of midnight is worth
 * `description` -_string_: a description of how this type of midnight should be performed
+#### MidnightPrefs
+A structure that describes a set of midnight preferences
+* `id` -_int_: a unique integer identifying this set of preferences
+* `zebe` -_string_: the kerberos of the Zebe who holds these preferences
+* `daysPreferred` -_[string]_: the days the zebe prefers to work
+* `tasksPreferred` -_[string]_: the tasks the zebe prefers to do
 ### Trade Models
 #### MidnightTrade
 A data model representing a potential or completed midnight trade.
 * `id` -_int_: a unique integer identifying this trade
-* `midnight` -_int_: the id of the midnight being traded
-* `zebe` -_int_: the id of the Zebe offering this midnight
+* `midnight_id` -_int_: the id of the midnight being traded
+* `zebe_offering` -_string_: the kerberos of the Zebe offering this midnight
 * `offered` -_float_: Any additional midnight points offered alongside the original midnight
 * `completed` -_bool_: True if a taker was found, and the trade was executed
-* `taker` -_string_: the kerberos of the Zebe taking the midnight
+* `zebe_taker` -_string_: the kerberos of the Zebe taking the midnight
 #### WorkdayForMidnightTrade
 A data model representing a potential or completed workday-midnight trade: a workday a Zebe offered for someone to take by giving midnight points.
 * `id` -_int_: a unique integer identifying this trade
-* `workday` -_int_: the id of the workday involved in the trade
+* `workday_id` -_int_: the id of the workday involved in the trade
 * `points` -_float_: the number of midnight points that were offered to take this workday
 * `completed` -_bool_: True if a taker was found and the trade was completed.
-* `taker` -_string_: the kerberos of the Zebe taking the workday
+* `zebe_taker` -_string_: the kerberos of the Zebe taking the workday
 #### WorkdayForWorkdayTrade
 A data model representing a workday trade for another workday.
 * `id` -_int_: a unique integer identifying this trade
-* `offered` -_int_: the id of the workday being offered in exchange for a workday on another date
+* `workday_offered_id` -_int_: the id of the workday being offered in exchange for a workday on another date
 * `date` -_date_: the date of a workday the offerer is willing to take a workday on
 * `completed` -_bool_: True if a valid taker was found and the trade was executed
-* `taken` -_int_: the id of the workday that the offerer took in exchange
+* `workday_taken_id` -_int_: the id of the workday that the offerer took in exchange
 ### House Models
 #### WorkdayAssignment
 A data model representing a workday assignment.
@@ -121,14 +129,15 @@ A data model representing a software ticket for workweek
 ?????????
 ### Social/Risk Models
 #### SocialEvent
-* `name` string
-* `start_time` date
+A structure representing a social event
+* `name` -_string_: the name of the event
+* `start_time` -_date_: the start time of the event
 #### PartyJob
-Data about a party job
+A structure representing a party job
 * `id` -_int_: unique integer identifying this party job
-* `social_event` objectid: of socialevent
+* `social_event` -_int_: id of social event for this party job
 * `date_and_time` -_date_: the date of this party job includes the time
-* `zebe` -_string_: the kerberos of the Zebe this party job was taken by
+* `zebe_taker` -_string_: the kerberos of the Zebe this party job was taken by
 * `task` -_string_: the name of the party job
 * `note` -_string_: any note Risk/Social might leave for the Zebe doing this party job
 * `potential` -_float_: the number of points this party job would be worth, if completed
@@ -146,31 +155,34 @@ A structure that describes the basic types of party jobs
 * `id` -_int_: a unique integer identifying this party job type
 * `name` -_string_: a name identifying this type of party job (ex. "Door")
 * `value` -_float_: a default value that this type of party job is worth
-* `description` -_string_: a description of how this type of party job should be performed
+* `desc` -_string_: a description of how this type of party job should be performed
 ##Routes
 Routes should belong to seven groups. Special case note: any route that accepts a non-GET method should also accept an OPTIONS method.
 General Cross-Origin Resource Sharing (CORS) protocols initialized by browsers will send OPTIONS requests before ever making any other call; the OPTIONS requests should be just handled by returning status code 200 and specifying the Methods, Origins, and Headers permitted.
 ### General
+General Routes necessary are:
 * `/user GET`: return the [Zebe](#zebe) whose kerberos matches the token bearer
 * `/user/create POST`: Require rush chair or presidential permissions. Create new [Zebes](#zebe) from the POST body (should be a list).
-* `/user/update/<string:kerberos> PUT`: Require presidential permissions. Update [Zebe](#zebe) identified by id.
+* `/user/update/<string:kerberos> PUT`: Require presidential or Rush Chair(?) permissions. Update [Zebe](#zebe) identified by id.
 * `/user/current GET`: return a list of [Zebe](#zebe) objects who are currently in ZBT.
 * `/semester GET`: return the current [Semester](#semester)
 * `/semester POST`: Require presidential/tech chair permissions. Create new [Semesters](#semester) from the POST body (should be a list).
+* `/semester/update_current/<int:id> PUT`: Require presidential/tech chair permissions. Set [Semester](#semester) with given id as new current semester.
 ### Midnights
 The main API routes necessary are:
 * `/midnights/accounts GET`: return a list of all [MidnightAccount](#midnightaccount) objects for the current Semester.
-* `/midnights/accounts POST`: Require midnight-maker permissions on the [Zebe](#zebe). Creates [MidnightAccount](#midnightaccount) objects using the POST body (should be a list).
-* `/midnights/accounts/<string:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightAccount](#midnightaccount).
-* `/midnights/types GET`: return a list of all [MidnightTypeDefault](#midnighttypedefault) objects (get the midnight type defaults)
-* `/midnights/types POST`: Require midnight-maker permissions on the [Zebe](#zebe). Create [MidnightTypeDefault](#midnighttypedefault) objects from the POST body (should be a list).
-* `/midnights/types/<string:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightTypeDefault](#midnighttypedefault).
-* `/midnights/midnight GET`: return all [Midnight](#midnight) assignments during the current week (Sunday-Saturday)
-* `/midnights/midnight POST`: Require midnight-maker permissions. Create [Midnight](#midnight) assignments in the POST body (should be a list).
-* `/midnights/midnight/<string:id> PUT`: Require midnight-maker permissions. Update the [Midnight](#midnight) with the given id using the PUT body.
+* `/midnights/accounts/create POST`: Require midnight-maker permissions on the [Zebe](#zebe). Creates [MidnightAccount](#midnightaccount) objects using the POST body (should be a list).
+* `/midnights/accounts/update/<int:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightAccount](#midnightaccount).
+* `/midnights/types GET`: return a list of all [MidnightType](#midnighttype) objects (get the midnight type defaults)
+* `/midnights/types/create POST`: Require midnight-maker permissions on the [Zebe](#zebe). Create [MidnightTypeDefault](#midnighttypedefault) objects from the POST body (should be a list).
+* `/midnights/types/update/<int:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightTypeDefault](#midnighttypedefault).
+* `/midnights/weeklist GET`: return all [Midnight](#midnight) assignments during the current week (Sunday-Saturday)
+* `/midnights/assign POST`: Require midnight-maker permissions. Create [Midnight](#midnight) assignments in the POST body (should be a list).
+* `/midnights/midnight/<int:id> PUT`: Require midnight-maker permissions. Update the [Midnight](#midnight) with the given id using the PUT body.
 * `/midnights/unreviewed GET`: Returns all unreviewed [Midnight](#midnight) assignments.
 * `/midnights/reviewed GET`: Returns all reviewed [Midnight](#midnight) assignments from the past week.
 ### Trades
+The main API routes necessary are:
 * `/trades/user GET`: return a list of all [MidnightTrades](#midnighttrade) the user was involved in
 * `/trades/midnight GET`: return a list of all incomplete [MidnightTrade](#midnighttrade) objects for midnights that have not passed
 * `/trades/midnight POST`: create a new [MidnightTrade](#midnighttrade) offer from POST body. **Check that the user actually has this midnight to give away.**
@@ -181,6 +193,7 @@ The main API routes necessary are:
 * `/trades/workday GET`: return a list of all incomplete [WorkdayForWorkdayTrade](#workdayforworkdaytrade) objects for workdays that have not passed
 * `/trades/workday POST`: create a new [WorkdayForWorkdayTrade](#workdayforworkdaytrade) offer from POST body. **Check that the user actually has this workday to give away.**
 * `/trades/workday/execute/<string:id> GET`: have the user/token bearer complete the [WorkdayForWorkdayTrade](#workdayforworkdaytrade) with the given id. **Check that the user actually has the workday necessary to complete the trade.**
+
 ### House
 * `/house/user GET`: return a list of the user/token bearer's [WorkdayAssignments](#workdayassignment).
 * `/house/workday/:date_unixtime GET`: return a list of all Zebes assigned to the workday on date_unixtime.
@@ -190,6 +203,7 @@ The main API routes necessary are:
 * `/house/accounts/create POST`: Require house-chair permissions. Create [HouseAccount](#houseaccount) objects from the POST body (should be a list).
 * `/house/accounts/update/<string:id> PUT`: Require house-chair permissions. Update id'd [HouseAccount](#houseaccount) with PUT body.
 * `/house/incomplete GET`: Returns all incomplete [WorkdayAssignment](#workdayassignment) assignments for workdays that have passed.
+
 ### Workweek
 * `/workweek/user GET`: return a list of the user/token bearer's [WorkweekShiftAssignment](#workweekshiftassignment).
 * `/workweek/user/tickets GET`: Require software-dev permissions. Return a list of the user's [WorkweekTickets](#workweekticket).
@@ -202,6 +216,7 @@ The main API routes necessary are:
 * `/workweek/accounts/<string:id> PUT`: Require workweek-chair permissions. Update id'd [WorkweekAccount](#workweekaccount) with PUT body.
 * `/workweek/incomplete GET`: Returns all incomplete [WorkweekShiftAssignment](#workweekshiftassignment) for shifts that have passed.
 * `/workweek/incomplete/tickets GET`: Returns all incomplete [WorkweekTickets](#workweekticket)
+
 ### Rush
 ????
 ### Social/Risk
@@ -212,6 +227,7 @@ The main API routes necessary are:
 * `/social/accounts GET`: return a list of all [SocialAccount](#socialaccount) objects for the current semester.
 * `/social/accounts/create POST`: Require social/risk permissions. Create [SocialAccount](#socialaccount) objects from the POST body (should be a list).
 * `/social/accounts/update/<string:id> PUT`: Require social/risk permissions. Update id'd [SocialAccount](#socialaccount) with PUT body.
+
 ## Additional Features
 * Email notifications for tasks through a no-reply bot
 * Potential addition of routes to suit frontend needs

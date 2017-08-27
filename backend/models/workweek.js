@@ -17,9 +17,9 @@ var workweekAccountSchema = new Schema({
 });
 
 var workweekTicketSchema = new Schema({
-  zebe_taker: String,
-  desc: String,
+  description: String,
   hours: Number,
+  zebe_taker: String,
   completed: Boolean,
 });
 
