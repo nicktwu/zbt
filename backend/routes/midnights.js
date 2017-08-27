@@ -3,7 +3,7 @@ var router = express.Router();
 var _ = require('lodash');
 var moment = require('moment');
 
-var Midnights = require('../models/midnight');
+var Midnights = require('../models/midnights');
 
 // /midnights/accounts GET
 router.get('/accounts', function(req, res, next) {

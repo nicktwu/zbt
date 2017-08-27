@@ -78,6 +78,7 @@ A data model representing a potential or completed midnight trade.
 A data model representing a potential or completed workday-midnight trade: a workday a Zebe offered for someone to take by giving midnight points.
 * `id` -_int_: a unique integer identifying this trade
 * `workday_id` -_int_: the id of the workday involved in the trade
+* `zebe_offering` -_string_: kerberos of zebe offering the trade
 * `points` -_float_: the number of midnight points that were offered to take this workday
 * `completed` -_bool_: True if a taker was found and the trade was completed.
 * `zebe_taker` -_string_: the kerberos of the Zebe taking the workday
@@ -85,9 +86,11 @@ A data model representing a potential or completed workday-midnight trade: a wor
 A data model representing a workday trade for another workday.
 * `id` -_int_: a unique integer identifying this trade
 * `workday_offered_id` -_int_: the id of the workday being offered in exchange for a workday on another date
+* `zebe_offering` -_string_: kerberos of zebe offering workday
 * `date` -_date_: the date of a workday the offerer is willing to take a workday on
 * `completed` -_bool_: True if a valid taker was found and the trade was executed
 * `workday_taken_id` -_int_: the id of the workday that the offerer took in exchange
+* `zebe_taker` -_string_: kerberos of zebe taking the workday
 ### House Models
 #### WorkdayAssignment
 A data model representing a workday assignment.
@@ -167,34 +170,37 @@ General Routes necessary are:
 * `/user/current GET`: return a list of [Zebe](#zebe) objects who are currently in ZBT.
 * `/semester GET`: return the current [Semester](#semester)
 * `/semester POST`: Require presidential/tech chair permissions. Create new [Semesters](#semester) from the POST body (should be a list).
-* `/semester/update_current/<int:id> PUT`: Require presidential/tech chair permissions. Set [Semester](#semester) with given id as new current semester.
+* `/semester/update_current/<string:id> PUT`: Require presidential/tech chair permissions. Set [Semester](#semester) with given id as new current semester.
 ### Midnights
 The main API routes necessary are:
 * `/midnights/accounts GET`: return a list of all [MidnightAccount](#midnightaccount) objects for the current Semester.
 * `/midnights/accounts/create POST`: Require midnight-maker permissions on the [Zebe](#zebe). Creates [MidnightAccount](#midnightaccount) objects using the POST body (should be a list).
-* `/midnights/accounts/update/<int:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightAccount](#midnightaccount).
+* `/midnights/accounts/update/<string:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightAccount](#midnightaccount).
 * `/midnights/types GET`: return a list of all [MidnightType](#midnighttype) objects (get the midnight type defaults)
 * `/midnights/types/create POST`: Require midnight-maker permissions on the [Zebe](#zebe). Create [MidnightTypeDefault](#midnighttypedefault) objects from the POST body (should be a list).
-* `/midnights/types/update/<int:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightTypeDefault](#midnighttypedefault).
+* `/midnights/types/update/<srting:id> PUT`: Require midnight-maker permissions on the [Zebe](#zebe). Reads the put body and uses the ID to update the relevant [MidnightTypeDefault](#midnighttypedefault).
 * `/midnights/weeklist GET`: return all [Midnight](#midnight) assignments during the current week (Sunday-Saturday)
 * `/midnights/assign POST`: Require midnight-maker permissions. Create [Midnight](#midnight) assignments in the POST body (should be a list).
-* `/midnights/midnight/<int:id> PUT`: Require midnight-maker permissions. Update the [Midnight](#midnight) with the given id using the PUT body.
+* `/midnights/update_assignment/<string:id> PUT`: Require midnight-maker permissions. Update the [Midnight](#midnight) with the given id using the PUT body.
 * `/midnights/unreviewed GET`: Returns all unreviewed [Midnight](#midnight) assignments.
 * `/midnights/reviewed GET`: Returns all reviewed [Midnight](#midnight) assignments from the past week.
 ### Trades
+With all trades we enforce the invariant that the underlying midnight/workday must exist
 The main API routes necessary are:
-* `/trades/user GET`: return a list of all [MidnightTrades](#midnighttrade) the user was involved in
+* `/trades/user/midnight GET`: return a list of all [MidnightTrades](#midnighttrade) the user was involved in
+* `/trades/user/workday_for_midnight GET`: return a list of all [WorkdayForWorkdayTrades](#workdayformidnighttrade) the user was involved in
+* `/trades/user/workday GET`: return a list of all [WorkdayForWorkdayTrades](#workdayforworkdaytrade) the user was involved in
 * `/trades/midnight GET`: return a list of all incomplete [MidnightTrade](#midnighttrade) objects for midnights that have not passed
 * `/trades/midnight POST`: create a new [MidnightTrade](#midnighttrade) offer from POST body. **Check that the user actually has this midnight to give away.**
-* `/trades/midnight/execute/<string:id> GET`: have the user/token bearer complete the [MidnightTrade](#midnighttrade) with the given id.
+* `/trades/midnight/execute/<string:id> PUT`: have the user/token bearer complete the [MidnightTrade](#midnighttrade) with the given id. Update trade to be completed, with user as taker. Update Midnight zebe to be user
 * `/trades/workday_for_midnight GET`: return a list of all incomplete [WorkdayForMidnightTrade](#workdayformidnighttrade) objects for workdays that have not passed
 * `/trades/workday_for_midnight POST`: create a new [WorkdayForMidnightTrade](#workdayformidnighttrade) offer from POST body. **Check that the user actually has this workday to give away.**
-* `/trades/workday_for_midnight/execute/<string:id> GET`: have the user/token bearer complete the [WorkdayForMidnightTrade](#workdayformidnighttrade) with the given id.
+* `/trades/workday_for_midnight/execute/<string:id> PUT`: have the user/token bearer complete the [WorkdayForMidnightTrade](#workdayformidnighttrade) with the given id.
 * `/trades/workday GET`: return a list of all incomplete [WorkdayForWorkdayTrade](#workdayforworkdaytrade) objects for workdays that have not passed
 * `/trades/workday POST`: create a new [WorkdayForWorkdayTrade](#workdayforworkdaytrade) offer from POST body. **Check that the user actually has this workday to give away.**
-* `/trades/workday/execute/<string:id> GET`: have the user/token bearer complete the [WorkdayForWorkdayTrade](#workdayforworkdaytrade) with the given id. **Check that the user actually has the workday necessary to complete the trade.**
-
+* `/trades/workday/execute/<string:id> PUT`: have the user/token bearer complete the [WorkdayForWorkdayTrade](#workdayforworkdaytrade) with the given id. **Check that the user actually has the workday necessary to complete the trade.**
 ### House
+The main API routes necessary are:
 * `/house/user GET`: return a list of the user/token bearer's [WorkdayAssignments](#workdayassignment).
 * `/house/workday/:date_unixtime GET`: return a list of all Zebes assigned to the workday on date_unixtime.
 * `/house/workday/create POST`: Require house-chair permissions. Create [WorkdayAssignment](#workdayassignment) objects from the POST body (should be a list).
@@ -203,7 +209,6 @@ The main API routes necessary are:
 * `/house/accounts/create POST`: Require house-chair permissions. Create [HouseAccount](#houseaccount) objects from the POST body (should be a list).
 * `/house/accounts/update/<string:id> PUT`: Require house-chair permissions. Update id'd [HouseAccount](#houseaccount) with PUT body.
 * `/house/incomplete GET`: Returns all incomplete [WorkdayAssignment](#workdayassignment) assignments for workdays that have passed.
-
 ### Workweek
 * `/workweek/user GET`: return a list of the user/token bearer's [WorkweekShiftAssignment](#workweekshiftassignment).
 * `/workweek/user/tickets GET`: Require software-dev permissions. Return a list of the user's [WorkweekTickets](#workweekticket).

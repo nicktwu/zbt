@@ -18,9 +18,11 @@ var workdayForMidnightTradeSchema = new Schema({
 
 var workdayForWorkdayTradeSchema = new Schema({
   workday_offered_id: Schema.Types.ObjectId,
+  zebe_offering: String,
   date: Date,
   completed: Boolean,
   workday_taken_id: Schema.Types.ObjectId,
+  zebe_taker: String,
 });
 
 
