@@ -43,6 +43,6 @@ app.use(auth.RequireLoggedIn);
 app.use('/api/v1/user', user);
 app.use('/api/v1/semester', semester);
 app.use('/api/v1/house', house);
-api.use('/api/v1/social', social);
+app.use('/api/v1/social', social);
 
 module.exports = app;
