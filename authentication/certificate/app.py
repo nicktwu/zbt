@@ -38,7 +38,7 @@ def get_token():
     kerberos = get_kerberos()
     if len(kerberos) < 1:
         abort(401)
-    token = generate_token(kerberos, ip)
+    token = generate_token(kerberos, ip).decode('utf-8')
     return jsonify({"token": token}), 200, CORS_HEADER
 
 
