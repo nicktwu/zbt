@@ -17,7 +17,8 @@ export default class App extends Component {
           <header><RouterHeaderNav/></header>
           <div className="Site-content">
             <Route exact path="/" render={() => <Redirect to="/profile/"/>} />
-            <Route path="/profile/" component={ProfileView} />
+            <Route exact path="/profile/" component={ProfileView} />
+            <Route path="/:reqType/" component={CalendarView} />
           </div>
           <footer>ZBTodo App</footer>
         </div>
