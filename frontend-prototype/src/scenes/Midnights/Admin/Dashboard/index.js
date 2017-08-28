@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { url } from 'urls';
+import { url } from '../../../../urls';
 import { Panel } from 'react-bootstrap';
-import { LoadingPanel, AuthorizationPanel, ErrorPanel } from 'components';
+import { LoadingPanel, AuthorizationPanel, ErrorPanel } from '../../../../components';
 import { LinkContainer } from 'react-router-bootstrap';
 
 class Dashboard extends Component {

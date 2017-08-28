@@ -2,7 +2,7 @@
  * Created by nwu on 7/16/17.
  */
 import React, { Component } from 'react';
-import { url } from 'urls';
+import { url } from '../../urls';
 import { Table, Button, Panel } from 'react-bootstrap';
 
 class TicketView extends Component {

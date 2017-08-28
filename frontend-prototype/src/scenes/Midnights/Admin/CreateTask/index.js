@@ -3,7 +3,7 @@ import {
   Panel, Form, ControlLabel, Col, FormGroup, FormControl, Button, Alert
 } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import { url } from 'urls';
+import { url } from '../../../../urls';
 
 class CreateTask extends Component {
   constructor(props) {

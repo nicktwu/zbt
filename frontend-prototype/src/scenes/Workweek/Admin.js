@@ -2,8 +2,8 @@
  * Created by nwu on 7/16/17.
  */
 import React, {Component} from 'react';
-import {url} from 'urls';
-import {AuthorizationPanel} from 'components';
+import {url} from '../../urls';
+import {AuthorizationPanel} from '../../components';
 import { Form, FormGroup, FormControl, Button, Table, ControlLabel, Panel } from 'react-bootstrap';
 
 class Dashboard extends Component {

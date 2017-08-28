@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { url } from 'urls';
+import { url } from '../../../../urls';
 import { Panel, Form, FormGroup, Col, ControlLabel, FormControl, Alert, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 

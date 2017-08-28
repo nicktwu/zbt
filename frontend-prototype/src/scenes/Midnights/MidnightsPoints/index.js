@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { AccountPanel, ErrorPanel } from 'components';
-import { url } from 'urls';
+import { AccountPanel, ErrorPanel } from '../../../components';
+import { url } from '../../../urls';
 
 class MidnightsPoints extends Component {
   constructor(props) {

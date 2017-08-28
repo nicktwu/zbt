@@ -11,9 +11,9 @@ import { Home, MidnightsUser, MidnightsPoints,
 } from './scenes';
 import {
   home_path, market_home, midnights_admin_accounts, midnights_admin_create_task, midnights_admin_home,
-    midnights_admin_tasks, market_home, home_path, midnights_admin_new_midnight, midnights_admin_review,
+    midnights_admin_tasks,  midnights_admin_new_midnight, midnights_admin_review,
     midnights_points_path, midnights_user_path, midnights_week_path, workweek_admin, workweek_home, workweek_software,
-} from 'paths';
+} from './paths';
 
 
 class App extends Component {

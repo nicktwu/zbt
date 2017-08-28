@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { MidnightsList, LoadingPanel, ErrorPanel } from 'components';
-import { url } from 'urls';
+import { MidnightsList, LoadingPanel, ErrorPanel } from '../../../components';
+import { url } from '../../../urls';
 import { Panel, Button } from 'react-bootstrap';
 
 class MidnightsWeek extends Component {

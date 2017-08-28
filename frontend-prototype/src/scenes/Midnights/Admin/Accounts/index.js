@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Panel } from 'react-bootstrap';
-import { AuthorizationPanel, LoadingPanel, CheckboxForm, ErrorPanel } from 'components';
-import { url } from 'urls';
+import { AuthorizationPanel, LoadingPanel, CheckboxForm, ErrorPanel } from '../../../../components';
+import { url } from '../../../../urls';
 import { Redirect } from 'react-router-dom';
 
 class AdminAccountList extends Component {
