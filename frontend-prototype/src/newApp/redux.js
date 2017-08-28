@@ -6,9 +6,11 @@ function callAPIMiddleware({ dispatch, getState }) {
   return next => action => {
     const {
       types,
-      callAPI,
       shouldCallAPI = () => true,
-      payload = {}
+      payload = {},
+      route,
+      params,
+      method = 'GET',
     } = action;
 
     if (!types) {
@@ -24,10 +26,6 @@ function callAPIMiddleware({ dispatch, getState }) {
       throw new Error('Expected an array of three string types.');
     }
 
-    if (typeof callAPI !== 'function') {
-      throw new Error('Expected callAPI to be a function.');
-    }
-
     if (!shouldCallAPI(getState())) {
       return;
     }
@@ -40,7 +38,24 @@ function callAPIMiddleware({ dispatch, getState }) {
       })
     );
 
-    return callAPI().then(
+    const url = `/api/v1${route}`;
+
+    const token = getState().auth.token;
+
+    if (!token) {
+      throw new Error('Can\'t make API request, unauthorized');
+    }
+
+    return fetch(new Request(url, {
+      method,
+      body: params ? JSON.stringify(params) : undefined,
+      headers: new Headers({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      }),
+      mode: 'cors',
+    })).then(res => res.json()).then(
       response =>
         dispatch(
           Object.assign({}, payload, {
