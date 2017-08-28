@@ -104,7 +104,7 @@ router.post('/assign', function(req, res, next) {
 });
 
 // /midnights/update_assignment/<int:id> PUT
-router.put('/update_assignment/:id' function(req, res, next) {
+router.put('/update_assignment/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
     Midnights.Midnight.findByID(req.params.id, function(err, assignment) {
       if (err) return next(err);

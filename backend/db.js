@@ -25,14 +25,14 @@ function populate_test_data() {
     kerberos: 'testuser',
     name: 'Rick Rick',
     current: true,
-    president: false,
-    midnight_maker: false,
-    house_chair: false,
-    workweek_chair: false,
-    dev: false,
-    rush_chair: false,
-    social_chair: false,
-    tech_chair: false,
+    president: true,
+    midnight_maker: true,
+    house_chair: true,
+    workweek_chair: true,
+    dev: true,
+    rush_chair: true,
+    social_chair: true,
+    tech_chair: true,
   });
   test.save(function(err) {
     if (err) console.log(err);

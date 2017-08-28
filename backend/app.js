@@ -9,6 +9,8 @@ var user = require('./routes/user');
 var semester = require('./routes/semester');
 var house = require('./routes/house');
 var social = require('./routes/social');
+var trades = require('./routes/trades');
+var midnights = require('./routes/midnights');
 var utils = require('./utils');
 
 if (utils.is_prod()) {
@@ -44,5 +46,7 @@ app.use('/api/v1/user', user);
 app.use('/api/v1/semester', semester);
 app.use('/api/v1/house', house);
 app.use('/api/v1/social', social);
+app.use('/api/v1/midnights', midnights);
+app.use('/api/v1/trades', trades);
 
 module.exports = app;

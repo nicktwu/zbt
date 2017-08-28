@@ -49,6 +49,10 @@ zebeSchema.methods.isRiskManager = function() {
   return this.risk_manager === true;
 };
 
+zebeSchema.methods.isDeveloper = function() {
+  return this.dev === true;
+};
+
 var Zebe = mongoose.model('Zebe', zebeSchema);
 
 module.exports = Zebe;
