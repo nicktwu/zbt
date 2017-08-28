@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# run mongodb
+mkdir -p backend/db
+mongod --dbpath ./backend/db --quiet --smallfiles &
+
+# run auth server
+python ./authentication/certificate/app.py &
+
+# run backend
+cd backend
+env PORT=3010 npm start
