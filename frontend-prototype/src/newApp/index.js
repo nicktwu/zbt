@@ -9,6 +9,7 @@ import ProfileView from './components/ProfileView';
 import * as config from './config.js';
 import makeStore from './redux.js';
 
+import 'font-awesome/css/font-awesome.css';
 import './index.css';
 
 const RouterHeaderNav = withRouter(({location}) => <HeaderNav location={location}/>);

@@ -22,6 +22,10 @@ export default class HeaderNav extends Component {
       </Link>
     ));
 
+    routesEls.push(<Link key="profile" to="/profile/" className={classnames({ active: '/profile/' === pathname }, 'profile')}>
+                    <i className="fa fa-user" aria-hidden="true"></i>
+                   </Link>);
+
     return (
         <div className="HeaderNav">{routesEls}</div>
     );

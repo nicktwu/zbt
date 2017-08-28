@@ -13,9 +13,16 @@
     text-decoration: none;
     font-size: 1.5em;
     height: content-fit;
+    margin-left: 1px;
 }
 
 .HeaderNav a.active {
     background-color: #ddd;
     color: #5a8dff;
+}
+
+.HeaderNav a.profile {
+    flex: 0 0 auto;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
 }
