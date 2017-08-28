@@ -210,6 +210,7 @@ The main API routes necessary are:
 * `/house/accounts/update/<string:id> PUT`: Require house-chair permissions. Update id'd [HouseAccount](#houseaccount) with PUT body.
 * `/house/incomplete GET`: Returns all incomplete [WorkdayAssignment](#workdayassignment) assignments for workdays that have passed.
 ### Workweek
+The main API routes necessary are:
 * `/workweek/user GET`: return a list of the user/token bearer's [WorkweekShiftAssignment](#workweekshiftassignment).
 * `/workweek/user/tickets GET`: Require software-dev permissions. Return a list of the user's [WorkweekTickets](#workweekticket).
 * `/workweek/tickets GET`: Require software-dev permissions. Return a list of all [WorkweekTickets](#workweekticket).
@@ -221,10 +222,10 @@ The main API routes necessary are:
 * `/workweek/accounts/<string:id> PUT`: Require workweek-chair permissions. Update id'd [WorkweekAccount](#workweekaccount) with PUT body.
 * `/workweek/incomplete GET`: Returns all incomplete [WorkweekShiftAssignment](#workweekshiftassignment) for shifts that have passed.
 * `/workweek/incomplete/tickets GET`: Returns all incomplete [WorkweekTickets](#workweekticket)
-
 ### Rush
 ????
 ### Social/Risk
+The main API routes necessary are:
 * `/social/events GET`: return a list of SocialEvent
 * `/social/jobs/<string:id> GET`: return a list of all [PartyJobs](#partyjob) for the  social event referenced by id
 * `/social/jobs/create POST`: Require social/risk permissions. Create [PartyJobs](#partyjob) from the POST body (should be a list).
@@ -232,7 +233,6 @@ The main API routes necessary are:
 * `/social/accounts GET`: return a list of all [SocialAccount](#socialaccount) objects for the current semester.
 * `/social/accounts/create POST`: Require social/risk permissions. Create [SocialAccount](#socialaccount) objects from the POST body (should be a list).
 * `/social/accounts/update/<string:id> PUT`: Require social/risk permissions. Update id'd [SocialAccount](#socialaccount) with PUT body.
-
 ## Additional Features
 * Email notifications for tasks through a no-reply bot
 * Potential addition of routes to suit frontend needs
