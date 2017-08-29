@@ -32,13 +32,9 @@ router.post('/accounts/create', function(req, res, next){
 // /midnights/accounts/<int:id> PUT
 router.put('/accounts/update/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
-    Midnights.MidnightAccount.findById(req.params.id, function(err, account) {
+    Midnights.MidnightAccount.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_account) {
       if (err) return next(err);
-      _.assign(account, req.body);
-      account.save(function(err, new_account) {
-        if (err) return next(err);
-        return res.json(new_account);
-      });
+      return res.json(new_account);
     });
   } else {
     res.sendStatus(403);
@@ -68,13 +64,9 @@ router.post('/types/create', function(req, res, next) {
 // /midnights/types/update/<int:id> PUT
 router.put('/types/update/:id', function(req, res, next){
   if (req.user.isMidnightMaker()) {
-    Midnights.MidnightType.findById(req.params.id, function(err, type) {
+    Midnights.MidnightType.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_type) {
       if (err) return next(err);
-      _.assign(type, req.body);
-      type.save(function(err, new_type) {
-        if (err) return next(err);
-        return res.json(new_type);
-      });
+      return res.json(new_type);
     });
   } else {
     res.sendStatus(403);
@@ -107,13 +99,9 @@ router.post('/assign', function(req, res, next) {
 // /midnights/update_assignment/<int:id> PUT
 router.put('/update_assignment/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
-    Midnights.Midnight.findById(req.params.id, function(err, assignment) {
+    Midnights.Midnight.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_assignment) {
       if (err) return next(err);
-      _.assign(assignment, req.body);
-      assignment.save(function(err, new_assignment) {
-        if (err) return next(err);
-        return res.json(new_assignment);
-      });
+      return res.json(new_assignment);
     });
   } else {
     res.sendStatus(403);

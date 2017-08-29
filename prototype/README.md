@@ -215,8 +215,8 @@ The main API routes necessary are:
 * `/workweek/user/tickets GET`: Require software-dev permissions. Return a list of the user's [WorkweekTickets](#workweekticket).
 * `/workweek/tickets GET`: Require software-dev permissions. Return a list of all [WorkweekTickets](#workweekticket).
 * `/workweek/shift GET`: return a list of all Zebes assigned to the next workweek shift.
-* `/workweek/shift POST`: Require workweek-chair permissions. Create [WorkweekShiftAssignment](#workweekshiftassignment) objects from the POST body (should be a list).
-* `/workweek/shift/<string:id> PUT`: Require workweek-chair permissions. Update the id'd [WorkweekShiftAssignment](#workweekshiftassignment) object from the PUT body.
+* `/workweek/shift/create POST`: Require workweek-chair permissions. Create [WorkweekShiftAssignment](#workweekshiftassignment) objects from the POST body (should be a list).
+* `/workweek/shift/update/<string:id> PUT`: Require workweek-chair permissions. Update the id'd [WorkweekShiftAssignment](#workweekshiftassignment) object from the PUT body.
 * `/workweek/accounts GET`: return a list of all [WorkweekAccount](#workweekaccount) objects for the current semester.
 * `/workweek/accounts POST`: Require workweek-chair permissions. Create [WorkweekAccount](#workweekaccount) objects from the POST body (should be a list).
 * `/workweek/accounts/<string:id> PUT`: Require workweek-chair permissions. Update id'd [WorkweekAccount](#workweekaccount) with PUT body.
