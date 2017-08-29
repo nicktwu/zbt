@@ -9,18 +9,18 @@ export default class ProfileView extends Component {
     const { midnightPoints } = match.midnightPoints;
     const { socialPoints } = match.socialPoints;
     const { events } = match.events;
-    var assingmentsString = '';
-    var assignments = this.props.Assignments.map(function(tasks, index){
-      assingmentsString += '<div>'
-      assingmentsString += '<li key={index}>{tasks.eventName}</li>'
-      assingmentsString += '<ul>'
-      assingmentsString += '<li>{tasks.points} pts</li>'
-      assingmentsString += '<li>{tasks.month} {tasks.date}, {tasks.year}</li>'
-      assingmentsString += '</ul>'
-      assingmentsString += '</div>' + '\n'
+    var assignments = this.props.Assignments.map(function(tasks, index) {
+      <div>
+	    <li key={index}>{tasks.eventName}</li>
+	    <ul>
+	      <li>{tasks.points} pts</li>
+	      <li>{tasks.month} {tasks.date}, {tasks.year}</li>
+	    </ul>
+      </div>
     });
 
     return (
+      <title>{name}</title>
       <div>
         <h3>{name}</h3>
         <img src={image} />
@@ -29,7 +29,9 @@ export default class ProfileView extends Component {
           <p>Midnight Points: {midnightPoints}</p>
           <p>Social Points: {socialPoints}</p>
         </div>
-        <div>{assingmentsString}</div>
+        <div>
+          {assignments}
+        </div>
       </div>
     );
   }
