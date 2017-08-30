@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import './ProfileView.css';
 
 export default class ProfileView extends Component {
   render() {
@@ -9,30 +11,51 @@ export default class ProfileView extends Component {
     const { midnightPoints } = match.midnightPoints;
     const { socialPoints } = match.socialPoints;
     const { events } = match.events;
-    var assignments = this.props.Assignments.map(function(tasks, index) {
-      <div>
-	    <li key={index}>{tasks.eventName}</li>
-	    <ul>
-	      <li>{tasks.points} pts</li>
-	      <li>{tasks.month} {tasks.date}, {tasks.year}</li>
-	    </ul>
+    var assignments = this.props.Assignments.map(function(task, index) {
+      <div className="eventEntry">
+  	    <li key={index}>{task.eventName}</li>
+  	    <ul>
+  	      <li>{task.points} pts</li>
+  	      <li>{task.dueDate.month} {task.dueDate.date}, {task.dueDate.year}</li>
+  	    </ul>
       </div>
     });
 
     return (
-      <title>{name}</title>
-      <div>
-        <h3>{name}</h3>
-        <img src={image} />
-        <div>
-          <p>Workweek Hours: {workWeekHours}</p>
-          <p>Midnight Points: {midnightPoints}</p>
-          <p>Social Points: {socialPoints}</p>
+      <head>
+      	<title>{name}</title>
+      </head>
+      <body>
+        <div className="content"}>
+          <div className="profile">
+            <div class="main">
+              <div class="basic">
+                <span class="helper"></span>
+                <img className="profilepic" src='http://lorempixel.com/250/250/' />
+                <h3 className="name">{ name }</h3>
+              </div>
+              <div className="points">
+                <p>Workweek Hours: { workWeekHours }/40</p>
+                <progress max="40" value={ workWeekHours }></progress>
+              </div>
+              <div className="points">
+                <p>Midnight Points: 4/15</p>
+                <progress max="15" value=4></progress>
+              </div>
+              <div className="points">
+                <p>Social Points: 7/13</p>
+                <progress max="13" value=7></progress>
+              </div>
+            </div>
+            <div className="assignmentsList">
+              <h5 className="assignHeading">My assignments: </h5>
+              <div className="assingments">
+                { assignments }
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          {assignments}
-        </div>
-      </div>
+      </body>
     );
   }
 }
