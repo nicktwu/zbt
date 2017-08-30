@@ -12,6 +12,7 @@ var social = require('./routes/social');
 var trades = require('./routes/trades');
 var midnights = require('./routes/midnights');
 var utils = require('./utils');
+var profile = require('./routes/profile');
 
 if (utils.is_prod()) {
   console.log("RUNNING IN PRODUCTION MODE...");

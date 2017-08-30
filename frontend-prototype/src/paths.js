@@ -15,3 +15,4 @@ export const market_home = "/market/";
 export const workweek_home = "/workweek";
 export const workweek_software = "/workweek/software";
 export const workweek_admin = "/workweek/admin";
+export const profile_user_path = "/profile/user";

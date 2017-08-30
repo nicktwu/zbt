@@ -11,7 +11,11 @@ class CalendarView extends Component {
   }
 
   render() {
-    const { events, user } = this.props;
+    const { events, user, type } = this.props;
+
+    if (type === 'profile') {
+      return null;
+    }
 
     return (
       <div className="CalendarView">
