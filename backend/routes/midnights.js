@@ -96,6 +96,14 @@ router.post('/assign', function(req, res, next) {
   }
 });
 
+// /midnights/:id GET
+router.get('/:id', function(req, res, next) {
+  Midnights.Midnight.findById(req.params.id, function(err, midnight) {
+    if (err) return next(err);
+    return res.json(midnight);
+  });
+});
+
 // /midnights/update_assignment/<int:id> PUT
 router.put('/update_assignment/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
