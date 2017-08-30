@@ -4,17 +4,15 @@ import { withRouter } from 'react-router';
 import './ProfileView.css';
 
 class ProfileView extends Component {
-  componentDidMount() {
-    this.props.fetchCurrentUser();
-  }
   render() {
-    const { match } = this.props || {};
-    const { name } = match.name || "Deep";
-    const { image } = match.image || "http://lorempixel.com/250/250/";
-    const { workWeekHours } = match.workWeekHours || "35";
-    const { midnightPoints } = match.midnightPoints || "7";
-    const { socialPoints } = match.socialPoints || "10";
-    const events = match.events || [{
+      console.log(this.props.user)
+    const { match } = this.props;
+    const { name } = this.props.user;
+    const { image = "http://lorempixel.com/250/250/" } = this.props.user;
+    const { workWeekHours } = this.props.user || "35";
+    const { midnightPoints } = this.props.user || "7";
+    const { socialPoints } = this.props.user || "10";
+    const events = this.props.events || [{
       eventName: "ZBTahiti Doors 10pm",
       points: 2,
       dueDate: Date(2016, 10, 8)
@@ -71,12 +69,6 @@ class ProfileView extends Component {
 
 const mapStateToProps = (state, {type}) => ({ ...state[type], user: state.user });
 const mapDispatchToProps = (dispatch, {type}) => ({
-  fetchCurrentUser() {
-    dispatch({
-      types: ['LOAD_USER_START', 'LOAD_USER_SUCCESS', 'LOAD_USER_FAIL'],
-      route: '/profile/user',
-    });
-  },
 });
 
 const ProfileViewWithUserData = connect(
