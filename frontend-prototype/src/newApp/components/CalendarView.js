@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 
 import './CalendarView.css';
 
@@ -9,12 +10,23 @@ class CalendarView extends Component {
   }
 
   render() {
-    const { events } = this.props;
+    const { events, user } = this.props;
 
     return (
       <div className="CalendarView">
         {[...Array(7).keys()].map(day => {
-          const dayEvents = (events || []).filter(event => event.date.getDay() === day);
+          const dayEvents = (events || [])
+                .filter(event => event.date.getDay() === day)
+                .map(event => ({
+                  ...event,
+                  properties: {
+                    available: !event.zebe,
+                    important: event.zebe === user.kerberos,
+                  },
+                }));
+
+          dayEvents.sort(eventCompare);
+
           const today = new Date();
           const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + day);
 
@@ -24,9 +36,12 @@ class CalendarView extends Component {
               <div className="CalendarView-events">
               {dayEvents.map(
                 (event, i) =>
-                  <div key={i} className="CalendarView-event">
+                  <div key={i} className={classnames('CalendarView-event', event.properties)}>
                       <div className="CalendarView-event-name">{event.task}</div>
-                      <div className="CalendarView-event-assignee">{event.zebe || 'none'}</div>
+                      <div className="CalendarView-event-details">
+                        <div className="CalendarView-event-assignee">{event.zebe || 'none'}</div>
+                        <div className="CalendarView-event-points">{event.potential} pts</div>
+                      </div>
                   </div>)}
               </div>
             </div>
@@ -37,7 +52,29 @@ class CalendarView extends Component {
   }
 }
 
-const mapStateToProps = (state, {type}) => state[type];
+// order events:
+// important first, then anything available, then the rest
+const eventCompare = (a, b) => {
+  if (a.properties.important && !b.properties.important) {
+    return -1;
+  }
+
+  if (!a.properties.important && b.properties.important) {
+    return 1;
+  }
+
+  if (a.properties.available && !b.properties.available) {
+    return -1;
+  }
+
+  if (!a.properties.available && b.properties.available) {
+    return 1;
+  }
+
+  return a.task.localeCompare(b.task);
+};
+
+const mapStateToProps = (state, {type}) => ({ ...state[type], user: state.user });
 const mapDispatchToProps = (dispatch, {type}) => ({
   fetchCurrentWeek() {
     dispatch({
