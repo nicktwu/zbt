@@ -114,10 +114,10 @@ router.get('/workday_for_midnight', function(req, res, next) {
 // /trades/workday_for_midnight POST
 router.post('/workday_for_midnight', function(req, res, next) {
 	//Make sure user has this workday
-	Midnight.WorkdayAssignment.find( 
+	House.WorkdayAssignment.find( 
 		{
 			id: req.body.id,
-			zebe: req.user.kerberos
+			zebe: req.user.kerberos,
 		}, 
 		function(err, workday) {
 			if (err) return next(err);
@@ -134,9 +134,9 @@ router.post('/workday_for_midnight', function(req, res, next) {
 });
 
 // /trades/workday_for_midnight/execute/<string:id> PUT
-router.put('/workday_for_midnight/execute/<string:id>', function(req, res, next) {
+router.put('/workday_for_midnight/execute/:id', function(req, res, next) {
 	Trades.WorkdayForMidnightTrade.findOneAndUpdate(
-		{ id: req.params.id }, 
+		{ id: req.params.id, completed: false }, 
 		{ 
 			zebe_taker: req.user.kerberos,
 			completed: true
@@ -177,7 +177,7 @@ router.get('/workday', function(req, res, next) {
 // /trades/workday POST
 router.post('/workday', function(req, res, next) {
 	//Make sure user has this workday
-	Midnight.WorkdayAssignment.find( {
+	House.WorkdayAssignment.find( {
 		id: req.body.id,
 		zebe: req.user.kerberos
 	}, function(err, workday) {
@@ -195,7 +195,7 @@ router.post('/workday', function(req, res, next) {
 
 // /trades/workday/execute/<string:id> PUT
 router.put('/workday/execute/:id', function(req, res, next) {
-	Trades.WorkdayForWorkdayTrade.findById(req.params.id, function(err, trade) {
+	Trades.WorkdayForWorkdayTrade.find({ id: req.params.id, completed: false }, function(err, trade) {
 		if (err) return next(err);
 		if (trade) { //trade must exist
 			//make sure user has workday taken
