@@ -20,13 +20,13 @@ class CalendarView extends Component {
 
           return (
             <div key={day} className="CalendarView-day">
-              <div>{d.toLocaleString('en-us', {weekday: 'short'})} {d.getMonth()}/{d.getDate()}</div>
+              <div className="CalendarView-date">{d.toLocaleString('en-us', {weekday: 'short'})} {d.getMonth()}/{d.getDate()}</div>
               <div className="CalendarView-events">
               {dayEvents.map(
                 (event, i) =>
                   <div key={i} className="CalendarView-event">
-                      <div>{event.task}</div>
-                      <div>{event.zebe}</div>
+                      <div className="CalendarView-event-name">{event.task}</div>
+                      <div className="CalendarView-event-assignee">{event.zebe || 'none'}</div>
                   </div>)}
               </div>
             </div>
