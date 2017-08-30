@@ -1,0 +1,28 @@
+.CalendarView {
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.CalendarView-day {
+    flex: 1;
+    height: 100%;
+    margin-left: 10px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.CalendarView-events {
+    border: solid 1px black;
+    flex: 1;
+    height: 100%;
+    padding: 3px;
+    overflow: auto;
+}
+
+.CalendarView-event {
+    background-color: yellow;
+    padding: 5px;
+}

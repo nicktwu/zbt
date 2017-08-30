@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import midnights from './midnights';
 
 function auth(state = {token: null}, action) {
   switch(action.type) {
@@ -14,6 +15,7 @@ function auth(state = {token: null}, action) {
 
 const appReducer = combineReducers({
   auth,
+  midnights,
 });
 
 export default appReducer;

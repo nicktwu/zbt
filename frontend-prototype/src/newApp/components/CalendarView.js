@@ -1,33 +1,55 @@
 import React, { Component } from 'react';
-import BigCalendar from 'react-big-calendar';
-import moment from 'moment';
+import { connect } from 'react-redux';
 
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './CalendarView.css';
 
-BigCalendar.setLocalizer(
-  BigCalendar.momentLocalizer(moment)
-);
+class CalendarView extends Component {
+  componentDidMount() {
+    this.props.fetchCurrentWeek();
+  }
 
-export default class CalendarView extends Component {
   render() {
-    const { match } = this.props;
-    const { reqType } = match.params;
-    const events = [{
-      title: 'Waitings',
-      start: new Date(2017, 7, 27, 14, 15, 0),
-      end: new Date(2017, 7, 27, 22, 15, 0),
-    }];
+    const { events } = this.props;
 
     return (
-      <div>
-        <BigCalendar
-          events={events}
-          views={['week', 'month']}
-          defaultView="week"
-          min={new Date(0, 0, 0, 10, 0, 0)}
-          max={new Date(0, 0, 0, 23, 59, 59)}
-          />
+      <div className="CalendarView">
+        {[...Array(7).keys()].map(day => {
+          const dayEvents = (events || []).filter(event => event.date.getDay() === day);
+          const today = new Date();
+          const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + day);
+
+          return (
+            <div key={day} className="CalendarView-day">
+              <div>{d.toLocaleString('en-us', {weekday: 'short'})} {d.getMonth()}/{d.getDate()}</div>
+              <div className="CalendarView-events">
+              {dayEvents.map(
+                (event, i) =>
+                  <div key={i} className="CalendarView-event">
+                      <div>{event.task}</div>
+                      <div>{event.zebe}</div>
+                  </div>)}
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }
 }
+
+const mapStateToProps = (state, {type}) => state[type];
+const mapDispatchToProps = (dispatch, {type}) => ({
+  fetchCurrentWeek() {
+    dispatch({
+      types: ['LOAD_WEEKLIST_START', 'LOAD_WEEKLIST_SUCCESS', 'LOAD_WEEKLIST_FAIL'],
+      route: '/midnights/weeklist',
+    });
+  },
+});
+
+const CalendarViewWithData = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CalendarView);
+
+export default CalendarViewWithData;

@@ -21,6 +21,7 @@ header, footer {
     flex: 1 1 auto;
     position: relative;/* need this to position inner content */
     overflow-y: auto;
+    height: 100%;
 
     padding: 1em;
 }
