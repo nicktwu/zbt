@@ -5,6 +5,7 @@ import { BrowserRouter, Route, withRouter, Redirect } from 'react-router-dom';
 import HeaderNav from './components/HeaderNav';
 import CalendarView from './components/CalendarView';
 import ProfileView from './components/ProfileView';
+import MidnightView from './components/MidnightView';
 
 import * as config from './config.js';
 import makeStore from './redux.js';
@@ -42,7 +43,8 @@ export default class App extends Component {
       <div className="Site-content">
         <Route exact path="/" render={() => <Redirect to="/profile/"/>} />
           <Route exact path="/profile/" component={ProfileView} />
-          <Route path="/:type/" render={
+          <Route exact path="/midnights/:date/:task" component={MidnightView} />
+          <Route exact path="/:type/" render={
                  ({match}) => <CalendarView type={match.params.type}/>} />
       </div>
     );

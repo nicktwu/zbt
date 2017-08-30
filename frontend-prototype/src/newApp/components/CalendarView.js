@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import { withRouter } from 'react-router';
 
 import './CalendarView.css';
 
@@ -36,7 +37,7 @@ class CalendarView extends Component {
               <div className="CalendarView-events">
               {dayEvents.map(
                 (event, i) =>
-                  <div key={i} className={classnames('CalendarView-event', event.properties)}>
+                  <div key={i} className={classnames('CalendarView-event', event.properties)} onClick={() => this.props.history.push(`/midnights/${d.getMonth()}-${d.getDate()}/${event.task}`)}>
                       <div className="CalendarView-event-name">{event.task}</div>
                       <div className="CalendarView-event-details">
                         <div className="CalendarView-event-assignee">{event.zebe || 'none'}</div>
@@ -89,4 +90,4 @@ const CalendarViewWithData = connect(
   mapDispatchToProps,
 )(CalendarView);
 
-export default CalendarViewWithData;
+export default withRouter(CalendarViewWithData);
