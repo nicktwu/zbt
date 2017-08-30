@@ -77,12 +77,24 @@ function callAPIMiddleware({ dispatch, getState }) {
 function authMiddleware({ dispatch, getState }) {
   return next => action => {
     const { type, url } = action;
+    const auth = {};
+    const callAPI = callAPIMiddleware({
+      dispatch,
+      getState: () => ({auth}),
+    })(() => {});
 
     if (type === 'AUTH_INIT') {
       fetch(url).then(res => res.json()).then(json => {
-        dispatch({
-          type: 'AUTH_SUCCESS',
-          token: json.token,
+        auth.token = json.token;
+
+        callAPI({
+          types: ['LOAD_USER_START', 'LOAD_USER_SUCCESS', 'LOAD_USER_FAIL'],
+          route: '/user/',
+        }).then(() => {
+          dispatch({
+            type: 'AUTH_SUCCESS',
+            token: json.token,
+          });
         });
       });
     }
