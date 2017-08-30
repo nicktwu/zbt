@@ -61,7 +61,7 @@ router.post('/midnight', function(req, res, next) {
 			Trades.MidnightTrade.create(req.body, function(err) {
 				if (err) return next(err);
 				return res.json(_.slice(arguments,1));
-			})
+			});
 		} else {
 			return res.sendStatus(403);
 		}
@@ -70,25 +70,26 @@ router.post('/midnight', function(req, res, next) {
 
 // /trades/midnight/execute/<string:id> PUT
 router.put('/midnight/execute/:id', function(req, res, next) {
-	Trades.MidnightTrade.findById(req.params.id, function(err, trade) {
-		if (err) return next(err);
-		if (trade) { //trade must exist
-			_.assign(trade, { zebe_taker: req.user.kerberos }, { completed: true });
-			trade.save(function(err, new_trade) {
-				if (err) return next(err);
-				Midnights.Midnight.findById(new_trade.midnight_id, function(err, midnight) {
-					if (err) return next(err);
-					if (midnight) { //midnight must exist
-						_.assign(midnight, { zebe: req.user.kerberos });
-						midnight.save(function(err, new_midnight) {
-							if (err) return next(err);
-							return res.json(new_trade);
-						});
+	Trades.MidnightTrade.findOneAndUpdate( 
+		{ id: req.params.id }, 
+		{ 
+			zebe_taker: req.user.kerberos, 
+			completed: true
+		},
+		function(err, new_trade) {
+			if (err) return next(err);
+			if (new_trade) {
+				Midnights.Midnight.findOneAndUpdate(
+					{ id: new_trade.midnight_id },
+					{ zebe: req.user.kerberos },
+					function(err, new_midnight) {
+						if (err) return next(err);
+						return res.json(new_trade);
 					}
-				});
-			});
+				);
+			}
 		}
-	});
+	);
 });
 
 // /trades/workday_for_midnight GET
@@ -97,56 +98,63 @@ router.get('/workday_for_midnight', function(req, res, next) {
 	//Grab all current workdays
 	House.WorkdayAssignment.find({ date: { $gte: today } }, function(err, cur_workdays) {
 		if (err) return next(err);
-		Trades.WorkdayForMidnightTrade.find({ 
-			completed: false,
-			workday_id: { $in: cur_workdays.map(function(x) {x.id;}) } 
-		}, function(err, cur_trades) {
-			if (err) return next(err);
-			return res.json(cur_trades);
-		});
+		Trades.WorkdayForMidnightTrade.find(
+			{ 
+				completed: false,
+				workday_id: { $in: cur_workdays.map(function(x) {x.id;}) } 
+			}, 
+			function(err, cur_trades) {
+				if (err) return next(err);
+				return res.json(cur_trades);
+			}
+		);
 	});
 });
 
 // /trades/workday_for_midnight POST
 router.post('/workday_for_midnight', function(req, res, next) {
 	//Make sure user has this workday
-	Midnight.WorkdayAssignment.find( {
-		id: req.body.id,
-		zebe: req.user.kerberos
-	}, function(err, workday) {
-		if (err) return next(err);
-		if (workday) { //workday must exist
-			Trades.WorkdayForMidnightTrade.create(req.body, function(err) {
-				if (err) return next(err);
-				return res.json(_.slice(arguments,1));
-			})
-		} else {
-			return res.sendStatus(403);
+	House.WorkdayAssignment.find( 
+		{
+			id: req.body.id,
+			zebe: req.user.kerberos,
+		}, 
+		function(err, workday) {
+			if (err) return next(err);
+			if (workday) { //workday must exist
+				Trades.WorkdayForMidnightTrade.create(req.body, function(err) {
+					if (err) return next(err);
+					return res.json(_.slice(arguments,1));
+				});
+			} else {
+				return res.sendStatus(403);
+			}
 		}
-	});
+	);
 });
 
 // /trades/workday_for_midnight/execute/<string:id> PUT
-router.put('/workday_for_midnight/execute/<string:id>', function(req, res, next) {
-	Trades.WorkdayForMidnightTrade.findById(req.params.id, function(err, trade) {
-		if (err) return next(err);
-		if (trade) { //trade must exist
-			_.assign(trade, { zebe_taker: req.user.kerberos }, { completed: true });
-			trade.save(function(err, new_trade) {
-				if (err) return next(err);
-				House.WorkdayAssignment.findById(new_trade.workday_id, function(err, workday) {
-					if (err) return next(err);
-					if (workday) { //midnight must exist
-						_.assign(workday, { zebe: req.user.kerberos });
-						workday.save(function(err, new_workday) {
-							if (err) return next(err);
-							return res.json(new_trade);
-						});
+router.put('/workday_for_midnight/execute/:id', function(req, res, next) {
+	Trades.WorkdayForMidnightTrade.findOneAndUpdate(
+		{ id: req.params.id, completed: false }, 
+		{ 
+			zebe_taker: req.user.kerberos,
+			completed: true
+		},
+		function(err, new_trade) {
+			if (err) return next(err);
+			if (new_trade) { //original trade must exist and have been updated
+				House.WorkdayAssignment.findOneAndUpdate(
+					{ id: new_trade.workday_id },
+					{ zebe: req.user.kerberos },
+					function(err, new_workday) {
+						if (err) return next(err);
+						return res.json(new_trade);
 					}
-				});
-			});
+				);
+			}
 		}
-	});
+	);
 });
 
 // /trades/workday GET
@@ -169,7 +177,7 @@ router.get('/workday', function(req, res, next) {
 // /trades/workday POST
 router.post('/workday', function(req, res, next) {
 	//Make sure user has this workday
-	Midnight.WorkdayAssignment.find( {
+	House.WorkdayAssignment.find( {
 		id: req.body.id,
 		zebe: req.user.kerberos
 	}, function(err, workday) {
@@ -187,7 +195,7 @@ router.post('/workday', function(req, res, next) {
 
 // /trades/workday/execute/<string:id> PUT
 router.put('/workday/execute/:id', function(req, res, next) {
-	Trades.WorkdayForWorkdayTrade.findById(req.params.id, function(err, trade) {
+	Trades.WorkdayForWorkdayTrade.find({ id: req.params.id, completed: false }, function(err, trade) {
 		if (err) return next(err);
 		if (trade) { //trade must exist
 			//make sure user has workday taken

@@ -3,6 +3,7 @@ var router = express.Router();
 var _ = require('lodash');
 var moment = require('moment');
 
+var Semester = require('../models/semester');
 var Midnights = require('../models/midnights');
 
 // /midnights/accounts GET
@@ -21,7 +22,7 @@ router.post('/accounts/create', function(req, res, next){
   if (req.user.isMidnightMaker()) {
     Midnights.MidnightAccount.create(req.body, function(err) {
       if (err) return next(err);
-      return res.json(_.slice(arguments,1));
+      return res.json(arguments);
     });
   } else {
     res.sendStatus(403);
@@ -31,13 +32,9 @@ router.post('/accounts/create', function(req, res, next){
 // /midnights/accounts/<int:id> PUT
 router.put('/accounts/update/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
-    Midnights.MidnightAccount.findByID(req.params.id, function(err, account) {
+    Midnights.MidnightAccount.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_account) {
       if (err) return next(err);
-      _.assign(account, req.body);
-      account.save(function(err, new_account) {
-        if (err) return next(err);
-        return res.json(new_account);
-      });
+      return res.json(new_account);
     });
   } else {
     res.sendStatus(403);
@@ -52,12 +49,12 @@ router.get('/types', function(req, res, next) {
   });
 });
 
-// /midnights/types POST
+// /midnights/types/create POST
 router.post('/types/create', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
     Midnights.MidnightType.create(req.body, function(err) {
       if (err) return next(err);
-      return res.json(_.slice(arguments,1));
+      return res.json(arguments);
     });
   } else {
     res.sendStatus(403);
@@ -67,13 +64,9 @@ router.post('/types/create', function(req, res, next) {
 // /midnights/types/update/<int:id> PUT
 router.put('/types/update/:id', function(req, res, next){
   if (req.user.isMidnightMaker()) {
-    Midnights.MidnightType.findByID(req.params.id, function(err, type) {
+    Midnights.MidnightType.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_type) {
       if (err) return next(err);
-      _.assign(type, req.body);
-      type.save(function(err, new_type) {
-        if (err) return next(err);
-        return res.json(new_type);
-      });
+      return res.json(new_type);
     });
   } else {
     res.sendStatus(403);
@@ -96,7 +89,7 @@ router.post('/assign', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
     Midnights.Midnight.create(req.body, function(err) {
       if (err) return next(err);
-      return res.json(_.slice(arguments,1))
+      return res.json(arguments)
     });
   } else {
     res.sendStatus(403);
@@ -106,13 +99,9 @@ router.post('/assign', function(req, res, next) {
 // /midnights/update_assignment/<int:id> PUT
 router.put('/update_assignment/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
-    Midnights.Midnight.findByID(req.params.id, function(err, assignment) {
+    Midnights.Midnight.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_assignment) {
       if (err) return next(err);
-      _.assign(assignment, req.body);
-      assignment.save(function(err, new_assignment) {
-        if (err) return next(err);
-        return res.json(new_assignment);
-      });
+      return res.json(new_assignment);
     });
   } else {
     res.sendStatus(403);
@@ -121,7 +110,8 @@ router.put('/update_assignment/:id', function(req, res, next) {
 
 // /midnights/unreviewed GET
 router.get('/unreviewed', function(req, res, next) {
-  Midnights.Midnight.find( { reviewed: false }, function(err, assignments) {
+  //check for midnights that have either no "reviewed" attribute or are explicitly not reviewed
+  Midnights.Midnight.find( { $or: [ { reviewed: { $exists: false } }, { reviewed: false } ] } , function(err, assignments) {
     if (err) return next(err);
     return res.json(assignments);
   });
@@ -131,7 +121,7 @@ router.get('/unreviewed', function(req, res, next) {
 router.get('/reviewed', function(req, res, next) {
   Midnights.Midnight.find( {reviewed: true }, function(err, assignments) {
     if (err) return next(err);
-    return res.json(assigments);
+    return res.json(assignments);
   });
 });
 

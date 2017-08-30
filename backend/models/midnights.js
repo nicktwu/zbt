@@ -22,7 +22,7 @@ var midnightAccountSchema = new Schema({
 var midnightTypeSchema = new Schema({
   name: String,
   value: Number,
-  desc: String,
+  description: String,
 });
 
 var midnightPrefsSchema = new Schema({
