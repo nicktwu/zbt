@@ -1,6 +1,5 @@
 export default function (state = {
   events: [],
-  event: false,
 }, action) {
   switch(action.type) {
   case 'LOAD_WEEKLIST_SUCCESS':
@@ -11,7 +10,8 @@ export default function (state = {
   case 'LOAD_EVENT_SUCCESS':
     return {
       ...state,
-      event: action.response
+      events: [...state.events.filter(event => event._id !== action.response._id),
+      {...action.response, date: new Date(action.response.date)}],
     };
   default:
     return state;

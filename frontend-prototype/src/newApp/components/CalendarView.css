@@ -59,3 +59,14 @@
     display: flex;
     justify-content: space-between;
 }
+
+.CalendarView-event:hover {
+    background-color: #ddd;
+    color: #5a8dff;
+}
+
+.CalendarView-event a.profile {
+    flex: 0 0 auto;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}

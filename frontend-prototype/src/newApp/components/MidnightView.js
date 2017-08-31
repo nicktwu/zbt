@@ -6,22 +6,25 @@ import MidnightTradingPanel from './MidnightTradingPanel';
 
 import './MidnightView.css';
 
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
 class MidnightView extends Component {
   componentDidMount() {
     this.props.fetchEvent();
   }
 
   render() {
-    const { event, user, type } = this.props.location;
-    console.log(this.props);
+    const { event, user, type } = this.props;
+
+    if (!event) {
+      return (
+        <div>Loading...</div>
+        );
+    }
 
     return (
       <div className="MidnightView">
         <div className="MidnightInfoPanel">
           <div className="MidnightView-title">
-            {event.task} - {days[event.date.getDay()].slice(0, 3)} {event.date.getMonth()}/{event.date.getDate()}
+            {event.task} - {event.date.toLocaleString('en-us', {weekday: 'short'})} {event.date.getMonth()}/{event.date.getDate()}
           </div>
           <div className="MidnightInfoPanel-important">
             Assignee: {event.zebe || "none"}
@@ -46,13 +49,14 @@ class MidnightView extends Component {
 }
 
 
-const mapStateToProps = (state, {type}) => ({ ...state[type], user: state.user });
-const mapDispatchToProps = (dispatch, {id}) => ({
+const mapStateToProps = (state, {id, type}) =>
+   ({ event: state[type].events.find(event => event._id === id), user: state.user });
+const mapDispatchToProps = (dispatch, {id, type}) => ({
   fetchEvent() {
     dispatch({
       types: ['LOAD_EVENT_START', 'LOAD_EVENT_SUCCESS', 'LOAD_EVENT_FAIL'],
       route: '/midnights/' + id,
-      shouldCallAPI: (state) => !state.event
+      shouldCallAPI: (state) => !state[type].events.includes(event => event._id === id),
     });
   },
 });
@@ -62,4 +66,4 @@ const MidnightViewWithData = connect(
   mapDispatchToProps,
 )(MidnightView);
 
-export default withRouter(MidnightViewWithData);
+export default MidnightViewWithData;
