@@ -58,25 +58,36 @@
     padding: 2em;
 }
 
+.MidnightTradeInstructions {
+    margin-bottom: 2em;
+    padding: 5px;
+    background-color: #f7f7f7;
+}
+
 .MidnightTradingPanel-container {
-    background-color: #f7f7f7;
-    min-height: 400px;
+    display: flex;
+    justify-content: center;
 }
 
-.MidnightTradingPanel-menu {
-    width: 100%;
-}
-
-.MidnightTradingPanel-menu-btn {
-    text-align: center;
-    width: 50%;
+.MidnightTradingPanel button {
+    color: #fff;
+    background-color: #6496c8;
+    text-shadow: -1px 1px #417cb8;
+    border: none;
     display: inline-block;
-    padding: .5em;
-    font-size: 1.1em;
-    background-color: white;
-    border-bottom: solid 1px white;
+    margin: 0 5px 0 0;
+    padding: 5px 15px;
+    font-size: 20px;
+    line-height: 1.8;
+    vertical-align: bottom;
 }
 
-.MidnightTradingPanel-menu-btn.active {
-    background-color: #f7f7f7;
+.MidnightTradingPanel button:hover {
+    background-color: #346392;
+    text-shadow: -1px 1px #27496d;
+}
+
+.MidnightTradingPanel button:active {
+    background-color: #27496d;
+    text-shadow: -1px 1px #193047;
 }
