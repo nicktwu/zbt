@@ -11,6 +11,10 @@ class MidnightView extends Component {
     this.props.fetchEvent();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.props.fetchEvent();
+  }
+
   render() {
     const { event, user, type } = this.props;
 

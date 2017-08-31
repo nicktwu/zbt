@@ -13,6 +13,16 @@ export default function (state = {
       events: [...state.events.filter(event => event._id !== action.response._id),
       {...action.response, date: new Date(action.response.date)}],
     };
+  case 'POST_OFFER_SUCCESS':
+    return {
+      ...state,
+      events: [],
+    };
+  case 'PUT_TRADE_SUCCESS':
+    return {
+      ...state,
+      events: [],
+    };
   default:
     return state;
   }
