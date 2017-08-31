@@ -43,7 +43,8 @@ export default class App extends Component {
       <div className="Site-content">
         <Route exact path="/" render={() => <Redirect to="/profile/"/>} />
           <Route exact path="/profile/" component={ProfileView} />
-          <Route exact path="/midnights/:date/:task" component={MidnightView} />
+          <Route exact path="/midnights/:id" render={
+                 ({match}) => <MidnightView id={match.params.id}/>} />
           <Route exact path="/:type/" render={
                  ({match}) => <CalendarView type={match.params.type}/>} />
       </div>
