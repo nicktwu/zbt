@@ -20,7 +20,7 @@ class MidnightView extends Component {
     return (
       <div className="MidnightView">
         <div className="MidnightInfoPanel">
-          <div className="MidnightInfoPanel-title">
+          <div className="MidnightView-title">
             {event.task} - {days[event.date.getDay()].slice(0, 3)} {event.date.getMonth()}/{event.date.getDate()}
           </div>
           <div className="MidnightInfoPanel-important">
