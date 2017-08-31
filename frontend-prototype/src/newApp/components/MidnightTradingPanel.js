@@ -5,35 +5,22 @@ import classnames from 'classnames';
 class MidnightTradingPanel extends Component {
   constructor() {
     super();
-    this.state = {
-      menuTab: 'offering' // or 'accepting' trades
-    };
-    this.menuButtonListener = this.menuButtonListener.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchTrades(this.state.menuTab);
   }
 
-  menuButtonListener(menuOption) {
-    this.setState({ menuTab: menuOption });
-  }
-
   render() {
+    const { events, user, type } = this.props;
+
 
     return (
       <div className="MidnightTradingPanel">
         <div className="MidnightView-title"><h1>Trade</h1></div>
         <div className="MidnightTradingPanel-container">
-          <div className="MidnightTradingPanel-menu">
-            <div className={classnames('MidnightTradingPanel-menu-btn', this.state.menuTab === 'offering' ? 'active' : '')} onClick={this.menuButtonListener('offering')}>Trade with others</div>
-            <div className={classnames('MidnightTradingPanel-menu-btn', this.state.menuTab === 'accepting' ? 'active' : '')} onClick={this.menuButtonListener('accepting')}>Incoming trade offers</div>
-          </div>
-        {/* map data into following wrapper */}
-          Buttons:
-          <div className="MidnightTradingPanel-trade">midnight blah - trade with this midnight</div>
-          <div className="MidnightTradingPanel-btn">Open midnight to solicit trade offers</div>
-          <div className="MidnightTradingPanel-btn">Free midnight -- I can't do it, someone take pls [disclaimer: if no one takes it, you're fucked]</div>
+          <button className="MidnightTradingPanel-btn">midnight blah - trade with this midnight</button>
+          <button className="MidnightTradingPanel-btn">Free midnight -- I can't do it, someone take pls [disclaimer: if no one takes it, you're fucked]</button>
         </div>
       </div>
     );
