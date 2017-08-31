@@ -9,7 +9,6 @@ export default function (state = {
       events: action.response.map(event => ({ ...event, date: new Date(event.date) })),
     };
   case 'LOAD_EVENT_SUCCESS':
-    console.log(action.response);
     return {
       ...state,
       event: action.response
