@@ -59,9 +59,8 @@
 }
 
 .MidnightTradingPanel-container {
-    height: 80%;
-    width: 600px;
-    border: 2px solid black;
+    background-color: #f7f7f7;
+    min-height: 400px;
 }
 
 .MidnightTradingPanel-menu {
@@ -73,5 +72,11 @@
     width: 50%;
     display: inline-block;
     padding: .5em;
-    border: 2px solid black;
+    font-size: 1.1em;
+    background-color: white;
+    border-bottom: solid 1px white;
+}
+
+.MidnightTradingPanel-menu-btn.active {
+    background-color: #f7f7f7;
 }

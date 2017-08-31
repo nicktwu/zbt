@@ -11,7 +11,7 @@ class MidnightTradingPanel extends Component {
 
     return (
       <div className="MidnightTradingPanel">
-        <div className="MidnightView-title">Trade</div>
+        <div className="MidnightView-title"><h1>Trade</h1></div>
         <div className="MidnightTradingPanel-container">
           <div className="MidnightTradingPanel-menu">
             <div className="MidnightTradingPanel-menu-btn">Trade with others</div>
