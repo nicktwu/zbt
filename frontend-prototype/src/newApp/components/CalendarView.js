@@ -41,7 +41,7 @@ class CalendarView extends Component {
               <div className="CalendarView-events">
               {dayEvents.map(
                 (event, i) =>
-                  <div key={i} className={classnames('CalendarView-event', event.properties)} onClick={() => this.props.history.push(`/midnights/${d.getMonth()}-${d.getDate()}/${event.task}`)}>
+                  <div key={i} className={classnames('CalendarView-event', event.properties)} onClick={() => this.props.history.push({pathname: `/midnights/${event._id}`, event: event})}>
                       <div className="CalendarView-event-name">{event.task}</div>
                       <div className="CalendarView-event-details">
                         <div className="CalendarView-event-assignee">{event.zebe || 'none'}</div>
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch, {type}) => ({
   fetchCurrentWeek() {
     dispatch({
       types: ['LOAD_WEEKLIST_START', 'LOAD_WEEKLIST_SUCCESS', 'LOAD_WEEKLIST_FAIL'],
-      route: '/midnights/weeklist',
+      route: '/midnights/weeklist'
     });
   },
 });
