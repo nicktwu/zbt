@@ -2,13 +2,33 @@
     height: 100%;
     min-height: 100%;
     width: 100%;
+    min-width: 960px;
     display: flex;
 }
 
 .MidnightInfoPanel {
 	width: 40%;
+	padding: 2em;
 }
 
 .MidnightTradingPanel {
 	width: 60%;
+}
+
+.MidnightInfoPanel-title {
+	padding-bottom: 1em;
+	font-weight: bold;
+	font-size: 2.5em;
+}
+
+.MidnightInfoPanel-important {
+	width: 300px;
+	font-size: 1.5em;
+	border: 2px solid black;
+	padding: .5em;
+	margin: 0 0 1.5em 1em;
+}
+
+.MidnightInfoPanel-description {
+	margin-top: 3em;
 }

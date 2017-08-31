@@ -21,16 +21,21 @@ class MidnightView extends Component {
       <div className="MidnightView">
         <div className="MidnightInfoPanel">
           <div className="MidnightInfoPanel-title">
-            {event.task} - {days[event.date.getDay()]} {event.date.getMonth()}/{event.date.getDate()}
+            {event.task} - {days[event.date.getDay()].slice(0, 3)} {event.date.getMonth()}/{event.date.getDate()}
           </div>
           <div className="MidnightInfoPanel-important">
-            Assignee: {event.zebe}
+            Assignee: {event.zebe || "none"}
           </div>
           <div className="MidnightInfoPanel-important">
             Points: {event.potential} Reviewed: {event.reviewed ? <font color='00FF00'>True</font> : <font color='FF0000'>False</font>}
           </div>
           <div className="MidnightInfoPanel-description">
-            this midnight involves doing this work, that work, and that work
+            this midnight involves doing: 
+            <ul>
+              <li>this work, </li>
+              <li>that work, </li>
+              <li>and that work </li>
+            </ul>
           </div>
         </div>
 
