@@ -5,7 +5,6 @@ import './ProfileView.css';
 
 class ProfileView extends Component {
   render() {
-      console.log(this.props.user)
     const { match } = this.props;
     const { name } = this.props.user;
     const { image = "http://lorempixel.com/250/250/" } = this.props.user;
@@ -32,34 +31,30 @@ class ProfileView extends Component {
     });
 
     return (
-      <div className="body">
-        <div className="content">
-          <div className="profile">
-            <div className="main">
-              <div className="basic">
-                <span className="helper"></span>
-                <img className="profilepic" src={ image } />
-                <h3 className="name">{ name }</h3>
-              </div>
-              <div className="points">
-                <p>Workweek Hours: { workWeekHours }/40</p>
-                <progress max="40" value={ workWeekHours }></progress>
-              </div>
-              <div className="points">
-                <p>Midnight Points: { midnightPoints }/15</p>
-                <progress max="15" value={ midnightPoints }></progress>
-              </div>
-              <div className="points">
-                <p>Social Points: { socialPoints }/13</p>
-                <progress max="13" value={ socialPoints }></progress>
-              </div>
-            </div>
-            <div className="assignmentsList">
-              <h5 className="assignHeading">My assignments: </h5>
-              <div className="assingments">
-                { assignments }
-              </div>
-            </div>
+      <div className="profile">
+        <div className="main">
+          <div className="basic">
+            <span className="helper"></span>
+            <img className="profilepic" src={ image } />
+            <h3 className="name">{ name }</h3>
+          </div>
+          <div className="points">
+            <p>Workweek Hours: { workWeekHours }/40</p>
+            <progress max="40" value={ workWeekHours }></progress>
+          </div>
+          <div className="points">
+            <p>Midnight Points: { midnightPoints }/15</p>
+            <progress max="15" value={ midnightPoints }></progress>
+          </div>
+          <div className="points">
+            <p>Social Points: { socialPoints }/13</p>
+            <progress max="13" value={ socialPoints }></progress>
+          </div>
+        </div>
+        <div className="assignmentsList">
+          <h5 className="assignHeading">My assignments: </h5>
+          <div className="assingments">
+            { assignments }
           </div>
         </div>
       </div>
