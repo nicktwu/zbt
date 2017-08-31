@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import classnames from 'classnames';
 
 class MidnightTradingPanel extends Component {
+  constructor() {
+    super();
+    this.state = {
+      menuTab: 'offering' // or 'accepting' trades
+    };
+    this.menuButtonListener = this.menuButtonListener.bind(this);
+  }
+
   componentDidMount() {
-    this.props.fetchTrades();
+    this.props.fetchTrades(this.state.menuTab);
+  }
+
+  menuButtonListener(menuOption) {
+    this.setState({ menuTab: menuOption });
   }
 
   render() {
@@ -14,8 +26,8 @@ class MidnightTradingPanel extends Component {
         <div className="MidnightView-title"><h1>Trade</h1></div>
         <div className="MidnightTradingPanel-container">
           <div className="MidnightTradingPanel-menu">
-            <div className="MidnightTradingPanel-menu-btn">Trade with others</div>
-            <div className="MidnightTradingPanel-menu-btn">Incoming trade offers</div>
+            <div className={classnames('MidnightTradingPanel-menu-btn', this.state.menuTab === 'offering' ? 'active' : '')} onClick={this.menuButtonListener('offering')}>Trade with others</div>
+            <div className={classnames('MidnightTradingPanel-menu-btn', this.state.menuTab === 'accepting' ? 'active' : '')} onClick={this.menuButtonListener('accepting')}>Incoming trade offers</div>
           </div>
         {/* map data into following wrapper */}
           Buttons:
@@ -30,13 +42,27 @@ class MidnightTradingPanel extends Component {
 
 
 const mapStateToProps = (state, {type}) => ({ ...state[type], user: state.user });
-const mapDispatchToProps = (dispatch, {midnight_id}) => ({
-  fetchTrades() {
-    dispatch({
-      types: ['LOAD_EVENT_START', 'LOAD_EVENT_SUCCESS', 'LOAD_EVENT_FAIL'],
-      //route: '/midnights/' + midnight_id,
-      //shouldCallAPI: //
-    });
+const mapDispatchToProps = (dispatch, {type}) => ({
+  fetchTrades(tradeDirection) {
+    if (tradeDirection === 'offering') {
+      dispatch({
+        types: ['POST_FREE_START', 'POST_FREE_SUCCESS', 'POST_FREE_FAIL'],
+        route: '/trades/midnight',
+        method: 'POST',
+        body: {
+          midnight_id: ,
+          zebe_offering: ,
+          offered: 
+        }
+      });
+    }
+    else {
+      dispatch({
+        types: ['POST_TRADES_START', 'POST_TRADES_SUCCESS', 'POST_TRADES_FAIL'],
+        route: '/trades/midnight/execute/' + TRADE_ID,
+        method: 'PUT'
+      });
+    }
   },
 });
 
@@ -45,4 +71,5 @@ const MidnightTradingPanelWithData = connect(
   mapDispatchToProps,
 )(MidnightTradingPanel);
 
-export default withRouter(MidnightTradingPanelWithData);
+
+export default MidnightTradingPanelWithData;
