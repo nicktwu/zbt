@@ -1,53 +1,77 @@
 .MidnightView {
     height: 100%;
-    min-height: 100%;
     width: 100%;
-    min-width: 960px;
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
 }
 
 .MidnightView-title {
-	padding-bottom: .5em;
-	font-weight: bold;
-	font-size: 2.5em;
+    margin-bottom: 2em;
+}
+
+.MidnightView-title h1 {
+    font-weight: bold;
+    font-size: 2.5em;
+    color: #333;
+    margin: 0;
+    display: inline;
+    background-color: #ffff8c;
 }
 
 .MidnightInfoPanel {
-	width: 40%;
-	padding: 2em;
+    flex: 2;
+    padding: 2em;
 }
 
 .MidnightInfoPanel-important {
-	width: 300px;
-	font-size: 1.5em;
-	border: 2px solid black;
-	padding: .5em;
-	margin: 1.5em 0 1.5em 1em;
+    font-size: 1.4em;
+    margin-top: 0.1em;
+}
+
+.MidnightInfoPanel-stats {
+    background-color: #f7f7f7;
+    padding: 10px 5px;
+}
+
+.MidnightInfoPanel-field {
+    background-color: #ffff8c;
 }
 
 .MidnightInfoPanel-description {
-	margin-top: 3em;
+    background-color: #f7f7f7;
+    padding: 10px 5px;
+    margin-top: 2em;
+}
+
+.MidnightInfoPanel-description > div {
+    margin-bottom: 1em;
+}
+
+.MidnightInfoPanel-description h3 {
+    display: inline;
+    background-color: #ffff8c;
 }
 
 .MidnightTradingPanel {
-	width: 60%;
-	padding: 2em;
+    flex: 3;
+    padding: 2em;
 }
 
 .MidnightTradingPanel-container {
-	height: 80%;
-	width: 600px;
-	border: 2px solid black;
+    height: 80%;
+    width: 600px;
+    border: 2px solid black;
 }
 
 .MidnightTradingPanel-menu {
-	width: 100%;
+    width: 100%;
 }
 
 .MidnightTradingPanel-menu-btn {
-	text-align: center;
-	width: 50%;
-	display: inline-block;
-	padding: .5em;
-	border: 2px solid black;
+    text-align: center;
+    width: 50%;
+    display: inline-block;
+    padding: .5em;
+    border: 2px solid black;
 }
