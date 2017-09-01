@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class MidnightTradingPanel extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: props.user,
+      midnight: props.midnight
+    };
+  }
 
   render() {
     const { events, user, type } = this.props;
-
 
     return (
       <div className="MidnightTradingPanel">
@@ -14,8 +20,8 @@ class MidnightTradingPanel extends Component {
           Midnight trade instructions
         </div>
         <div className="MidnightTradingPanel-container">
-          <button className="MidnightTradingPanel-btn" onClick={this.props.takeTrade}>Claim</button>
-          <button className="MidnightTradingPanel-btn" onClick={this.props.offerTrade}>Post for Claiming</button>
+          <button className="MidnightTradingPanel-btn" onClick={() => this.props.takeTrade(this.state)}>Claim</button>
+          <button className="MidnightTradingPanel-btn" onClick={() => this.props.offerTrade(this.state)}>Post for Claiming</button>
         </div>
       </div>
     );
@@ -23,17 +29,18 @@ class MidnightTradingPanel extends Component {
 }
 
 
-const mapStateToProps = (state, {type}) => ({ ...state[type], user: state.user });
-const mapDispatchToProps = (dispatch, {type}) => ({
-  offerTrade() {
+const mapStateToProps = (state) => ({ ...state['midnights'], user: state.user });
+const mapDispatchToProps = (dispatch) => ({
+  offerTrade(state) {
+    console.log(state);
     dispatch({
       types: ['POST_OFFER_START', 'POST_OFFER_SUCCESS', 'POST_OFFER_FAIL'],
       route: '/trades/midnight',
       method: 'POST',
       body: {
-        midnight_id: '',
-        zebe_offering: '',
-        offered: ''
+        midnight_id: state.midnight._id,
+        zebe_offering: state.user.kerberos,
+        offered: 0
       }
     });
   },
@@ -48,7 +55,7 @@ const mapDispatchToProps = (dispatch, {type}) => ({
 
 const MidnightTradingPanelWithData = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(MidnightTradingPanel);
 
 
