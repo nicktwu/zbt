@@ -46,9 +46,15 @@ function callAPIMiddleware({ dispatch, getState }) {
       throw new Error('Can\'t make API request, unauthorized');
     }
 
+    let body;
+    if (params) {
+      body = new FormData();
+      body.append('json', JSON.stringify(params));
+    }
+
     return fetch(new Request(url, {
       method,
-      body: params ? JSON.stringify(params) : undefined,
+      body,
       headers: new Headers({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
