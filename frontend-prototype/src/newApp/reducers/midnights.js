@@ -1,5 +1,6 @@
 export default function (state = {
   events: [],
+  trades: [],
 }, action) {
   switch(action.type) {
   case 'LOAD_WEEKLIST_SUCCESS':
@@ -22,6 +23,12 @@ export default function (state = {
     return {
       ...state,
       events: [],
+    };
+
+  case 'LOAD_TRADES_SUCCESS':
+    return {
+      ...state,
+      trades: action.response,
     };
   default:
     return state;

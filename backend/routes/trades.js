@@ -39,9 +39,9 @@ router.get('/midnight', function(req, res, next) {
 	Midnights.Midnight.find({ date: { $gte: yesterday } }, function(err,cur_midnights) {
 		if (err) return next(err);
 		//Grab incomplete midnight trades for current midnights
-		Trades.Midnight.find( { 
-			completed: false, 
-			midnight_id: { $in: cur_midnights.map(function(x) {return x.id;})}
+    Trades.MidnightTrade.find( {
+      completed: {$ne: true},
+      midnight_id: { $in: cur_midnights.map(function(x) {return x._id;})}
 		}, function(err, cur_trades) {
 			if (err) return next(err);
 			return res.json(cur_trades);

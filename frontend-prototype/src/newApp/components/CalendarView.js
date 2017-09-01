@@ -8,10 +8,18 @@ import './CalendarView.css';
 class CalendarView extends Component {
   componentDidMount() {
     this.props.fetchCurrentWeek();
+    this.props.fetchTrades();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.type !== nextProps.type) {
+      this.props.fetchCurrentWeek();
+      this.props.fetchTrades();
+    }
   }
 
   render() {
-    const { events, user, type } = this.props;
+    const { events, trades, user, type } = this.props;
 
     if (type === 'profile') {
       return null;
@@ -25,7 +33,7 @@ class CalendarView extends Component {
                 .map(event => ({
                   ...event,
                   properties: {
-                    available: !event.zebe,
+                    available: !event.zebe || trades.findIndex(trade => trade.midnight_id === event._id && !trade.completed) !== -1,
                     important: event.zebe === user.kerberos,
                   },
                 }));
@@ -84,7 +92,13 @@ const mapDispatchToProps = (dispatch, {type}) => ({
   fetchCurrentWeek() {
     dispatch({
       types: ['LOAD_WEEKLIST_START', 'LOAD_WEEKLIST_SUCCESS', 'LOAD_WEEKLIST_FAIL'],
-      route: '/midnights/weeklist'
+      route: `/${type}/weeklist`
+    });
+  },
+  fetchTrades() {
+    dispatch({
+      types: ['LOAD_TRADES_START', 'LOAD_TRADES_SUCCESS', 'LOAD_TRADES_FAIL'],
+      route: '/trades/midnight'
     });
   },
 });
