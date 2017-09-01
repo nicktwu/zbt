@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var moment = require('moment');
+var mongoose = require('mongoose');
 
 var Trades = require('../models/trades');
 var Midnights = require('../models/midnights');
@@ -53,8 +54,8 @@ router.get('/midnight', function(req, res, next) {
 router.post('/midnight', function(req, res, next) {
 	//Make sure user has this midnight
 	Midnights.Midnight.find( {
-		id: req.body.id,
-		zebe: req.user.kerberos
+		_id: mongoose.Types.ObjectId(req.body.midnight_id),
+		//zebe: req.user.kerberos
 	}, function(err, midnight) {
 		if (err) return next(err);
 		if (midnight) { //midnight must exist
@@ -77,12 +78,16 @@ router.put('/midnight/execute/:id', function(req, res, next) {
 			completed: true
 		},
 		function(err, new_trade) {
+			console.log('TRADE COMPLETE');
+			console.log(new_trade);
 			if (err) return next(err);
 			if (new_trade) {
 				Midnights.Midnight.findOneAndUpdate(
-					{ id: new_trade.midnight_id },
+					{ _id: mongoose.Types.ObjectId(new_trade.midnight_id) },
 					{ zebe: req.user.kerberos },
 					function(err, new_midnight) {
+						console.log('NEW MIDNIGHT');
+						console.log(new_midnight);
 						if (err) return next(err);
 						return res.json(new_trade);
 					}

@@ -21,7 +21,8 @@ class MidnightTradingPanel extends Component {
         </div>
         <div className="MidnightTradingPanel-container">
           <button className="MidnightTradingPanel-btn" onClick={() => this.props.takeTrade(this.state)}>Claim</button>
-          {this.state.midnight.zebe !== this.state.user.kerberos ? <button className="MidnightTradingPanel-btn" onClick={() => this.props.offerTrade(this.state)}>Post for Claiming</button> : ''}
+          {this.state.midnight.zebe === this.state.user.kerberos ? <button className="MidnightTradingPanel-btn" onClick={() => this.props.offerTrade(this.state)}>Post for Claiming</button> : ''}
+          <button className="MidnightTradingPanel-btn" onClick={() => this.props.offerTrade(this.state)}>Post for Claiming</button>
         </div>
       </div>
     );
@@ -36,9 +37,9 @@ const mapDispatchToProps = (dispatch) => ({
       types: ['POST_OFFER_START', 'POST_OFFER_SUCCESS', 'POST_OFFER_FAIL'],
       route: '/trades/midnight',
       method: 'POST',
-      body: {
+      params: {
         midnight_id: state.midnight._id,
-        zebe_offering: state.user.kerberos,
+        zebe_offering: state.midnight.zebe, //state.user.kerberos,
         offered: 0
       }
     });

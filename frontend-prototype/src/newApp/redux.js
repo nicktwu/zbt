@@ -48,8 +48,7 @@ function callAPIMiddleware({ dispatch, getState }) {
 
     let body;
     if (params) {
-      body = new FormData();
-      body.append('json', JSON.stringify(params));
+      body = JSON.stringify({...params});
     }
 
     return fetch(new Request(url, {
