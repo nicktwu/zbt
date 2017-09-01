@@ -52,8 +52,7 @@ class MidnightView extends Component {
             </ul>
           </div>
         </div>
-
-        <MidnightTradingPanel />
+        <MidnightTradingPanel midnight={event}/>
       </div>
     );
   }
@@ -67,7 +66,7 @@ const mapDispatchToProps = (dispatch, {id, type}) => ({
     dispatch({
       types: ['LOAD_EVENT_START', 'LOAD_EVENT_SUCCESS', 'LOAD_EVENT_FAIL'],
       route: '/midnights/' + id,
-      shouldCallAPI: (state) => !state[type].events.includes(event => event._id === id),
+      shouldCallAPI: (state) => state[type].events.findIndex(event => event._id === id) === -1,
     });
   },
 });
