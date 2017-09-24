@@ -8,9 +8,11 @@ setup-secret:
 	printf "\"};\nmodule.exports=secret;" >> backend/secrets.js
 	rm secret
 
-
 setup: setup-secret
 
-start:
+start-server:
+	cd database && make start
 	cd authentication && make start
 	cd backend && make start
+
+start: start-server

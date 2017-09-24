@@ -42,19 +42,16 @@ For authentication via the mobile app, a separate endpoint can be provided. A sc
 
 ### Local Development
 
-You need to run the following things before you can run anything:
+You need python, node, make, and docker installed and working.
 
-- `yarn install` or `npm install` in the `/backend` folder
-- `yarn install` or `npm install` in the `/frontend-prototype` folder
-- `pip install flask` (if you use virtual environment) or `sudo pip install flask` (if you are installing globally) in `/authentication`
-- `sudo apt-get install mongodb-server` (for some functional mongodb)
-
-Create a file `/authentication/certificate/secret.py` and have a single variable `crypto_key=<key>`, where `<key>` is a string that matches the secret in `/backend/secrets.js`.
-
-Now run the backend parts with (runs mongod, authentication app on port 5555, backend on port 3010)
-
+To setup the basic keys for running the servers, run:
 ```bash
-./dev-server
+make setup 
+``` 
+
+To run all parts of the backend setup, simply navigate to the project root and run the following:
+```bash
+make start
 ```
 
 In `/frontend-prototype` run `yarn start` or `npm start` to start the frontend dev server (on port 3000).
