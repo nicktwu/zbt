@@ -5,7 +5,7 @@ setup-secret:
 	cat secret | tr -d "\n" >> authentication/certificate/secret.py
 	cat secret | tr -d "\n" >> backend/secrets.js
 	printf "\"" >> authentication/certificate/secret.py
-	printf "\"};\n module.exports=secret;" >> backend/secrets.js
+	printf "\"};\nmodule.exports=secret;" >> backend/secrets.js
 	rm secret
 
 

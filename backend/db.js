@@ -11,10 +11,10 @@ function init() {
   if (utils.is_prod()) {
     console.log('Connecting to prod db');
     // MONGODB_URI already contains username, pass, and db
-    mongoose.connect(process.env.MONGODB_URI);
+    mongoose.connect(process.env.MONGODB_URI, {useMongoClient:true});
   } else {
     console.log('Connecting to dev db');
-    mongoose.connect(config.mongodb_server_dev + config.db_name_dev);
+    mongoose.connect(process.env.MONGODB_URI, {useMongoClient:true});
   }
 
   var db = mongoose.connection;
