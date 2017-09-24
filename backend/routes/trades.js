@@ -72,7 +72,8 @@ router.post('/midnight', function(req, res, next) {
 // /trades/midnight/execute/<string:id> PUT
 router.put('/midnight/execute/:id', function(req, res, next) {
 	Trades.MidnightTrade.findOneAndUpdate( 
-		{ midnight_id: req.params.id, completed: { $ne: true } }, 
+		{ midnight_id: req.params.id, completed: { $ne: true } },  
+		{ new: true },
 		{ 
 			zebe_taker: req.user.kerberos, 
 			completed: true
