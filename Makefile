@@ -1,4 +1,4 @@
-setup:
+setup-secret:
 	python generate-secret.py > secret
 	printf "crypto_key=\"" > authentication/certificate/secret.py
 	printf "var secret={crypto_key:\"" > backend/secrets.js
@@ -7,6 +7,9 @@ setup:
 	printf "\"" >> authentication/certificate/secret.py
 	printf "\"};\n module.exports=secret;" >> backend/secrets.js
 	rm secret
+
+
+setup: setup-secret
 
 start:
 	cd authentication && make start
