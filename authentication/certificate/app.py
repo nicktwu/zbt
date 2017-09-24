@@ -44,6 +44,4 @@ def get_token():
 
 # For testing and development use only
 if __name__ == '__main__':
-    # monkeypatch
-    get_kerberos = lambda: 'testuser'
-    app.run(port=5555)
+    app.run(host='0.0.0.0',port=5555)
