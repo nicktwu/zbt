@@ -10,4 +10,4 @@ stop:
 
 # change the username to your kerberos
 release:
-	scp -r certificate/* nwu@athena.dialup.mit.edu:/mit/zbt/web_scripts/auth/certificate
+	scp -r certificate/* nwu@athena.dialup.mit.edu:/mit/zbt/web_scripts/authentication/certificate
