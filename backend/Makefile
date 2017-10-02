@@ -13,5 +13,3 @@ start-dev: stop build
 stop:
 	-docker stop backend
 
-release: 
-	git subtree push --prefix backend heroku master

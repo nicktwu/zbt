@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var logger = require('morgan');
 var auth = require('./auth');
 var db = require('./db');
 var user = require('./routes/user');
@@ -15,15 +15,16 @@ var utils = require('./utils');
 // var profile = require('./routes/profile');
 // ^ missing dependency (?)
 
+db.init();
+
+var app = express();
+
 if (utils.is_prod()) {
   console.log("RUNNING IN PRODUCTION MODE...");
 } else {
   console.log("RUNNING IN DEVELOPMENT MODE...");
+  app.use(logger("dev"));
 }
-
-db.init();
-
-var app = express();
 
 app.enable('trust proxy');
 
@@ -37,6 +38,18 @@ if (!utils.is_prod()) {
     res.send('ok');
   });
 }
+
+app.options("/*", function(req, res, next){
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.sendStatus(200);
+});
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 app.use(auth.RequireLoggedIn);
 

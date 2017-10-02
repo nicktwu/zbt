@@ -8,7 +8,7 @@ var Zebe = require('./models/zebe');
 
 var jwt_opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: secrets.crypto_key,
+  secretOrKey: secrets.crypto_key
 };
 
 var jwt_strategy = new JwtStrategy(jwt_opts, function(payload, done) {
