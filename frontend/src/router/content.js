@@ -11,7 +11,7 @@ export class ContentRouter extends Component {
       <Switch>
         { internalPaths.map((entry, idx) => {
           return (
-            <Route path={entry.path} exact={entry.exact} component={entry.component}/>
+            <Route key={idx} path={entry.path} exact={entry.exact} component={entry.component}/>
           )
         }) }
       </Switch>

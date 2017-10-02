@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import appReducer from './reducers';
+import {getAPIUrl} from './config';
 
 function callAPIMiddleware({ dispatch, getState }) {
   return next => action => {
@@ -38,7 +39,7 @@ function callAPIMiddleware({ dispatch, getState }) {
       })
     );
 
-    const url = `/api/v1${route}`;
+    const url = getAPIUrl() + `/api/v1${route}`;
 
     const token = getState().auth.token;
 
@@ -50,7 +51,6 @@ function callAPIMiddleware({ dispatch, getState }) {
     if (params) {
       body = JSON.stringify({...params});
     }
-
     return fetch(new Request(url, {
       method,
       body,

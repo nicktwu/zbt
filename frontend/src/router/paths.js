@@ -7,6 +7,7 @@ import MidnightIcon from 'material-ui-icons/Alarm'
 import HouseIcon from 'material-ui-icons/Assignment'
 import SocialIcon from 'material-ui-icons/AccountCircle';
 import {Home} from '../components/Home';
+import {Trades} from '../components/Trades';
 
 export const HOME="/";
 export const LOGIN="/login";
@@ -29,6 +30,7 @@ export const internalPaths = [
     exact: false,
     text: "Trades",
     icon: TradeIcon,
+    component: Trades
   },
   {
     path: MIDNIGHTS_HOME,

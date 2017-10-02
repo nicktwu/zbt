@@ -3,7 +3,7 @@
  */
 import {combineReducers} from 'redux';
 import session from './session/reducers';
-
+import user from './user/reducers';
 
 function ready(state={ready: true}, action) {
   return state
@@ -12,6 +12,7 @@ function ready(state={ready: true}, action) {
 const rootReducer = combineReducers({
   ready,
   session,
+  user,
 });
 
 export default rootReducer;

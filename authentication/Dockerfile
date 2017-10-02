@@ -8,6 +8,6 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5555
 
-ENV SSL_CLIENT_S_DN_Email test
+ENV SSL_CLIENT_S_DN_Email testuser@mit.edu
 
 CMD ["python","certificate/app.py"]

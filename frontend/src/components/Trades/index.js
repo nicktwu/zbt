@@ -1,5 +1,5 @@
 /**
- * Created by nwu on 9/27/17.
+ * Created by nwu on 10/1/17.
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
@@ -28,7 +28,7 @@ const style = theme => ({
 });
 
 
-class Home extends Component {
+class Trades extends Component {
 
   componentWillMount() {
     let props = this.props;
@@ -41,7 +41,7 @@ class Home extends Component {
     if (this.props.user) {
       return (
         <Paper className={this.props.classes.paper}>
-          <Typography type="headline" gutterBottom>Hello, {this.props.user.name} ({this.props.user.kerberos})!</Typography>
+          <Typography type="headline" gutterBottom>Trading</Typography>
           <Typography type="caption">
             {this.props.user.current ? "Current Zebe":""}{this.props.user.president ? ", President":""}{this.props.user.rush_chair ? ", Rush Chair":""}{this.props.user.midnight_maker ? ", Midnight Maker":""}{this.props.user.house_chair ? ", House Chair":""}{this.props.user.social_chair ? ", Social Chair":""}{this.props.user.workweek_chair ? ", Workweek Chair":""}{this.props.user.tech_chair ? ", Tech Chair":""}{this.props.user.dev ? ", Developer":""}
           </Typography>
@@ -55,6 +55,6 @@ class Home extends Component {
   }
 }
 
-let ConnectedHome = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Home));
+let ConnectedTrades = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Trades));
 
-export {ConnectedHome as Home}
+export {ConnectedTrades as Trades}
