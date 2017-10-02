@@ -16,6 +16,7 @@ if (!utils.is_prod()) {
   jwt_opts.secretOrKey = secrets.crypto_key;
 }
 
+console.log(process.env.SECRET_KEY);
 
 var jwt_strategy = new JwtStrategy(jwt_opts, function(payload, done) {
   if (_.has(payload, 'kerberos')) {

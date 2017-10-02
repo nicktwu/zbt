@@ -3,7 +3,7 @@
  */
 
 const AUTH_BASE = "https://zbt.scripts.mit.edu:444/authentication/";
-const BACKEND_BASE = "http://localhost:3001";
+const BACKEND_BASE = "http://zbt-backend.herokuapp.com";
 const API_BASE= BACKEND_BASE + "/api/v1";
 const USER_BASE = API_BASE + "/user";
 
