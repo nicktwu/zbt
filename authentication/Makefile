@@ -6,3 +6,8 @@ start: stop build
 
 stop:
 	-docker stop auth
+
+
+# change the username to your kerberos
+release:
+	scp -r certificate/* nwu@athena.dialup.mit.edu:/mit/zbt/web_scripts/auth/certificate

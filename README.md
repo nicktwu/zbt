@@ -42,7 +42,12 @@ For authentication via the mobile app, a separate endpoint can be provided. A sc
 
 ### Local Development
 
-You need python, node, make, and docker installed and working.
+For the authentication module, you need a working installation of python and pip, preferably 2.x. To setup the required python modules, inside your virtual environment, navigate to the authentication directory and run:
+```bash
+pip install -r requirements.txt
+```
+
+The rest of the project requires a working installation of node, yarn, make, and docker. 
 
 To setup the basic keys for running the servers, run:
 ```bash

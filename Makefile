@@ -16,3 +16,9 @@ start-server:
 	cd backend && make start
 
 start: start-server
+
+release: setup-secret
+	cd authentication && make release
+	git subtree push --prefix backend heroku master
+	rm -rf authentication/certificate/secret.py
+	rm -rf backend/secrets.js

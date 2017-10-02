@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/todo",
   "dependencies": {
     "classnames": "^2.2.5",
     "material-ui": "^1.0.0-beta.12",

@@ -9,13 +9,13 @@ import SocialIcon from 'material-ui-icons/AccountCircle';
 import {Home} from '../components/Home';
 import {Trades} from '../components/Trades';
 
-export const HOME="/";
-export const LOGIN="/login";
-export const TRADES_HOME="/trades";
-export const MIDNIGHTS_HOME="/midnights";
-export const WORKDAYS_HOME="/workdays";
-export const SOCIAL_HOME="/social";
-
+const BASE = "/todo";
+export const HOME=BASE+"/";
+export const LOGIN=BASE+"/login";
+export const TRADES_HOME=BASE+"/trades";
+export const MIDNIGHTS_HOME=BASE+"/midnights";
+export const WORKDAYS_HOME=BASE+"/workdays";
+export const SOCIAL_HOME=BASE+"/social";
 
 export const internalPaths = [
   {

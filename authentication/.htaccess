@@ -1,0 +1,13 @@
+RewriteEngine On
+
+RewriteRule ^$ index.cgi/ [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.cgi/$1 [QSA,L]
+
+RedirectMatch 301 /certificate(.*) /authentication
+
+AuthType SSLCert
+Require valid-user
+ErrorDocument 401 /__scripts/needcerts
