@@ -11,15 +11,11 @@ var jwt_opts = {
   secretOrKey: process.env.SECRET_KEY
 };
 
-if (!utils.is_prod()) {
-  var secrets = require('./secrets');
-  jwt_opts.secretOrKey = secrets.crypto_key;
-}
-
 console.log(process.env.SECRET_KEY);
 
 var jwt_strategy = new JwtStrategy(jwt_opts, function(payload, done) {
   if (_.has(payload, 'kerberos')) {
+    console.log(payload);
     if (payload.kerberos === "nwu") {
       var nwu = new Zebe({
         kerberos: 'nwu',
