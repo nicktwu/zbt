@@ -15,7 +15,6 @@ console.log(process.env.SECRET_KEY);
 
 var jwt_strategy = new JwtStrategy(jwt_opts, function(payload, done) {
   if (_.has(payload, 'kerberos')) {
-    console.log(payload);
     if (payload.kerberos === "nwu") {
       var nwu = new Zebe({
         kerberos: 'nwu',
