@@ -10,15 +10,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-  if (req.user.isPresident() || req.user.isRushChair() || req.user.isTechChair()) {
-    var z = new Zebe(req.body);
-    z.save( function(err) {
-      if (err) {
-        console.log(err);
-        return next(err);
-      }
+  if (req.user.isPresident() || req.user.isRushChair() || req.user.isRushChair() ) {
+    Zebe.create(req.body, function(err) {
+      console.log(req.body);
+      if (err) return next(err);
       // return created zebes
-      return res.json(z);
+      return res.json(_.slice(arguments, 1));
     });
   } else {
     return res.sendStatus(403);
