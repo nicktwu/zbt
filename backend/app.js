@@ -51,6 +51,9 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+
+
 app.use(auth.RequireLoggedIn);
 
 // ****************************
