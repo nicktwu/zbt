@@ -11,9 +11,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/zebe/:kerberos', function(req, res, next) {
-  Zebe.findOne({ kerberos: req.params.kerberos }, function(err, zebes) {
+  Zebe.findOne({ kerberos: req.params.kerberos }, function(err, zebe) {
     if (err) return next(err);
-    return res.json(zebes);
+    return res.json(zebe);
   });
 });
 

@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var zebeSchema = new Schema({
   kerberos: { type: String, index: { unique: true } },
   name: String,
-  password: String,
+  password: { type: String, select: false},
   current: Boolean,
   president: Boolean,
   midnight_maker: Boolean,
@@ -14,7 +14,7 @@ var zebeSchema = new Schema({
   rush_chair: Boolean,
   social_chair: Boolean,
   tech_chair: Boolean,
-  risk_manager: Boolean,
+  risk_manager: Boolean
 });
 
 zebeSchema.methods.isPresident = function() {

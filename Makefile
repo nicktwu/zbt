@@ -26,6 +26,7 @@ release: setup-secret
 	rm -rf authentication/certificate/secret.py
 	rm -rf backend/secret
 	rm -rf production_secret
+	cd frontend && make release
 
 quick-release:
 	git subtree push --prefix backend heroku master
