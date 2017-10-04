@@ -7,6 +7,7 @@ import { TableCell, TableRow } from 'material-ui/Table';
 import RemoveIcon from 'material-ui-icons/RemoveCircle';
 import EditIcon from 'material-ui-icons/Edit';
 import MidnightTypeForm from './MidnightTypeForm';
+import RemoveDialog from './RemoveDialog';
 
 export default class ZebeEntry extends Component {
   constructor(props) {
@@ -17,10 +18,8 @@ export default class ZebeEntry extends Component {
     };
     this.openDialog = this.openDialog.bind(this);
     this.openEdit = this.openEdit.bind(this);
-    this.openReset = this.openReset.bind(this);
     this.closeDialog = this.closeDialog.bind(this);
     this.closeEdit = this.closeEdit.bind(this);
-    this.closeReset = this.closeReset.bind(this);
   }
 
   openDialog(evt) {
@@ -31,16 +30,6 @@ export default class ZebeEntry extends Component {
   openEdit(evt) {
     evt.preventDefault();
     this.setState({openEdit:true})
-  }
-
-  openReset(evt) {
-    evt.preventDefault();
-    this.setState({openReset:true})
-  }
-
-  closeReset(evt) {
-    evt.preventDefault();
-    this.setState({openReset:false});
   }
 
   closeDialog(evt) {
@@ -69,6 +58,8 @@ export default class ZebeEntry extends Component {
           <IconButton color="accent" onClick={this.openDialog}>
             <RemoveIcon/>
           </IconButton>
+          <RemoveDialog open={this.state.openRemove} name={this.props.entry.name}
+                        id={this.props.entry._id} close={this.closeDialog}/>
         </TableCell>
       </TableRow>
     )

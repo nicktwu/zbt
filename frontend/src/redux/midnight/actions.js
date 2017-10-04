@@ -49,7 +49,21 @@ export function editType(dispatch) {
   return (token, data) => {
     MidnightAPI.editType(token, data).then(handle401(dispatch)).then(res=>{
       // TODO: error handle
-      return res.json()
+      console.log(res);
+      return res.json();
+    }).then(()=>token).then(getTypeList(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
+export function removeType(dispatch) {
+  return (token, id) => {
+    MidnightAPI.removeType(token, id).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      console.log(res);
+      return res.json();
     }).then(()=>token).then(getTypeList(dispatch)).catch(err=>{
       // TODO: handle errors
       console.log(err);

@@ -10,11 +10,11 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 import {connect} from 'react-redux';
-import {remove} from '../../../redux/user/actions';
+import {removeType} from '../../../redux/midnight/actions';
 
 function mapDispatchToProps(dispatch) {
   return {
-    removeUser: remove(dispatch),
+    removeType: removeType(dispatch),
   }
 }
 
@@ -31,7 +31,7 @@ class RemoveDialog extends Component {
   }
 
   remove(evt) {
-    this.props.removeUser(this.props.token, this.props.kerberos);
+    this.props.removeType(this.props.token, this.props.id);
     this.props.close(evt);
   }
 
@@ -41,7 +41,7 @@ class RemoveDialog extends Component {
         <DialogTitle>{"Permanently delete?"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to remove {this.props.kerberos} permanently? This action is irreversible.
+            Are you sure you want to remove {this.props.name} permanently? This action is irreversible.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

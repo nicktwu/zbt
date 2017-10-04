@@ -73,6 +73,18 @@ router.put('/types/update/:id', function(req, res, next){
   }
 });
 
+// /midnights/types/remove/id DELETE
+router.delete('/types/remove/:id', function(req, res, next) {
+  if (req.user.isMidnightMaker()) {
+    Midnights.MidnightType.remove({ _id: req.params.id }, function(err) {
+      if (err) return next(err);
+      return res.json({removed: true});
+    });
+  } else {
+    res.sendStatus(403);
+  }
+});
+
 // /midnights/weeklist GET
 router.get('/weeklist', function(req, res, next) {
   var today = new Date();

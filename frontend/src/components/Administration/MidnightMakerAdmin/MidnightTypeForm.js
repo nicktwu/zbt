@@ -80,7 +80,6 @@ class MidnightTypeForm extends Component {
 
 
   render() {
-    console.log(this.state);
     return (
       <Dialog open={this.props.open} onRequestClose={this.props.cancel}>
         <DialogTitle>{this.props.initialState ? "Edit Midnight Default" : 'Add a new type of midnight'}</DialogTitle>

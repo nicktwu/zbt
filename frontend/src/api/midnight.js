@@ -20,4 +20,8 @@ export default class MidnightAPI {
   static editType(token, data) {
     return API.makeCall("PUT", midnight.editType + data._id, token, data);
   }
+
+  static removeType(token, id) {
+    return API.makeCall("DELETE", midnight.removeType + id, token, null);
+  }
 }

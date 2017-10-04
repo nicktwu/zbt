@@ -33,4 +33,5 @@ export const midnight = {
   typeList: MIDNIGHT_BASE + "/types",
   createType: MIDNIGHT_BASE + "/types/create",
   editType: MIDNIGHT_BASE + "/types/update/",
+  removeType: MIDNIGHT_BASE + "/types/remove/"
 };
