@@ -12,6 +12,7 @@ var social = require('./routes/social');
 var trades = require('./routes/trades');
 var midnights = require('./routes/midnights');
 var utils = require('./utils');
+var jwt = require('jsonwebtoken');
 // var profile = require('./routes/profile');
 // ^ missing dependency (?)
 
@@ -51,7 +52,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-
+app.post("/login", auth.ManualLogIn, function(req, res) {
+  res.json({token: jwt.sign({kerberos: req.user.kerberos, iat: Date.now(), exp: Date.now() + 30*60*1000 /*30 minutes*/})})
+});
 
 
 app.use(auth.RequireLoggedIn);

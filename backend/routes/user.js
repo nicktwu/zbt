@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
+var bcrypt = require('bcrypt');
 
 var Zebe = require('../models/zebe');
 
@@ -56,6 +57,16 @@ router.get('/current', function(req, res, next) {
     if (err) return next(err);
     return res.json(zebes);
   });
+});
+
+router.post('/password/change', function(req, res, next) {
+  bcrypt.hash(req.body.password, 10 /* rounds of salting */, function(err, hash) {
+    if (err) return next(err);
+    Zebe.findOneAndUpdate({kerberos: req.user.kerberos}, {password: hash}, function(err) {
+      if (err) next(err);
+      return res.json({updated: true})
+    })
+  })
 });
 
 module.exports = router;
