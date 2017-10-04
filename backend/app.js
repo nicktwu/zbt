@@ -60,7 +60,7 @@ app.post("/login", function(req, res) {
     if (!zebe) return res.sendStatus(401);
     return bcrypt.compare(req.body.password, zebe.password, function(err, match) {
       if (match) {
-        return res.json({token: jwt.sign({kerberos: zebe.kerberos, iat: Date.now(), exp: Date.now() + 30*60*1000 /*30 minutes*/})})
+        return res.json({token: jwt.sign({kerberos: zebe.kerberos, iat: Date.now(), exp: Date.now() + 30*60*1000 /*30 minutes*/}, process.env.SECRET_KEY)})
       } else {
         return res.sendStatus(401);
       }
