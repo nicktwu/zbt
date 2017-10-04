@@ -9,6 +9,13 @@ router.get('/', function(req, res, next) {
   res.json(req.user);
 });
 
+router.get('/:kerberos', function(req, res, next) {
+  Zebe.findOne({ kerberos: req.params.kerberos }, function(err, zebes) {
+    if (err) return next(err);
+    return res.json(zebes);
+  });
+});
+
 router.post('/create', function(req, res, next) {
   if (req.user.isPresident() || req.user.isRushChair() || req.user.isRushChair() ) {
     Zebe.create(req.body, function(err) {
