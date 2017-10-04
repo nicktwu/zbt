@@ -10,6 +10,7 @@ import BuildIcon from 'material-ui-icons/Build';
 import {Home} from '../components/Home';
 import {Trades} from '../components/Trades';
 import {Administration} from '../components/Administration';
+import Midnights from '../components/Midnights';
 
 const BASE = "/todo";
 export const HOME=BASE+"/";
@@ -39,7 +40,8 @@ export const internalPaths = [
     path: MIDNIGHTS_HOME,
     exact: false,
     text: "Midnights",
-    icon: MidnightIcon
+    icon: MidnightIcon,
+    component: Midnights
   },
   {
     path: WORKDAYS_HOME,

@@ -8,9 +8,9 @@ export function loginWithCertificate(dispatch) {
   return ()=>{
     SessionAPI.loginWithCertificate().then(res => {
       if (res.status >= 500 && res.status < 600) {
-        dispatch({type: SESSION_ERROR, message: "Something bad happened."})
+        dispatch({type: SESSION_ERROR, certificateMessage: "Something bad happened."})
       } else if (res.status >= 400 && res.status < 500) {
-        dispatch({type: SESSION_ERROR, message: "You are not authorized. If you think this is an error, contact zbt-webmaster@mit.edu."})
+        dispatch({type: SESSION_ERROR, certificateMessage: "You are not authorized. If you think this is an error, contact zbt-webmaster@mit.edu."})
       } else {
         return res.json();
       }
@@ -20,7 +20,7 @@ export function loginWithCertificate(dispatch) {
       }
       return dispatch({type: SESSION_ERROR, certificateMessage: "Something bad happened."});
     }).catch(err => {
-      return dispatch({type: SESSION_ERROR, message: err});
+      console.log(err);
     })
   }
 }
@@ -29,16 +29,16 @@ export function loginWithForm(dispatch) {
   return (credentials)=> {
     SessionAPI.loginWithForm(credentials).then(res => {
       if (res.status === 401) {
-        dispatch({type: SESSION_ERROR, message: "Incorrect username or password"})
+        dispatch({type: SESSION_ERROR, formMessage: "Incorrect username or password"})
       }
       return res.json()
     }).then(json => {
       if (json.hasOwnProperty("token")) {
         return dispatch({type: LOGIN, token: json.token});
       }
-      return dispatch({type: SESSION_ERROR, certificateMessage: "Something bad happened."});
+      return dispatch({type: SESSION_ERROR, formMessage: "Something bad happened."});
     }).catch(err => {
-      return dispatch({type: SESSION_ERROR, message: err});
+      console.log(err);
     })
   }
 }

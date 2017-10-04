@@ -27,9 +27,11 @@ const style = theme => ({
   paper: {
     padding: theme.spacing.unit*3,
   },
+  tableContainer: {
+    overflowX: "scroll",
+  },
   table: {
     marginTop: theme.spacing.unit*3,
-    overflowX: "scroll",
   },
   tableRow: {
   },
@@ -73,7 +75,7 @@ class Admin extends Component {
 
   closeForm(event) {
     event.preventDefault();
-    this.setState({open:false});
+    this.setState({open: false});
   }
 
   render() {
@@ -82,29 +84,36 @@ class Admin extends Component {
         <Typography type="headline" gutterBottom>President/VP Admin Panel</Typography>
         <Divider/>
         <div className={this.props.classes.buttonContainer}>
-          <Button raised onClick={this.openForm}><AddIcon className={this.props.classes.addIcon}/> Add a new zebe</Button>
+          <Button raised onClick={this.openForm}><AddIcon className={this.props.classes.addIcon}/> Add a new
+            zebe</Button>
         </div>
         <ZebeForm open={this.state.open} cancel={this.closeForm}/>
-        <Table className={this.props.classes.table}>
-          <TableHead>
-            <TableRow className={this.props.classes.tableRow}>
-              <TableCell className={this.props.classes.tableCell}><Typography type="subheading">Full name</Typography></TableCell>
-              <TableCell className={this.props.classes.tableCell}><Typography type="subheading">Kerberos/Username</Typography></TableCell>
-              <TableCell className={this.props.classes.tableCell}><Typography type="subheading">Edit</Typography></TableCell>
-              <TableCell className={this.props.classes.tableCell}><Typography type="subheading">Reset Password</Typography></TableCell>
-              <TableCell className={this.props.classes.tableCell}><Typography type="subheading">Remove</Typography></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.props.all ? this.props.all.map((entry, index) => {
-              return (
-                <ZebeEntry tableCell={this.props.classes.tableCell}
-                           tableRow={this.props.classes.tableRow}
-                           entry={entry} index={index} key={index} />
-              )
-            }) : null }
-          </TableBody>
-        </Table>
+        <div className={this.props.classes.tableContainer}>
+          <Table className={this.props.classes.table}>
+            <TableHead>
+              <TableRow className={this.props.classes.tableRow}>
+                <TableCell className={this.props.classes.tableCell}><Typography type="subheading">Full name</Typography></TableCell>
+                <TableCell className={this.props.classes.tableCell}><Typography
+                  type="subheading">Kerberos/Username</Typography></TableCell>
+                <TableCell className={this.props.classes.tableCell}><Typography
+                  type="subheading">Edit</Typography></TableCell>
+                <TableCell className={this.props.classes.tableCell}><Typography type="subheading">Reset
+                  Password</Typography></TableCell>
+                <TableCell className={this.props.classes.tableCell}><Typography
+                  type="subheading">Remove</Typography></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.props.all ? this.props.all.map((entry, index) => {
+                return (
+                  <ZebeEntry tableCell={this.props.classes.tableCell}
+                             tableRow={this.props.classes.tableRow}
+                             entry={entry} index={index} key={index}/>
+                )
+              }) : null }
+            </TableBody>
+          </Table>
+        </div>
       </Paper>
     )
   }

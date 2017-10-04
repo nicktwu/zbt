@@ -64,7 +64,7 @@ router.post('/types/create', function(req, res, next) {
 // /midnights/types/update/<int:id> PUT
 router.put('/types/update/:id', function(req, res, next){
   if (req.user.isMidnightMaker()) {
-    Midnights.MidnightType.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_type) {
+    Midnights.MidnightType.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, new_type) {
       if (err) return next(err);
       return res.json(new_type);
     });

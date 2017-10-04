@@ -25,7 +25,6 @@ function mapDispatchToProps(dispatch) {
 
 const style = theme => ({
   panelContainer: {
-    paddingBottom: theme.spacing.unit*6,
   }
 });
 

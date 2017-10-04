@@ -2,12 +2,7 @@
  * Created by nwu on 9/24/17.
  */
 import React, {Component} from 'react';
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
-import {withStyles} from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
+import {withStyles, Snackbar, Typography, Button, TextField, Grid, Paper} from 'material-ui';
 
 const styles = theme => ({
   container: {
@@ -77,6 +72,12 @@ class LoginPage extends Component {
     return (
       <div className={classes.container}>
         <div className={classes.root}>
+          <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+                    open={!!this.props.certMessage}
+                    message={this.props.certMessage}/>
+          <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+                    open={!!this.props.formMessage}
+                    message={this.props.formMessage}/>
           <Grid container spacing={24}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>

@@ -1,0 +1,23 @@
+/**
+ * Created by nwu on 10/4/17.
+ */
+import API from './api';
+import {midnight} from './urls';
+
+export default class MidnightAPI {
+  static getWeekList(token) {
+    return API.makeCall("GET", midnight.weekList, token, null);
+  }
+
+  static getTypeList(token) {
+    return API.makeCall("GET", midnight.typeList, token, null);
+  }
+
+  static createType(token, data) {
+    return API.makeCall("POST", midnight.createType, token, data);
+  }
+
+  static editType(token, data) {
+    return API.makeCall("PUT", midnight.editType + data._id, token, data);
+  }
+}

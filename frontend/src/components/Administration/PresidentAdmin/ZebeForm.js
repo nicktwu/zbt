@@ -100,7 +100,7 @@ class ZebeForm extends Component {
     return (
       <form>
         <Dialog open={this.props.open} onRequestClose={this.props.cancel}>
-          <DialogTitle>{'Add a new Zebe'}</DialogTitle>
+          <DialogTitle>{this.props.initialState ? "Edit Zebe Permissions": 'Add a new Zebe'}</DialogTitle>
           <DialogContent>
             <TextField className={this.props.classes.textField}
                        label="Full Name" value={this.state.name}

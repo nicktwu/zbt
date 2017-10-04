@@ -68,6 +68,7 @@ const styles = theme => ({
   content: {
     width: '100%',
     marginLeft: -drawerWidth,
+    boxSizing: "border-box",
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
@@ -77,14 +78,15 @@ const styles = theme => ({
     }),
     height: 'calc(100% - 56px)',
     marginTop: 56,
-    [theme.breakpoints.up('sm')]: {
-      content: {
-        height: 'calc(100% - 64px)',
-        marginTop: 64,
-      },
-    },
+
     overflow: "scroll",
     marginBottom: theme.spacing.unit*3,
+  },
+  [theme.breakpoints.up('sm')]: {
+    content: {
+      height: 'calc(100% - 64px)',
+      marginTop: 64,
+    },
   },
   contentShift: {
     marginLeft: 0,

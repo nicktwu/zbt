@@ -20,7 +20,7 @@ export default function reducer(state=initialState, action) {
     case LOGIN:
       return {token: action.token, certificateMessage:"", formMessage:""};
     case LOGOUT:
-      return initialState;
+      return {token: action.token, certificateMessage:"Logged out.", formMessage:""};
     default:
       return state
   }

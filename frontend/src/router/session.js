@@ -21,6 +21,7 @@ function mapStateToProps(state) {
     ready: state.ready,
     token: state.session.token,
     certificateMessage: state.session.certificateMessage,
+    formMessage: state.session.formMessage,
   }
 }
 
@@ -40,7 +41,9 @@ class SessionRouter extends Component {
           <Route path={LOGIN}>
             { this.props.token ? <Redirect to={HOME}/> :
             <LoginPage loginWithCertificate={this.props.loginWithCertificate}
-                       loginWithForm={this.props.loginWithForm}/> }
+                       loginWithForm={this.props.loginWithForm}
+                       certMessage={this.props.certificateMessage}
+                       formMessage={this.props.formMessage}/> }
           </Route>
           <Route>
             { this.props.token ?
