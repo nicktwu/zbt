@@ -23,10 +23,25 @@ router.post('/create', function(req, res, next) {
 });
 
 router.put('/update/:kerberos', function(req, res, next) {
-  Zebe.update({ kerberos: req.params.kerberos }, req.body, function(err, raw) {
+  if (req.user.isPresident() || req.user.isRushChair() || req.user.isRushChair()) {
+    Zebe.update({kerberos: req.params.kerberos}, req.body, function (err, raw) {
+      if (err) next(err);
+      return res.json(raw);
+    });
+  } else {
+    return res.sendStatus(403);
+  }
+});
+
+router.delete('/remove/:kerberos', function(req, res, next) {
+  if (req.user.isPresident() || req.user.isRushChair() || req.user.isRushChair() ) {
+  Zebe.remove({kerberos: req.params.kerberos}, function(err) {
     if (err) next(err);
-    return res.json(raw);
-  });
+    return res.json({removed: true})
+  })
+  } else {
+    return res.sendStatus(403);
+  }
 });
 
 router.get('/current', function(req, res, next) {
