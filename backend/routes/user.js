@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   res.json(req.user);
 });
 
-router.get('/:kerberos', function(req, res, next) {
+router.get('/zebe/:kerberos', function(req, res, next) {
   Zebe.findOne({ kerberos: req.params.kerberos }, function(err, zebes) {
     if (err) return next(err);
     return res.json(zebes);
