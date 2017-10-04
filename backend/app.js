@@ -55,7 +55,7 @@ app.use(function(req, res, next) {
 });
 
 app.post("/login", function(req, res) {
-  Zebe.findOne({kerberos: req.body.username}, function(err, zebe) {
+  Zebe.findOne({kerberos: req.body.username}, "kerberos password", function(err, zebe) {
     if (err) return next(err);
     if (!zebe) return res.sendStatus(401);
     return bcrypt.compare(req.body.password, zebe.password, function(err, match) {

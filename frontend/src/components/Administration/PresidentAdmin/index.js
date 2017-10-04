@@ -29,6 +29,7 @@ const style = theme => ({
   },
   table: {
     marginTop: theme.spacing.unit*3,
+    overflowX: "scroll",
   },
   tableRow: {
   },
