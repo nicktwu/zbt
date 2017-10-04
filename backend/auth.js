@@ -11,9 +11,12 @@ var jwt_opts = {
 
 var jwt_strategy = new JwtStrategy(jwt_opts, function(payload, done) {
   if (_.has(payload, 'kerberos')) {
-    Zebe.findOne({ kerberos: payload.kerberos }, function(err, zebe) {
+    Zebe.findOne({ kerberos: payload.kerberos }, "+password", function(err, zebe) {
       if (err) return done(err);
       if (!zebe) return done(null, false);
+      if (zebe.password) {
+        zebe.password = "redacted";
+      }
       return done(null, zebe);
     });
   } else {
