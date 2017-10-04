@@ -13,6 +13,8 @@ var trades = require('./routes/trades');
 var midnights = require('./routes/midnights');
 var utils = require('./utils');
 var jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
+var Zebe = require('./models/zebe');
 // var profile = require('./routes/profile');
 // ^ missing dependency (?)
 
@@ -52,8 +54,18 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.post("/login", auth.ManualLogIn, function(req, res) {
-  res.json({token: jwt.sign({kerberos: req.user.kerberos, iat: Date.now(), exp: Date.now() + 30*60*1000 /*30 minutes*/})})
+app.post("/login", function(req, res) {
+  Zebe.findOne({kerberos: req.body.username}, function(err, zebe) {
+    if (err) return next(err);
+    if (!zebe) return res.sendStatus(401);
+    return bcrypt.compare(req.body.password, zebe.password, function(err, match) {
+      if (match) {
+        return res.json({token: jwt.sign({kerberos: zebe.kerberos, iat: Date.now(), exp: Date.now() + 30*60*1000 /*30 minutes*/})})
+      } else {
+        return res.sendStatus(401);
+      }
+    });
+  })
 });
 
 
