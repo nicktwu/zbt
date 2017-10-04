@@ -12,7 +12,6 @@ class SessionAPI {
       }),
       body: JSON.stringify({username: credentials.username, password: credentials.password})
     });
-
     return fetch(request);
   }
 

@@ -3,11 +3,13 @@
  */
 import HomeIcon from 'material-ui-icons/Home';
 import TradeIcon from 'material-ui-icons/CompareArrows';
-import MidnightIcon from 'material-ui-icons/Alarm'
-import HouseIcon from 'material-ui-icons/Assignment'
-import SocialIcon from 'material-ui-icons/AccountCircle';
+import MidnightIcon from 'material-ui-icons/Brightness2';
+import HouseIcon from 'material-ui-icons/Assignment';
+import SocialIcon from 'material-ui-icons/Group';
+import BuildIcon from 'material-ui-icons/Build';
 import {Home} from '../components/Home';
 import {Trades} from '../components/Trades';
+import {Administration} from '../components/Administration';
 
 const BASE = "/todo";
 export const HOME=BASE+"/";
@@ -16,6 +18,7 @@ export const TRADES_HOME=BASE+"/trades";
 export const MIDNIGHTS_HOME=BASE+"/midnights";
 export const WORKDAYS_HOME=BASE+"/workdays";
 export const SOCIAL_HOME=BASE+"/social";
+export const SETTINGS_HOME=BASE+"/settings";
 
 export const internalPaths = [
   {
@@ -49,5 +52,12 @@ export const internalPaths = [
     exact: false,
     text: "Social",
     icon: SocialIcon
+  },
+  {
+    path: SETTINGS_HOME,
+    exact: false,
+    text: "Administration",
+    icon: BuildIcon,
+    component: Administration,
   }
 ];

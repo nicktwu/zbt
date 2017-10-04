@@ -83,6 +83,8 @@ const styles = theme => ({
         marginTop: 64,
       },
     },
+    overflow: "scroll",
+    marginBottom: theme.spacing.unit*3,
   },
   contentShift: {
     marginLeft: 0,

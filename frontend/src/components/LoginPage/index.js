@@ -69,7 +69,7 @@ class LoginPage extends Component {
 
   loginForm(evt) {
     evt.preventDefault();
-    console.log(this.state);
+    this.props.loginWithForm(this.state);
   }
 
   render() {

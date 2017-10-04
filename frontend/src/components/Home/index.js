@@ -8,7 +8,6 @@ import Typography from 'material-ui/Typography'
 import {Paper, withStyles} from 'material-ui';
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     token: state.session.token,
     user: state.user.user,

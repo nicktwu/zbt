@@ -27,7 +27,19 @@ export function loginWithCertificate(dispatch) {
 
 export function loginWithForm(dispatch) {
   return (credentials)=> {
-    SessionAPI.loginWithForm(credentials).then()
+    SessionAPI.loginWithForm(credentials).then(res => {
+      if (res.status === 401) {
+        dispatch({type: SESSION_ERROR, message: "Incorrect username or password"})
+      }
+      return res.json()
+    }).then(json => {
+      if (json.hasOwnProperty("token")) {
+        return dispatch({type: LOGIN, token: json.token});
+      }
+      return dispatch({type: SESSION_ERROR, certificateMessage: "Something bad happened."});
+    }).catch(err => {
+      return dispatch({type: SESSION_ERROR, message: err});
+    })
   }
 }
 
