@@ -32,6 +32,7 @@ router.post('/accounts/create', function(req, res, next){
 // /midnights/accounts/<int:id> PUT
 router.put('/accounts/update/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
+    console.log(req.body);
     Midnights.MidnightAccount.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_account) {
       if (err) return next(err);
       return res.json(new_account);
@@ -119,7 +120,7 @@ router.get('/:id', function(req, res, next) {
 // /midnights/update_assignment/<int:id> PUT
 router.put('/update_assignment/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
-    Midnights.Midnight.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_assignment) {
+    Midnights.Midnight.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, new_assignment) {
       if (err) return next(err);
       return res.json(new_assignment);
     });

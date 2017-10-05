@@ -19,6 +19,31 @@ export function getWeekList(dispatch) {
   }
 }
 
+export function createMidnight(dispatch) {
+  return (token, data) => {
+    MidnightAPI.createMidnight(token, data).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      return res.json()
+    }).then(()=>token).then(getWeekList(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
+export function editMidnight(dispatch) {
+  return (token, data) => {
+    MidnightAPI.editMidnight(token, data).then(handle401(dispatch)).then(res=>{
+      console.log(res);
+      // TODO: error handle
+      return res.json()
+    }).then(()=>token).then(getWeekList(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
 export function getTypeList(dispatch) {
   return (token) => {
     MidnightAPI.getTypeList(token).then(handle401(dispatch)).then(res=>{

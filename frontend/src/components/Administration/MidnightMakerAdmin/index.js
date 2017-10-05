@@ -4,11 +4,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getWeekList, getTypeList} from '../../../redux/midnight/actions';
-import {Divider, Typography, Paper, withStyles, Button} from 'material-ui';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import AddIcon from 'material-ui-icons/Add';
+import {Divider, Typography, Paper, withStyles} from 'material-ui';
 import MidnightTypeForm from './MidnightTypeForm';
 import MidnightType from './MidnightType';
+import AdminTable from '../AdminTable';
+import MidnightForm from './MidnightForm';
+import MidnightEntry from './MidnightEntry';
 
 function mapStateToProps(state) {
   return {
@@ -33,95 +34,34 @@ const style = theme => ({
   title: {
     marginTop: theme.spacing.unit*2,
   },
-  buttonContainer : {
+  gutterDivider: {
     marginTop: theme.spacing.unit*3,
-    textAlign: "center",
-  },
-  tableContainer: {
-    overflowX: "scroll",
-  },
-  table: {
-    marginTop: theme.spacing.unit*3,
-  },
-  tableCell: {
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    verticalAlign: "middle",
-  },
+    marginBottom: theme.spacing.unit*3,
+  }
 });
 
-
 class Admin extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-    };
-    this.openForm = this.openForm.bind(this);
-    this.closeForm = this.closeForm.bind(this);
-  }
 
   componentWillMount() {
     let props = this.props;
     if (props.token && props.getTypes) {
       props.getTypes(props.token);
+      props.getMidnights(props.token);
     }
   }
-
-  openForm(event) {
-    event.preventDefault();
-    this.setState({open: true});
-  }
-
-  closeForm(event) {
-    event.preventDefault();
-    this.setState({open:false});
-  }
-
   render() {
     return (
       <Paper className={this.props.classes.paper}>
         <Typography type="headline" gutterBottom>Midnight Maker Admin Panel</Typography>
         <Divider/>
-        <div className={this.props.classes.buttonContainer}>
-          <Button raised onClick={this.openForm}><AddIcon className={this.props.classes.addIcon}/>Create a new type of midnight</Button>
-        </div>
-        <MidnightTypeForm open={this.state.open} cancel={this.closeForm}/>
-        <div className={this.props.classes.tableContainer}>
-          <Table className={this.props.classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell className={this.props.classes.tableCell}>
-                  <Typography type="subheading">Midnight Task</Typography>
-                </TableCell>
-                <TableCell className={this.props.classes.tableCell}>
-                  <Typography type="subheading">Default Value</Typography>
-                </TableCell>
-                <TableCell className={this.props.classes.tableCell}>
-                  <Typography type="subheading">Description</Typography>
-                </TableCell>
-                <TableCell className={this.props.classes.tableCell}>
-                  <Typography type="subheading">Edit</Typography>
-                </TableCell>
-                <TableCell className={this.props.classes.tableCell}>
-                  <Typography type="subheading">Remove</Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              { this.props.types && this.props.types.length ?
-                this.props.types.map((type, index) => {
-                  return (
-                    <MidnightType key={index} tableCell={this.props.classes.tableCell}
-                                  tableRow={this.props.classes.tableRow} entry={type}/>
-                  )
-                }) : <TableRow><TableCell className={this.props.classes.tableCell}>
-                  <Typography type="caption">No midnight types exist</Typography>
-                </TableCell></TableRow>
-              }
-            </TableBody>
-          </Table>
-        </div>
+        <AdminTable contents={this.props.types} headings={["Midnight Task", "Default Value", "Description", "Edit", "Remove"]}
+                    componentForEntry={MidnightType} createMessage="Create a new type of midnight"
+                    missing="No midnight types exist." form={MidnightTypeForm}/>
+        <Divider className={this.props.classes.gutterDivider}/>
+        <AdminTable contents={this.props.midnights.reduce((all, next) => (all.concat(next)), [])} createMessage="Assign a new midnight"
+                    headings={["Date","Task","Zebe","Note","Points","Edit","Remove"]}
+                    missing="There are no midnights for this week." form={MidnightForm}
+                    componentForEntry={MidnightEntry}/>
       </Paper>
     )
   }

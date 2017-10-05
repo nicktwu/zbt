@@ -16,10 +16,7 @@ router.get('/', function(req, res, next) {
 // Invariant: at most one semester can be current
 router.post('/', function(req, res, next) {
 	console.log("attempt to create semester");
-	console.log(req.user.kerberos);
-	console.log(req.body.name);
 	if (req.user.isPresident() || req.user.isTechChair()){
-		console.log("permitted");
 		// check if there exists a current semester
 		Semester.getCurrent(function(err, cur) {
 			if (err) return next(err); // more than one current semester

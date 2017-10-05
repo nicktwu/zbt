@@ -9,6 +9,14 @@ export default class MidnightAPI {
     return API.makeCall("GET", midnight.weekList, token, null);
   }
 
+  static createMidnight(token, data) {
+    return API.makeCall("POST", midnight.createMidnight, token, data);
+  }
+
+  static editMidnight(token, data) {
+    return API.makeCall("PUT", midnight.editMidnight + data._id, token, data);
+  }
+
   static getTypeList(token) {
     return API.makeCall("GET", midnight.typeList, token, null);
   }

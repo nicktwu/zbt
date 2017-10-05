@@ -11,9 +11,8 @@ const initialState = {
 export default function reducer(state=initialState, action) {
   switch(action.type) {
     case WEEKLIST:
-      console.log(action.midnights);
       return {
-        midnights: [...Array(7).keys()].map((day)=>(action.midnights.filter(entry => entry.date.getDay() === day))),
+        midnights: [...Array(7).keys()].map((day)=>(action.midnights.filter(entry => (new Date(entry.date)).getDay() === day))),
         types: state.types
       };
     case TYPELIST:

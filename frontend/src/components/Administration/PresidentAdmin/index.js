@@ -5,11 +5,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAll} from '../../../redux/user/actions';
 import {Divider, Typography} from 'material-ui';
-import {Paper, Button, withStyles} from 'material-ui';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import AddIcon from 'material-ui-icons/Add';
+import {Paper, withStyles} from 'material-ui';
 import ZebeForm from './ZebeForm';
 import ZebeEntry from './ZebeEntry';
+import AdminTable from '../AdminTable';
 
 function mapStateToProps(state) {
   return {
@@ -27,39 +26,10 @@ const style = theme => ({
   paper: {
     padding: theme.spacing.unit*3,
   },
-  tableContainer: {
-    overflowX: "scroll",
-  },
-  table: {
-    marginTop: theme.spacing.unit*3,
-  },
-  tableRow: {
-  },
-  tableCell: {
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    verticalAlign: "middle",
-  },
-  addIcon: {
-    height: theme.spacing.unit*2,
-  },
-  buttonContainer : {
-    marginTop: theme.spacing.unit*3,
-    textAlign: "center",
-  }
-
 });
 
 
 class Admin extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-    };
-    this.openForm = this.openForm.bind(this);
-    this.closeForm = this.closeForm.bind(this);
-  }
 
   componentWillMount() {
     let props = this.props;
@@ -68,52 +38,14 @@ class Admin extends Component {
     }
   }
 
-  openForm(event) {
-    event.preventDefault();
-    this.setState({open: true});
-  }
-
-  closeForm(event) {
-    event.preventDefault();
-    this.setState({open: false});
-  }
-
   render() {
     return (
       <Paper className={this.props.classes.paper}>
         <Typography type="headline" gutterBottom>President/VP Admin Panel</Typography>
         <Divider/>
-        <div className={this.props.classes.buttonContainer}>
-          <Button raised onClick={this.openForm}><AddIcon className={this.props.classes.addIcon}/> Add a new
-            zebe</Button>
-        </div>
-        <ZebeForm open={this.state.open} cancel={this.closeForm}/>
-        <div className={this.props.classes.tableContainer}>
-          <Table className={this.props.classes.table}>
-            <TableHead>
-              <TableRow className={this.props.classes.tableRow}>
-                <TableCell className={this.props.classes.tableCell}><Typography type="subheading">Full name</Typography></TableCell>
-                <TableCell className={this.props.classes.tableCell}><Typography
-                  type="subheading">Kerberos/Username</Typography></TableCell>
-                <TableCell className={this.props.classes.tableCell}><Typography
-                  type="subheading">Edit</Typography></TableCell>
-                <TableCell className={this.props.classes.tableCell}><Typography type="subheading">Reset
-                  Password</Typography></TableCell>
-                <TableCell className={this.props.classes.tableCell}><Typography
-                  type="subheading">Remove</Typography></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.props.all ? this.props.all.map((entry, index) => {
-                return (
-                  <ZebeEntry tableCell={this.props.classes.tableCell}
-                             tableRow={this.props.classes.tableRow}
-                             entry={entry} index={index} key={index}/>
-                )
-              }) : null }
-            </TableBody>
-          </Table>
-        </div>
+        <AdminTable form={ZebeForm} contents={this.props.all} createMessage="Add a new zebe"
+                    componentForEntry={ZebeEntry}
+                    headings={["Full Name","Kerberos/Username","Edit","Reset Password","Remove"]}/>
       </Paper>
     )
   }

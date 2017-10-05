@@ -30,8 +30,10 @@ export const user = {
 
 export const midnight = {
   weekList: MIDNIGHT_BASE + "/weeklist",
+  createMidnight: MIDNIGHT_BASE + "/assign",
+  editMidnight: MIDNIGHT_BASE + "/update_assignment/",
   typeList: MIDNIGHT_BASE + "/types",
   createType: MIDNIGHT_BASE + "/types/create",
   editType: MIDNIGHT_BASE + "/types/update/",
-  removeType: MIDNIGHT_BASE + "/types/remove/"
+  removeType: MIDNIGHT_BASE + "/types/remove/",
 };
