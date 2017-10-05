@@ -44,6 +44,18 @@ export function editMidnight(dispatch) {
   }
 }
 
+export function removeMidnight(dispatch) {
+  return (token, id) => {
+    MidnightAPI.removeMidnight(token, id).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      return res.json();
+    }).then(()=>token).then(getTypeList(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
 export function getTypeList(dispatch) {
   return (token) => {
     MidnightAPI.getTypeList(token).then(handle401(dispatch)).then(res=>{

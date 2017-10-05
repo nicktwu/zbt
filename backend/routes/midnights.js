@@ -130,6 +130,19 @@ router.put('/update_assignment/:id', function(req, res, next) {
   }
 });
 
+// /midnights/remove/:id DELETE
+router.delete('/remove/:id', function(req, res, next) {
+  if (req.user.isMidnightMaker()) {
+    Midnights.Midnight.remove({ _id: req.params.id }, function(err) {
+      if (err) return next(err);
+      return res.json({removed: true});
+    });
+  } else {
+    res.sendStatus(403);
+  }
+})
+
+
 // /midnights/unreviewed GET
 router.get('/unreviewed', function(req, res, next) {
   //check for midnights that have either no "reviewed" attribute or are explicitly not reviewed

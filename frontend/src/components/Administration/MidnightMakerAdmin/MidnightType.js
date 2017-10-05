@@ -7,7 +7,7 @@ import { TableCell, TableRow } from 'material-ui/Table';
 import RemoveIcon from 'material-ui-icons/RemoveCircle';
 import EditIcon from 'material-ui-icons/Edit';
 import MidnightTypeForm from './MidnightTypeForm';
-import RemoveDialog from './RemoveDialog';
+import RemoveDialog from './RemoveTypeDialog';
 
 export default class ZebeEntry extends Component {
   constructor(props) {
