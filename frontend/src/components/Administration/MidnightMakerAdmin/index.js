@@ -62,6 +62,8 @@ class Admin extends Component {
                     headings={["Date","Task","Zebe","Note","Points","Edit","Remove"]}
                     missing="There are no midnights for this week." form={MidnightForm}
                     componentForEntry={MidnightEntry}/>
+        <Divider className={this.props.classes.gutterDivider}/>
+
       </Paper>
     )
   }

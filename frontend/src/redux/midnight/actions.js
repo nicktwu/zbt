@@ -49,7 +49,7 @@ export function removeMidnight(dispatch) {
     MidnightAPI.removeMidnight(token, id).then(handle401(dispatch)).then(res=>{
       // TODO: error handle
       return res.json();
-    }).then(()=>token).then(getTypeList(dispatch)).catch(err=>{
+    }).then(()=>token).then(getWeekList(dispatch)).catch(err=>{
       // TODO: handle errors
       console.log(err);
     })

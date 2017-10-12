@@ -1,17 +1,18 @@
 /**
  * Created by nwu on 9/26/17.
  */
-//dev use only
-//const AUTH_BASE="http://localhost:3002";
-// for prod
-const AUTH_BASE = "https://zbt.scripts.mit.edu:444/authentication/";
-// dev use only
+// dev backend
 // const BACKEND_BASE = "http://localhost:3001";
-// for prod
+// const AUTH_BASE="http://localhost:3002";
+
+// prod backend
+const AUTH_BASE = "https://zbt.scripts.mit.edu:444/authentication/";
 const BACKEND_BASE = "https://zbt-backend.herokuapp.com";
+
 const API_BASE= BACKEND_BASE + "/api/v1";
 const USER_BASE = API_BASE + "/user";
 const MIDNIGHT_BASE = API_BASE + "/midnights";
+const SEMESTER_BASE = API_BASE + "/semester";
 
 export const session = {
   certificate: AUTH_BASE,
@@ -37,4 +38,10 @@ export const midnight = {
   createType: MIDNIGHT_BASE + "/types/create",
   editType: MIDNIGHT_BASE + "/types/update/",
   removeType: MIDNIGHT_BASE + "/types/remove/",
+};
+
+export const semester = {
+  get: SEMESTER_BASE + "/",
+  set: SEMESTER_BASE + "/",
+  getAll: SEMESTER_BASE + "/all",
 };

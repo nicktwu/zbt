@@ -4,7 +4,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAll} from '../../../redux/user/actions';
-import {Divider, Typography} from 'material-ui';
+import {getCurrent} from '../../../redux/semester/actions';
+import {Divider, Typography, Button, Grid} from 'material-ui';
 import {Paper, withStyles} from 'material-ui';
 import ZebeForm from './ZebeForm';
 import ZebeEntry from './ZebeEntry';
@@ -13,12 +14,14 @@ import AdminTable from '../AdminTable';
 function mapStateToProps(state) {
   return {
     all: state.user.allUsers,
+    semester: state.semester.semester
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAllUsers: getAll(dispatch)
+    getAllUsers: getAll(dispatch),
+    getSemester: getCurrent(dispatch)
   }
 }
 
@@ -26,6 +29,10 @@ const style = theme => ({
   paper: {
     padding: theme.spacing.unit*3,
   },
+  semesterPaper: {
+    marginTop: theme.spacing.unit*3,
+    padding: theme.spacing.unit*3,
+  }
 });
 
 
@@ -35,6 +42,7 @@ class Admin extends Component {
     let props = this.props;
     if (props.token && props.getAllUsers) {
       props.getAllUsers(props.token);
+      props.getSemester(props.token);
     }
   }
 
@@ -43,9 +51,21 @@ class Admin extends Component {
       <Paper className={this.props.classes.paper}>
         <Typography type="headline" gutterBottom>President/VP Admin Panel</Typography>
         <Divider/>
+        <Paper className={this.props.classes.semesterPaper}>
+          <Grid container justify="space-between" align="center">
+            <Grid item>
+              <Typography type="subheading">
+                Semester: {this.props.semester ? this.props.semester : "None"}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button color="accent" className={this.props.classes.button} dense raised>Change</Button>
+            </Grid>
+          </Grid>
+        </Paper>
         <AdminTable form={ZebeForm} contents={this.props.all} createMessage="Add a new zebe"
                     componentForEntry={ZebeEntry}
-                    headings={["Full Name","Kerberos/Username","Edit","Reset Password","Remove"]}/>
+                    headings={["Full Name", "Kerberos/Username", "Edit", "Reset Password", "Remove"]}/>
       </Paper>
     )
   }

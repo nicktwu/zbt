@@ -12,6 +12,14 @@ router.get('/', function(req, res, next) {
   });
 });
 
+// see all semesters
+router.get('/all', function(req, res, next) {
+  Semester.find({}, function(err, semesters) {
+    if (err) return next(err);
+    return res.json(semesters);
+  });
+});
+
 // create new semesters
 // Invariant: at most one semester can be current
 router.post('/', function(req, res, next) {
