@@ -42,6 +42,7 @@ export const midnight = {
 
 export const semester = {
   get: SEMESTER_BASE + "/",
-  set: SEMESTER_BASE + "/",
+  create: SEMESTER_BASE + "/",
   getAll: SEMESTER_BASE + "/all",
+  set: SEMESTER_BASE + "/update_current/",
 };

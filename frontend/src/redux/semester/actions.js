@@ -33,3 +33,27 @@ export function getSemesters(dispatch) {
   }
 }
 
+export function createSemester(dispatch) {
+  return (token, data) => {
+    SemesterAPI.create(token, data).then(handle401(dispatch)).then(res=>{
+      // TODO: errors
+      return res.json()
+    }).then(()=>token).then(getSemesters(dispatch)).catch(err => {
+      // TODO errors
+      console.log(err);
+    })
+  }
+}
+
+export function setCurrent(dispatch) {
+  return (token, id) => {
+    SemesterAPI.setCurrent(token, id).then(handle401(dispatch)).then(res=>{
+      // TODO: errors
+      return res.json()
+    }).then(()=>token).then(getCurrent(dispatch)).catch(err=>{
+      // TODO: errors
+      console.log(err);
+    })
+  }
+}
+

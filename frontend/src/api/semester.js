@@ -9,11 +9,15 @@ export default class SemesterAPI {
     return API.makeCall("GET", semester.get, token, null);
   }
 
-  static setCurrent(token, data) {
-    return API.makeCall("PUT", semester.set, token, data);
+  static create(token, data) {
+    return API.makeCall("POST", semester.create, token, data);
   }
 
   static getAll(token) {
     return API.makeCall("GET", semester.getAll, token, null);
+  }
+
+  static setCurrent(token, id) {
+    return API.makeCall("PUT", semester.set + id, token, null);
   }
 }

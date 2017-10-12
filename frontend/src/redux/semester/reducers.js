@@ -5,18 +5,20 @@ import {SEMESTER, SEMESTERS} from './types';
 
 const initialState = {
   semester: {},
-  semesters: []
+  all: []
 };
 
 export default function reducer(state=initialState, action) {
   switch(action.type) {
     case SEMESTER:
       return {
-        semester: action.semester
+        semester: action.semester,
+        all: state.all,
       };
     case SEMESTERS:
       return {
-        semesters: action.semesters
+        semester: state.semester,
+        all: action.semesters
       };
     default:
       return state

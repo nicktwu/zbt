@@ -38,6 +38,22 @@ const style = theme => ({
 
 
 class Admin extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    }
+    this.closeSemester = this.closeSemester.bind(this);
+    this.openSemesters = this.openSemesters.bind(this);
+  }
+
+  openSemesters() {
+    this.setState({open: true});
+  }
+
+  closeSemester() {
+    this.setState({open: false});
+  }
 
   componentWillMount() {
     let props = this.props;
@@ -56,15 +72,15 @@ class Admin extends Component {
           <Grid container justify="space-between" align="center">
             <Grid item>
               <Typography type="subheading">
-                Semester: {this.props.semester ? this.props.semester : "None"}
+                Semester: {this.props.semester && this.props.semester.name ? this.props.semester.name : "None"}
               </Typography>
             </Grid>
             <Grid item>
-              <Button color="accent" className={this.props.classes.button} dense raised>Change</Button>
+              <Button color="accent" onClick={this.openSemesters} className={this.props.classes.button} dense raised>Change</Button>
             </Grid>
           </Grid>
         </Paper>
-        <SemesterDialog/>
+        <SemesterDialog open={this.state.open} close={this.closeSemester} />
         <AdminTable form={ZebeForm} contents={this.props.all} createMessage="Add a new zebe"
                     componentForEntry={ZebeEntry}
                     headings={["Full Name", "Kerberos/Username", "Edit", "Reset Password", "Remove"]}/>

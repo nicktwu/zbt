@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
 
 // see all semesters
 router.get('/all', function(req, res, next) {
-  console.log(req);
   Semester.find({}, function(err, semesters) {
     if (err) return next(err);
     return res.json(semesters);
@@ -58,43 +57,26 @@ router.put('/update_current/:id', function(req, res, next){
 			if (err) return next(err); // more than one current semester
 			if (cur === null) {
 				// change id to be current
-				Semester.findById(req.params.id, function(err, new_sem) {
+        Semester.findByIdAndUpdate(req.params.id, {current: true}, function(err, new_sem) {
 					if (err) return next(err);
 					if (new_sem) {
-						_.assign(new_sem, { current: true });
-						new_sem.save(function(err,new_cur) {
-							if (err) return next(err);
-							return res.json(new_cur);
-						});
+						return res.json(new_sem);
 					} else {
-						res.sendStatus(403); //can't find semester by ID
+						res.sendStatus(404); //can't find semester by ID
 					}
 				});
 			} else {
-				Semester.findById(req.params.id, function(err, new_sem) {
-					if (err) return next(err);
-					if (new_sem){
-						Semester.findById(cur.id, function(err, old_sem) {
-							if (err) return next(err);
-							if (old_sem) {
-								//change old semester first, even if operation fails you preserve invariant
-								_.assign(old_sem, { current: false });
-								old_sem.save(function(err, old_cur) {
-									if (err) return next(err);
-									_.assign(new_sem, { current: true });
-									new_sem.save(function(err, new_cur) {
-										if (err) return next(err);
-										return res.json(new_cur);
-									});
-								});
-							} else {
-								return res.sendStatus(403); //can't find old current semester by ID
-							}
-						});
-					} else {
-						return res.sendStatus(403); // can't find new current semester by ID, want to leave things alone
-					}
-				});
+			  Semester.findByIdAndUpdate(cur.id, {current: false}, function(err, old) {
+          if (err) return next(err);
+          Semester.findByIdAndUpdate(req.params.id, {current: true}, function(err, new_sem) {
+            if (err) return next(err);
+            if (new_sem) {
+              return res.json(new_sem);
+            } else {
+              res.sendStatus(404); //can't find semester by ID
+            }
+          } )
+        });
 			}
 		});
 	} else {
