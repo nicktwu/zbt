@@ -25,7 +25,7 @@ function mapStateToProps(state) {
   })
 }
 
-class ResetDialog extends Component {
+class SemesterDialog extends Component {
   constructor(props) {
     super(props);
     this.save = this.save.bind(this);
@@ -64,4 +64,4 @@ class ResetDialog extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResetDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(SemesterDialog);

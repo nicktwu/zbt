@@ -10,6 +10,7 @@ import {Paper, withStyles} from 'material-ui';
 import ZebeForm from './ZebeForm';
 import ZebeEntry from './ZebeEntry';
 import AdminTable from '../AdminTable';
+import SemesterDialog from './SemesterDialog';
 
 function mapStateToProps(state) {
   return {
@@ -63,6 +64,7 @@ class Admin extends Component {
             </Grid>
           </Grid>
         </Paper>
+        <SemesterDialog/>
         <AdminTable form={ZebeForm} contents={this.props.all} createMessage="Add a new zebe"
                     componentForEntry={ZebeEntry}
                     headings={["Full Name", "Kerberos/Username", "Edit", "Reset Password", "Remove"]}/>

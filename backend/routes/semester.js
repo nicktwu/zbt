@@ -14,6 +14,7 @@ router.get('/', function(req, res, next) {
 
 // see all semesters
 router.get('/all', function(req, res, next) {
+  console.log(req);
   Semester.find({}, function(err, semesters) {
     if (err) return next(err);
     return res.json(semesters);
