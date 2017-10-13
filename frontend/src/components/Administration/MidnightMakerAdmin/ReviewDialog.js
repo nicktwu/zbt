@@ -33,6 +33,7 @@ class RemoveDialog extends Component {
   }
 
   save(evt) {
+
     this.close(evt);
   }
 
@@ -45,7 +46,9 @@ class RemoveDialog extends Component {
         <Dialog open={this.state.open} onRequestClose={this.close}>
           <DialogTitle>{"Review Midnights"}</DialogTitle>
           <DialogContent>
-
+            {this.props.unreviewed.map((m,idx) => {
+              return "Hello World"
+            })}
           </DialogContent>
           <DialogActions>
             <Button onClick={this.close} color="primary">

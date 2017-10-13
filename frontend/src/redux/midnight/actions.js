@@ -3,7 +3,7 @@
  */
 import MidnightAPI from '../../api/midnight';
 import {handle401} from '../session/filter';
-import {WEEKLIST, TYPELIST, ACCOUNTS} from './types';
+import {WEEKLIST, TYPELIST, ACCOUNTS, UNREVIEWED} from './types';
 
 export function getWeekList(dispatch) {
   return (token)=> {
@@ -156,6 +156,44 @@ export function removeAccount(dispatch) {
     }).then(()=>token).then(getAccountList(dispatch)).catch(err=>{
       // TODO: handle errors
       console.log(err);
+    })
+  }
+}
+
+export function getUnreviewed(dispatch) {
+  return (token) => {
+    MidnightAPI.getUnreviewed(token).then(handle401(dispatch)).then(res=>{
+      // TODO: handle err
+      return res.json()
+    }).then(json => {
+      dispatch({type: UNREVIEWED, midnights: json})
+    }).catch(err=> {
+      // TODO: handle err
+      console.log(err)
+    })
+  }
+}
+
+export function reviewMidnight(dispatch) {
+  return (token, data) => {
+    MidnightAPI.awardPoints(token, data).then(handle401(dispatch)).then(res=>{
+      // TODO: handle err
+      return res.json()
+    }).then(()=>token).then(getUnreviewed(dispatch)).catch(err=> {
+      // TODO: handle err
+      console.log(err)
+    })
+  }
+}
+
+export function reviewBulkMidnights(dispatch) {
+  return (token, data) => {
+    MidnightAPI.bulkAwardPoints(token, data).then(handle401(dispatch)).then(res=>{
+      // TODO: handle err
+      return res.json()
+    }).then(()=>token).then(getUnreviewed(dispatch)).catch(err=> {
+      // TODO: handle err
+      console.log(err)
     })
   }
 }

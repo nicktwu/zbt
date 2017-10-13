@@ -52,4 +52,16 @@ export default class MidnightAPI {
   static removeAccount(token, id) {
     return API.makeCall("DELETE", midnight.removeAccount + id, token, null);
   }
+
+  static getUnreviewed(token) {
+    return API.makeCall("GET", midnight.unreviewed, token, null)
+  }
+
+  static awardPoints(token, data) {
+    return API.makeCall("PUT", midnight.award, token, data)
+  }
+
+  static bulkAwardPoints(token, data) {
+    return API.makeCall("PUT", midnight.bulkAward, token, data)
+  }
 }

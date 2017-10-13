@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getWeekList, getTypeList, getAccountList} from '../../../redux/midnight/actions';
+import {getWeekList, getTypeList, getAccountList, getUnreviewed} from '../../../redux/midnight/actions';
 import {Divider, Typography, Paper, withStyles} from 'material-ui';
 import MidnightTypeForm from './MidnightTypeForm';
 import MidnightType from './MidnightType';
@@ -20,6 +20,7 @@ function mapStateToProps(state) {
     midnights: state.midnight.midnights,
     types: state.midnight.types,
     accounts: state.midnight.accounts,
+    unreviewed: state.midnight.unreviewed,
     semester: state.semester.semester,
     zebes: state.user.allUsers,
   }
@@ -29,7 +30,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getMidnights: getWeekList(dispatch),
     getTypes: getTypeList(dispatch),
-    getAccounts: getAccountList(dispatch)
+    getAccounts: getAccountList(dispatch),
+    getUnreviewed: getUnreviewed(dispatch),
   }
 }
 
@@ -55,6 +57,7 @@ class Admin extends Component {
       props.getTypes(props.token);
       props.getMidnights(props.token);
       props.getAccounts(props.token);
+      props.getUnreviewed(props.token);
     }
   }
   render() {
@@ -75,7 +78,7 @@ class Admin extends Component {
                     headings={["Zebe","Balance", "Requirement", "Edit","Remove"]}
                     form={MidnightAccount} missing="No accounts are open." componentForEntry={MidnightAccountEntry}/>
         <Divider className={this.props.classes.gutterDivider} />
-        <ReviewDialog />
+        <ReviewDialog unreviewed={this.props.unreviewed} />
       </Paper>
     )
   }

@@ -42,6 +42,9 @@ export const midnight = {
   createAccount: MIDNIGHT_BASE + "/accounts/create",
   editAccount: MIDNIGHT_BASE + "/accounts/update/",
   removeAccount: MIDNIGHT_BASE + "/accounts/remove/",
+  unreviewed: MIDNIGHT_BASE + "/unreviewed",
+  award: "unimplemented",
+  bulkAward: "unimplemented",
 };
 
 export const semester = {
