@@ -156,8 +156,16 @@ router.delete('/remove/:id', function(req, res, next) {
 
 // /midnights/unreviewed GET
 router.get('/unreviewed', function(req, res, next) {
+  var today = new Date();
+  var lastDay = new Date(today.getFullYear(), today.getMonth(),today.getDate());
   //check for midnights that have either no "reviewed" attribute or are explicitly not reviewed
-  Midnights.Midnight.find( { $or: [ { reviewed: { $exists: false } }, { reviewed: false } ] } , function(err, assignments) {
+  Midnights.Midnight.find( {
+    $and: [{
+      $or: [ { reviewed: { $exists: false } }, { reviewed: false } ]
+    },{
+      date: { $lte: lastDay }
+    } ]
+  }, function(err, assignments) {
     if (err) return next(err);
     return res.json(assignments);
   });

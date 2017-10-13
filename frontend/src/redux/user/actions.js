@@ -3,7 +3,7 @@
  */
 import UserAPI from '../../api/user';
 import {handle401} from '../session/filter'
-import {CURRENT_USER, ALL_USERS} from './types';
+import {CURRENT_USER, ALL_USERS, PASSWORD_ERROR} from './types';
 
 export function getCurrent(dispatch) {
   return (token) => {
@@ -78,11 +78,16 @@ export function reset(dispatch) {
 }
 
 export function changePassword(dispatch) {
-  return (token, password) => {
-    UserAPI.changePassword(token, password).then(handle401(dispatch)).then((res) => {
-      //TODO: handle errors
-    }).catch(err=>{
-      console.log(err);
-    })
+  return (token, password, confirm) => {
+    if (password === confirm) {
+      UserAPI.changePassword(token, password).then(handle401(dispatch)).then((res) => {
+        //TODO: handle errors
+        dispatch({type: PASSWORD_ERROR, message: "Password changed."})
+      }).catch(err=>{
+        console.log(err);
+      })
+    } else {
+      dispatch({type: PASSWORD_ERROR, message: "Password mismatch"})
+    }
   }
 }

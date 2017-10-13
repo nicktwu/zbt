@@ -6,7 +6,7 @@ import {IconButton} from 'material-ui';
 import { TableCell, TableRow } from 'material-ui/Table';
 import RemoveIcon from 'material-ui-icons/RemoveCircle';
 import EditIcon from 'material-ui-icons/Edit';
-import RemoveMidnightDialog from './RemoveMidnightDialog';
+import RemoveDialog from './RemoveAccountDialog';
 import MidnightAccountForm from './MidnightAccountForm';
 
 export default class ZebeEntry extends Component {
@@ -58,7 +58,7 @@ export default class ZebeEntry extends Component {
           <IconButton color="accent" onClick={this.openDialog}>
             <RemoveIcon/>
           </IconButton>
-          <RemoveMidnightDialog open={this.state.openRemove} name={"this midnight account"}
+          <RemoveDialog open={this.state.openRemove} name={"this midnight account"}
                         id={this.props.entry._id} close={this.closeDialog}/>
         </TableCell>
       </TableRow>

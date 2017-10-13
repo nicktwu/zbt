@@ -12,6 +12,7 @@ import MidnightForm from './MidnightForm';
 import MidnightEntry from './MidnightEntry';
 import MidnightAccount from './MidnightAccountForm';
 import MidnightAccountEntry from './MidnightAccountEntry';
+import ReviewDialog from './ReviewDialog'
 
 function mapStateToProps(state) {
   return {
@@ -43,7 +44,7 @@ const style = theme => ({
   gutterDivider: {
     marginTop: theme.spacing.unit*3,
     marginBottom: theme.spacing.unit*3,
-  }
+  },
 });
 
 class Admin extends Component {
@@ -73,6 +74,8 @@ class Admin extends Component {
         <AdminTable contents={this.props.accounts} createMessage="Add a Midnight Account"
                     headings={["Zebe","Balance", "Requirement", "Edit","Remove"]}
                     form={MidnightAccount} missing="No accounts are open." componentForEntry={MidnightAccountEntry}/>
+        <Divider className={this.props.classes.gutterDivider} />
+        <ReviewDialog />
       </Paper>
     )
   }

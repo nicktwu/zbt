@@ -3,13 +3,14 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Divider, Typography} from 'material-ui';
+import {Divider, Typography, Snackbar} from 'material-ui';
 import {Paper, Button, TextField, withStyles} from 'material-ui';
 import {changePassword} from '../../../redux/user/actions';
 
 function mapStateToProps(state) {
   return {
     token: state.session.token,
+    message: state.user.message,
   }
 }
 
@@ -54,9 +55,8 @@ class Admin extends Component {
 
   changePassword(evt) {
     evt.preventDefault();
-    if (this.state.password === this.state.confirm_password) {
-      this.props.changePassword(this.props.token, this.state.password);
-    }
+    this.props.changePassword(this.props.token, this.state.password, this.state.confirm_password);
+    this.setState({password:"",confirm_password:""});
   }
 
   render() {
@@ -73,6 +73,9 @@ class Admin extends Component {
     }
     return (
       <Paper className={this.props.classes.paper}>
+        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+                  open={!!this.props.message}
+                  message={this.props.message}/>
         <Typography type="headline" gutterBottom>Change Password</Typography>
         <Divider/>
         <TextField fullWidth id="password" label="New Password" type="password" value={this.state.password} onChange={this.setField("password")} margin="normal"/>
