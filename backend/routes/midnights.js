@@ -44,9 +44,9 @@ router.put('/accounts/update/:id', function(req, res, next) {
 // /midnights/accounts/remove/:id DELETE
 router.delete('/accounts/remove/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
-    Midnights.MidnightAccount.findByIdAndRemove(req.params.id, function(err, acc) {
+    Midnights.MidnightAccount.findByIdAndRemove(req.params.id, function(err) {
       if (err) return next(err);
-      return res.json(acc);
+      return res.json({removed: true});
     })
   } else {
     res.sendStatus(403);
