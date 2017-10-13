@@ -32,8 +32,7 @@ router.post('/accounts/create', function(req, res, next){
 // /midnights/accounts/<int:id> PUT
 router.put('/accounts/update/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
-    console.log(req.body);
-    Midnights.MidnightAccount.findOneAndUpdate({ id: req.params.id }, req.body, function(err, new_account) {
+    Midnights.MidnightAccount.findByIdAndUpdate(req.params.id, {zebe: req.body.zebe, balance: req.body.balance, requirement: req.body.requirement}, function(err, new_account) {
       if (err) return next(err);
       return res.json(new_account);
     });
@@ -41,6 +40,18 @@ router.put('/accounts/update/:id', function(req, res, next) {
     res.sendStatus(403);
   }
 });
+
+// /midnights/accounts/remove/:id DELETE
+router.delete('/accounts/remove/:id', function(req, res, next) {
+  if (req.user.isMidnightMaker()) {
+    Midnights.MidnightAccount.findByIdAndRemove(req.params.id, function(err, acc) {
+      if (err) return next(err);
+      return res.json(acc);
+    })
+  } else {
+    res.sendStatus(403);
+  }
+})
 
 // /midnights/types GET
 router.get('/types', function(req, res, next) {

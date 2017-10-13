@@ -3,7 +3,7 @@
  */
 import MidnightAPI from '../../api/midnight';
 import {handle401} from '../session/filter';
-import {WEEKLIST, TYPELIST} from './types';
+import {WEEKLIST, TYPELIST, ACCOUNTS} from './types';
 
 export function getWeekList(dispatch) {
   return (token)=> {
@@ -102,6 +102,58 @@ export function removeType(dispatch) {
       console.log(res);
       return res.json();
     }).then(()=>token).then(getTypeList(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
+export function getAccountList(dispatch) {
+  return (token) => {
+    MidnightAPI.getAccountList(token).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      return res.json()
+    }).then(json=>{
+      dispatch({type: ACCOUNTS, accounts: json});
+    }).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
+export function createAccount(dispatch) {
+  return (token, data) => {
+    MidnightAPI.createAccount(token, data).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      return res.json()
+    }).then(()=>token).then(getAccountList(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
+export function editAccount(dispatch) {
+  return (token, data) => {
+    MidnightAPI.editAccount(token, data).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      console.log(res);
+      return res.json();
+    }).then(()=>token).then(getAccountList(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
+export function removeAccount(dispatch) {
+  return (token, id) => {
+    MidnightAPI.removeAccount(token, id).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      console.log(res);
+      return res.json();
+    }).then(()=>token).then(getAccountList(dispatch)).catch(err=>{
       // TODO: handle errors
       console.log(err);
     })

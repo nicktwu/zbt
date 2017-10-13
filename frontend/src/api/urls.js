@@ -38,6 +38,10 @@ export const midnight = {
   createType: MIDNIGHT_BASE + "/types/create",
   editType: MIDNIGHT_BASE + "/types/update/",
   removeType: MIDNIGHT_BASE + "/types/remove/",
+  accountList: MIDNIGHT_BASE + "/accounts",
+  createAccount: MIDNIGHT_BASE + "/accounts/create",
+  editAccount: MIDNIGHT_BASE + "/accounts/update/",
+  removeAccount: MIDNIGHT_BASE + "/accounts/remove/",
 };
 
 export const semester = {

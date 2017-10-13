@@ -61,14 +61,26 @@ class SemesterDialog extends Component {
   }
 
   save(evt) {
-    console.log(this.state);
     this.props.setCurrent(this.props.token, this.state.selected);
+    this.setState({
+      name: "",
+      startDate: (new Date()).toISOString().substring(0, 10),
+      endDate: (new Date()).toISOString().substring(0, 10),
+      current: false,
+      selected: "",
+    });
     this.props.close(evt);
   }
 
   componentWillMount() {
     if (this.props.getSemesters && this.props.token) {
       this.props.getSemesters(this.props.token);
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.initial) {
+      this.setState({selected:props.initial})
     }
   }
 

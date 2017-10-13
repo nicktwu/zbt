@@ -36,4 +36,20 @@ export default class MidnightAPI {
   static removeType(token, id) {
     return API.makeCall("DELETE", midnight.removeType + id, token, null);
   }
+
+  static getAccountList(token) {
+    return API.makeCall("GET", midnight.accountList, token, null)
+  }
+
+  static createAccount(token, data) {
+    return API.makeCall("POST", midnight.createAccount, token, data);
+  }
+
+  static editAccount(token, data) {
+    return API.makeCall("PUT", midnight.editAccount + data._id, token, data);
+  }
+
+  static removeAccount(token, id) {
+    return API.makeCall("DELETE", midnight.removeAccount + id, token, null);
+  }
 }

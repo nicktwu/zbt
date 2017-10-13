@@ -3,26 +3,32 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getWeekList, getTypeList} from '../../../redux/midnight/actions';
+import {getWeekList, getTypeList, getAccountList} from '../../../redux/midnight/actions';
 import {Divider, Typography, Paper, withStyles} from 'material-ui';
 import MidnightTypeForm from './MidnightTypeForm';
 import MidnightType from './MidnightType';
 import AdminTable from '../AdminTable';
 import MidnightForm from './MidnightForm';
 import MidnightEntry from './MidnightEntry';
+import MidnightAccount from './MidnightAccountForm';
+import MidnightAccountEntry from './MidnightAccountEntry';
 
 function mapStateToProps(state) {
   return {
     token: state.session.token,
     midnights: state.midnight.midnights,
-    types: state.midnight.types
+    types: state.midnight.types,
+    accounts: state.midnight.accounts,
+    semester: state.semester.semester,
+    zebes: state.user.allUsers,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getMidnights: getWeekList(dispatch),
-    getTypes: getTypeList(dispatch)
+    getTypes: getTypeList(dispatch),
+    getAccounts: getAccountList(dispatch)
   }
 }
 
@@ -47,6 +53,7 @@ class Admin extends Component {
     if (props.token && props.getTypes) {
       props.getTypes(props.token);
       props.getMidnights(props.token);
+      props.getAccounts(props.token);
     }
   }
   render() {
@@ -63,7 +70,9 @@ class Admin extends Component {
                     missing="There are no midnights for this week." form={MidnightForm}
                     componentForEntry={MidnightEntry}/>
         <Divider className={this.props.classes.gutterDivider}/>
-
+        <AdminTable contents={this.props.accounts} createMessage="Add a Midnight Account"
+                    headings={["Zebe","Balance", "Requirement", "Edit","Remove"]}
+                    form={MidnightAccount} missing="No accounts are open." componentForEntry={MidnightAccountEntry}/>
       </Paper>
     )
   }

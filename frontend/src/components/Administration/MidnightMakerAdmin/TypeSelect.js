@@ -6,7 +6,7 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 
 function renderInput(inputProps) {
-  const { classes, value, ref, ...other } = inputProps;
+  const { classes, value, ref, label, ...other } = inputProps;
 
   return (
     <TextField
@@ -14,7 +14,7 @@ function renderInput(inputProps) {
       value={value}
       margin="normal"
       inputRef={ref}
-      label="Task"
+      label={label}
       InputProps={{
         classes: {
           input: classes.input,
@@ -25,27 +25,29 @@ function renderInput(inputProps) {
   );
 }
 
-function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion.name, query);
-  const parts = parse(suggestion.name, matches);
+function renderSuggestion(getText) {
+  return (suggestion, {query, isHighlighted}) => {
+    const matches = match(getText(suggestion), query);
+    const parts = parse(getText(suggestion), matches);
 
-  return (
-    <MenuItem selected={isHighlighted} component="div">
-      <div>
-        {parts.map((part, index) => {
-          return part.highlight ? (
-            <span key={index} style={{ fontWeight: 300 }}>
+    return (
+      <MenuItem selected={isHighlighted} component="div">
+        <div>
+          {parts.map((part, index) => {
+            return part.highlight ? (
+              <span key={index} style={{fontWeight: 300}}>
               {part.text}
             </span>
-          ) : (
-            <strong key={index} style={{ fontWeight: 500 }}>
-              {part.text}
-            </strong>
-          );
-        })}
-      </div>
-    </MenuItem>
-  );
+            ) : (
+              <strong key={index} style={{fontWeight: 500}}>
+                {part.text}
+              </strong>
+            );
+          })}
+        </div>
+      </MenuItem>
+    );
+  }
 }
 
 function renderSuggestionsContainer(options) {
@@ -58,7 +60,7 @@ function renderSuggestionsContainer(options) {
   );
 }
 
-function getSuggestions(value, suggestionList) {
+function getSuggestions(getText, value, suggestionList) {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
   let count = 0;
@@ -67,7 +69,7 @@ function getSuggestions(value, suggestionList) {
     ? []
     : suggestionList.filter(suggestion => {
       const keep =
-        count < 5 && suggestion.name.toLowerCase().slice(0, inputLength) === inputValue;
+        count < 5 && getText(suggestion).toLowerCase().slice(0, inputLength) === inputValue;
 
       if (keep) {
         count += 1;
@@ -110,19 +112,13 @@ class IntegrationAutosuggest extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSuggestionsClearRequested = this.handleSuggestionsClearRequested.bind(this);
-    this.handleSuggestionSelect = this.handleSuggestionSelect.bind(this);
     this.handleSuggestionsFetchRequested = this.handleSuggestionsFetchRequested.bind(this);
-  }
-
-  handleSuggestionSelect(suggestion) {
-    this.props.selectSuggestion(suggestion);
-    return suggestion.name;
   }
 
   handleSuggestionsFetchRequested(suggestionList) {
     return ({ value }) => {
       this.setState({
-        suggestions: getSuggestions(value, suggestionList),
+        suggestions: getSuggestions(this.props.valueForSuggestion, value, suggestionList),
       });
     }
   };
@@ -156,11 +152,12 @@ class IntegrationAutosuggest extends Component {
         onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested(this.props.suggestions)}
         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
         renderSuggestionsContainer={renderSuggestionsContainer}
-        getSuggestionValue={this.handleSuggestionSelect}
-        renderSuggestion={renderSuggestion}
+        getSuggestionValue={this.props.handleSuggestionSelect}
+        renderSuggestion={renderSuggestion(this.props.valueForSuggestion)}
         inputProps={{
           classes,
           value: this.state.value,
+          label: this.props.label,
           onChange: this.handleChange,
         }}
       />

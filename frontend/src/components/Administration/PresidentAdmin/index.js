@@ -80,7 +80,7 @@ class Admin extends Component {
             </Grid>
           </Grid>
         </Paper>
-        <SemesterDialog open={this.state.open} close={this.closeSemester} />
+        <SemesterDialog open={this.state.open} close={this.closeSemester} initial={this.props.semester._id}/>
         <AdminTable form={ZebeForm} contents={this.props.all} createMessage="Add a new zebe"
                     componentForEntry={ZebeEntry}
                     headings={["Full Name", "Kerberos/Username", "Edit", "Reset Password", "Remove"]}/>

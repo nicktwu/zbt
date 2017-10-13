@@ -103,9 +103,9 @@ class MidnightTypeForm extends Component {
         <DialogContent className={this.props.classes.dialogContent}>
           <Grid container>
             <Grid item xs={12} sm={4}>
-              {this.props.types ? <TypeSelect selectSuggestion={(suggestion)=>{this.setState({potential:suggestion.value})}}
+              {this.props.types ? <TypeSelect handleSuggestionSelect={(suggestion)=>{this.setState({potential:suggestion.value}); return suggestion.name}}
                                               initialValue={this.props.initialState ? this.props.initialState.task : null}
-                                              handleChange={this.setTask}
+                                              handleChange={this.setTask} label="Task" valueForSuggestion={s => s.name}
                                               suggestions={this.props.types}/> : null}
             </Grid>
             <Grid item xs={12} sm={2}>
