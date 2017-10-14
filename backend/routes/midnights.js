@@ -120,11 +120,21 @@ router.post('/assign', function(req, res, next) {
   }
 });
 
-// /midnights/:id GET
-router.get('/:id', function(req, res, next) {
-  Midnights.Midnight.findById(req.params.id, function(err, midnight) {
+// /midnights/unreviewed GET
+router.get('/unreviewed', function(req, res, next) {
+  console.log(req);
+  //check for midnights that have either no "reviewed" attribute or are explicitly not reviewed
+  Midnights.Midnight.find( { $or: [ { reviewed: { $exists: false } }, { reviewed: false } ] } , function(err, assignments) {
     if (err) return next(err);
-    return res.json(midnight);
+    return res.json(assignments);
+  });
+});
+
+// /midnights/reviewed GET
+router.get('/reviewed', function(req, res, next) {
+  Midnights.Midnight.find( {reviewed: true }, function(err, assignments) {
+    if (err) return next(err);
+    return res.json(assignments);
   });
 });
 
@@ -153,24 +163,18 @@ router.delete('/remove/:id', function(req, res, next) {
   }
 })
 
-
-// /midnights/unreviewed GET
-router.get('/unreviewed', function(req, res, next) {
-  console.log(req);
-  //check for midnights that have either no "reviewed" attribute or are explicitly not reviewed
-  Midnights.Midnight.find( { $or: [ { reviewed: { $exists: false } }, { reviewed: false } ] } , function(err, assignments) {
+// /midnights/:id GET
+router.get('/:id', function(req, res, next) {
+  Midnights.Midnight.findById(req.params.id, function(err, midnight) {
     if (err) return next(err);
-    return res.json(assignments);
+    return res.json(midnight);
   });
 });
 
-// /midnights/reviewed GET
-router.get('/reviewed', function(req, res, next) {
-  Midnights.Midnight.find( {reviewed: true }, function(err, assignments) {
-    if (err) return next(err);
-    return res.json(assignments);
-  });
-});
+
+
+
+
 
 
 module.exports = router;
