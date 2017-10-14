@@ -156,6 +156,7 @@ router.delete('/remove/:id', function(req, res, next) {
 
 // /midnights/unreviewed GET
 router.get('/unreviewed', function(req, res, next) {
+  console.log(req);
   //check for midnights that have either no "reviewed" attribute or are explicitly not reviewed
   Midnights.Midnight.find( { $or: [ { reviewed: { $exists: false } }, { reviewed: false } ] } , function(err, assignments) {
     if (err) return next(err);
