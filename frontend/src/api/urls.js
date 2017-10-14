@@ -43,7 +43,7 @@ export const midnight = {
   editAccount: MIDNIGHT_BASE + "/accounts/update/",
   removeAccount: MIDNIGHT_BASE + "/accounts/remove/",
   unreviewed: MIDNIGHT_BASE + "/unreviewed",
-  award: "unimplemented",
+  award: MIDNIGHT_BASE + "/award",
   bulkAward: "unimplemented",
 };
 

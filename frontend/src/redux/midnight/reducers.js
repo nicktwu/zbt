@@ -34,7 +34,6 @@ export default function reducer(state=initialState, action) {
         unreviewed: state.unreviewed
       };
     case UNREVIEWED:
-      console.log(action);
       return {
         midnights: state.midnights,
         types: state.types,

@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getWeekList, getTypeList, getAccountList, getUnreviewed} from '../../../redux/midnight/actions';
+import {getWeekList, getTypeList, getAccountList, getUnreviewed, reviewMidnight} from '../../../redux/midnight/actions';
 import {Divider, Typography, Paper, withStyles} from 'material-ui';
 import MidnightTypeForm from './MidnightTypeForm';
 import MidnightType from './MidnightType';
@@ -32,6 +32,7 @@ function mapDispatchToProps(dispatch) {
     getTypes: getTypeList(dispatch),
     getAccounts: getAccountList(dispatch),
     getUnreviewed: getUnreviewed(dispatch),
+    awardOne: reviewMidnight(dispatch)
   }
 }
 
@@ -78,7 +79,7 @@ class Admin extends Component {
                     headings={["Zebe","Balance", "Requirement", "Edit","Remove"]}
                     form={MidnightAccount} missing="No accounts are open." componentForEntry={MidnightAccountEntry}/>
         <Divider className={this.props.classes.gutterDivider} />
-        <ReviewDialog unreviewed={this.props.unreviewed} />
+        <ReviewDialog unreviewed={this.props.unreviewed} awardOne={(value)=>this.props.awardOne(this.props.token, value)}/>
       </Paper>
     )
   }

@@ -14,13 +14,20 @@ class MidnightReviewEntry extends Component {
     super(props);
     this.state = {
       value: 0,
-    }
+    };
+    this.save = this.save.bind(this);
   }
 
+  save() {
+    let data = {
+      _id: this.props.midnight._id,
+      awarded: this.state.value
+    };
+    this.props.awardOne(data);
+  }
 
   componentWillMount() {
     if (this.props.midnight) {
-      console.log(this.props.midnight);
       this.setState({ value: this.props.midnight.potential })
     }
   }
@@ -35,7 +42,7 @@ class MidnightReviewEntry extends Component {
           <TextField type="number" label="Award" value={this.state.value} onChange={(evt)=>{this.setState({value: evt.target.value})}}/>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Button raised>Save</Button>
+          <Button raised onClick={this.save}>Save</Button>
         </Grid>
       </Grid>
     )
@@ -80,7 +87,7 @@ class RemoveDialog extends Component {
           <DialogContent>
             {this.props.unreviewed.map((m,idx) => {
               return (
-                <MidnightReviewEntry key={idx} midnight={m}/>
+                <MidnightReviewEntry key={idx} midnight={m} awardOne={this.props.awardOne}/>
               )
             })}
           </DialogContent>
