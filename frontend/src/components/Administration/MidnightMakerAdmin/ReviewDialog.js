@@ -2,12 +2,46 @@
  * Created by nwu on 10/12/17.
  */
 import React, {Component} from 'react';
-import {Button, withStyles} from 'material-ui';
+import {Button, Grid, TextField, withStyles} from 'material-ui';
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
 } from 'material-ui/Dialog';
+
+class MidnightReviewEntry extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0,
+    }
+  }
+
+
+  componentWillMount() {
+    if (this.props.midnight) {
+      console.log(this.props.midnight);
+      this.setState({ value: this.props.midnight.potential })
+    }
+  }
+
+  render() {
+    return (
+      <Grid container  align="center">
+        <Grid item xs={12} md={6}>
+          {this.props.midnight.date.substring(0,10)}: {this.props.midnight.task} ({this.props.midnight.zebe})
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <TextField type="number" label="Award" value={this.state.value} onChange={(evt)=>{this.setState({value: evt.target.value})}}/>
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <Button raised>Save</Button>
+        </Grid>
+      </Grid>
+    )
+  }
+}
+
 
 const style = theme => ({
   buttonContainer : {
@@ -15,8 +49,6 @@ const style = theme => ({
     textAlign: "center",
   },
 });
-
-
 
 class RemoveDialog extends Component {
   constructor(props) {
@@ -47,7 +79,9 @@ class RemoveDialog extends Component {
           <DialogTitle>{"Review Midnights"}</DialogTitle>
           <DialogContent>
             {this.props.unreviewed.map((m,idx) => {
-              return "Hello World"
+              return (
+                <MidnightReviewEntry key={idx} midnight={m}/>
+              )
             })}
           </DialogContent>
           <DialogActions>

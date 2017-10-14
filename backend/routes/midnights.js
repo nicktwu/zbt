@@ -122,7 +122,6 @@ router.post('/assign', function(req, res, next) {
 
 // /midnights/unreviewed GET
 router.get('/unreviewed', function(req, res, next) {
-  console.log(req);
   //check for midnights that have either no "reviewed" attribute or are explicitly not reviewed
   Midnights.Midnight.find( { $or: [ { reviewed: { $exists: false } }, { reviewed: false } ] } , function(err, assignments) {
     if (err) return next(err);
@@ -150,6 +149,33 @@ router.put('/update_assignment/:id', function(req, res, next) {
     res.sendStatus(403);
   }
 });
+
+router.put('/award', function(req, res, next) {
+  if (req.user.isMidnightMaker()) {
+    Midnights.Midnight.findOneAndUpdate({
+      $and: [
+        {_id: req.body._id},
+        { $or: [ { reviewed: { $exists: false } }, { reviewed: false } ] }
+      ]
+    }, {
+      awarded: req.body.awarded
+    }, function(err, resp) {
+      if (err) return next(err);
+      return res.json(resp);
+    })
+  } else {
+    res.sendStatus(403);
+  }
+});
+
+router.put('/bulk_award', function(req, res, next) {
+  if (req.user.isMidnightMaker()) {
+
+  } else {
+    res.sendStatus(403);
+  }
+});
+
 
 // /midnights/remove/:id DELETE
 router.delete('/remove/:id', function(req, res, next) {
