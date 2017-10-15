@@ -179,14 +179,6 @@ router.put('/award', function(req, res, next) {
   }
 });
 
-router.put('/bulk_award', function(req, res, next) {
-  if (req.user.isMidnightMaker()) {
-
-  } else {
-    res.sendStatus(403);
-  }
-});
-
 
 // /midnights/remove/:id DELETE
 router.delete('/remove/:id', function(req, res, next) {
@@ -198,7 +190,7 @@ router.delete('/remove/:id', function(req, res, next) {
   } else {
     res.sendStatus(403);
   }
-})
+});
 
 // /midnights/:id GET
 router.get('/:id', function(req, res, next) {
@@ -207,11 +199,5 @@ router.get('/:id', function(req, res, next) {
     return res.json(midnight);
   });
 });
-
-
-
-
-
-
 
 module.exports = router;

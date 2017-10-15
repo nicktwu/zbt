@@ -63,24 +63,24 @@ class RemoveDialog extends Component {
     this.state = {
       open: false,
     };
-    this.save = this.save.bind(this);
     this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
+  }
+
+  open() {
+    this.props.refresh();
+    this.setState({open: true});
   }
 
   close(evt) {
     this.setState({open: false})
   }
 
-  save(evt) {
-
-    this.close(evt);
-  }
-
   render () {
     return (
       <div>
         <div className={this.props.classes.buttonContainer}>
-          <Button raised color="primary" onClick={()=>{this.setState({open:true})}}>Review past midnights</Button>
+          <Button raised color="primary" onClick={this.open}>Review past midnights</Button>
         </div>
         <Dialog open={this.state.open} onRequestClose={this.close}>
           <DialogTitle>{"Review Midnights"}</DialogTitle>
@@ -94,10 +94,7 @@ class RemoveDialog extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.close} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.save} color="accent">
-              Save All
+              Close
             </Button>
           </DialogActions>
         </Dialog>

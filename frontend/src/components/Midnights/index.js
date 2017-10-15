@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getWeekList} from '../../redux/midnight/actions';
+import {getCurrent} from '../../redux/user/actions'
 import {Paper, Divider, Grid, Typography, withStyles} from 'material-ui';
 
 const daysOfTheWeek=['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -18,6 +19,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    getCurrent: getCurrent(dispatch),
     getMidnights: getWeekList(dispatch)
   }
 }
@@ -29,6 +31,9 @@ const style = theme => ({
   },
   calendar: {
     marginTop: theme.spacing.unit*3,
+  },
+  highlighted: {
+    color: "red",
   }
 });
 
@@ -37,8 +42,9 @@ class Midnights extends Component {
 
   componentWillMount() {
     let props = this.props;
-    if (props.token && props.getMidnights) {
-      props.getMidnights(props.token)
+    if (props.token && props.getMidnights && props.getCurrent) {
+      props.getMidnights(props.token);
+      props.getCurrent(props.token);
     }
   }
 
@@ -57,8 +63,8 @@ class Midnights extends Component {
                   <Grid container direction="column">
                     { this.props.midnightList[index].length ? this.props.midnightList[index].map((midnight, idx) => {
                       return (
-                        <Grid item key={idx}>
-                          {midnight.task}
+                        <Grid item key={idx} className={ (this.props.user.kerberos === midnight.zebe) ? this.props.classes.highlighted : "" } >
+                          {midnight.task}: {midnight.zebe}
                         </Grid>
                       )
                     }) :

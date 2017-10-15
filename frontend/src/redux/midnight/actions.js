@@ -34,7 +34,6 @@ export function createMidnight(dispatch) {
 export function editMidnight(dispatch) {
   return (token, data) => {
     MidnightAPI.editMidnight(token, data).then(handle401(dispatch)).then(res=>{
-      console.log(res);
       // TODO: error handle
       return res.json()
     }).then(()=>token).then(getWeekList(dispatch)).catch(err=>{
@@ -99,7 +98,6 @@ export function removeType(dispatch) {
   return (token, id) => {
     MidnightAPI.removeType(token, id).then(handle401(dispatch)).then(res=>{
       // TODO: error handle
-      console.log(res);
       return res.json();
     }).then(()=>token).then(getTypeList(dispatch)).catch(err=>{
       // TODO: handle errors
@@ -138,7 +136,6 @@ export function editAccount(dispatch) {
   return (token, data) => {
     MidnightAPI.editAccount(token, data).then(handle401(dispatch)).then(res=>{
       // TODO: error handle
-      console.log(res);
       return res.json();
     }).then(()=>token).then(getAccountList(dispatch)).catch(err=>{
       // TODO: handle errors
@@ -151,7 +148,6 @@ export function removeAccount(dispatch) {
   return (token, id) => {
     MidnightAPI.removeAccount(token, id).then(handle401(dispatch)).then(res=>{
       // TODO: error handle
-      console.log(res);
       return res.json();
     }).then(()=>token).then(getAccountList(dispatch)).catch(err=>{
       // TODO: handle errors
@@ -179,19 +175,7 @@ export function reviewMidnight(dispatch) {
     MidnightAPI.awardPoints(token, data).then(handle401(dispatch)).then(res=>{
       // TODO: handle err
       return res.json()
-    }).then(()=>token).then(getUnreviewed(dispatch)).catch(err=> {
-      // TODO: handle err
-      console.log(err)
-    })
-  }
-}
-
-export function reviewBulkMidnights(dispatch) {
-  return (token, data) => {
-    MidnightAPI.bulkAwardPoints(token, data).then(handle401(dispatch)).then(res=>{
-      // TODO: handle err
-      return res.json()
-    }).then(()=>token).then(getUnreviewed(dispatch)).catch(err=> {
+    }).then(()=>token).then(getUnreviewed(dispatch)).then(()=>token).then(getAccountList(dispatch)).catch(err=> {
       // TODO: handle err
       console.log(err)
     })

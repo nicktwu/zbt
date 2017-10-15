@@ -9,8 +9,6 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import {withStyles, Grid, Button, TextField} from 'material-ui';
 import {createAccount, editAccount} from '../../../redux/midnight/actions';
-import {getAll} from '../../../redux/user/actions'
-import {getCurrent} from '../../../redux/semester/actions'
 import {connect} from 'react-redux';
 import TypeSelect from './TypeSelect'
 
@@ -24,8 +22,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCurrentSemester: getCurrent(dispatch),
-    getAllUsers: getAll(dispatch),
     create: createAccount(dispatch),
     edit: editAccount(dispatch),
   }
@@ -56,13 +52,6 @@ class MidnightAccountForm extends Component {
     this.submit = this.submit.bind(this);
     this.changeState = this.changeState.bind(this);
     this.setZebe = this.setZebe.bind(this);
-  }
-
-  componentWillMount() {
-    if (this.props.getAllUsers && this.props.token && this.props.getCurrentSemester) {
-      this.props.getAllUsers(this.props.token);
-      this.props.getCurrentSemester(this.props.token);
-    }
   }
 
   componentWillReceiveProps(nextProps) {

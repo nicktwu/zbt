@@ -8,20 +8,20 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 import {withStyles, Grid, Button, TextField} from 'material-ui';
-import {getTypeList, createMidnight, editMidnight} from '../../../redux/midnight/actions';
+import {createMidnight, editMidnight} from '../../../redux/midnight/actions';
 import {connect} from 'react-redux';
 import TypeSelect from './TypeSelect'
 
 function mapStateToProps(state) {
   return ({
     token: state.session.token,
-    types: state.midnight.types
+    types: state.midnight.types,
+    accounts: state.midnight.accounts,
   })
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getTypes: getTypeList(dispatch),
     create: createMidnight(dispatch),
     edit: editMidnight(dispatch),
   }
@@ -56,6 +56,7 @@ class MidnightTypeForm extends Component {
     this.submit = this.submit.bind(this);
     this.changeState = this.changeState.bind(this);
     this.setTask = this.setTask.bind(this);
+    this.setZebe = this.setZebe.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -95,6 +96,10 @@ class MidnightTypeForm extends Component {
     this.setState({task: newValue});
   }
 
+  setZebe(newValue) {
+    this.setState({zebe: newValue});
+  }
+
 
   render() {
     return (
@@ -108,12 +113,13 @@ class MidnightTypeForm extends Component {
                                               handleChange={this.setTask} label="Task" valueForSuggestion={s => s.name}
                                               suggestions={this.props.types}/> : null}
             </Grid>
-            <Grid item xs={12} sm={2}>
-              <TextField className={this.props.classes.textField} margin="normal"
-                         label="Zebe" value={this.state.zebe}
-                         onChange={this.changeState("zebe")}/>
+            <Grid item xs={12} sm={3}>
+              { this.props.accounts ? <TypeSelect handleSuggestionSelect={(sug)=>{return sug.zebe}}
+                                                  initialValue={this.props.initialState ? this.props.initialState.zebe : null}
+                                                  handleChange={this.setZebe} label="Zebe" valueForSuggestion={s => s.zebe}
+                                                  suggestions={this.props.accounts}/> : null}
             </Grid>
-            <Grid item xs={12} sm={2}>
+            <Grid item xs={12} sm={1}>
               <TextField className={this.props.classes.textField} type="number" fullWidth
                          label="Points" value={this.state.potential} margin="normal"
                          onChange={this.changeState("potential")}/>

@@ -3,6 +3,8 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {getCurrent} from '../../../redux/semester/actions';
+import {getAll} from '../../../redux/user/actions';
 import {getWeekList, getTypeList, getAccountList, getUnreviewed, reviewMidnight} from '../../../redux/midnight/actions';
 import {Divider, Typography, Paper, withStyles} from 'material-ui';
 import MidnightTypeForm from './MidnightTypeForm';
@@ -32,7 +34,9 @@ function mapDispatchToProps(dispatch) {
     getTypes: getTypeList(dispatch),
     getAccounts: getAccountList(dispatch),
     getUnreviewed: getUnreviewed(dispatch),
-    awardOne: reviewMidnight(dispatch)
+    awardOne: reviewMidnight(dispatch),
+    getCurrentSemester: getCurrent(dispatch),
+    getAllUsers: getAll(dispatch),
   }
 }
 
@@ -54,11 +58,13 @@ class Admin extends Component {
 
   componentWillMount() {
     let props = this.props;
-    if (props.token && props.getTypes) {
+    if (props.token && props.getTypes && props.getMidnights && props.getAccounts && props.getUnreviewed && props.getCurrentSemester && props.getAllUsers) {
       props.getTypes(props.token);
       props.getMidnights(props.token);
       props.getAccounts(props.token);
       props.getUnreviewed(props.token);
+      props.getCurrentSemester(props.token);
+      props.getAllUsers(props.token);
     }
   }
   render() {
@@ -79,7 +85,9 @@ class Admin extends Component {
                     headings={["Zebe","Balance", "Requirement", "Edit","Remove"]}
                     form={MidnightAccount} missing="No accounts are open." componentForEntry={MidnightAccountEntry}/>
         <Divider className={this.props.classes.gutterDivider} />
-        <ReviewDialog unreviewed={this.props.unreviewed} awardOne={(value)=>this.props.awardOne(this.props.token, value)}/>
+        <ReviewDialog unreviewed={this.props.unreviewed}
+                      awardOne={(value)=>this.props.awardOne(this.props.token, value)}
+                      refresh={()=>{this.props.getUnreviewed(this.props.token)}}/>
       </Paper>
     )
   }

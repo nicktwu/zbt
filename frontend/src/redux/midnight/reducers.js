@@ -14,7 +14,7 @@ export default function reducer(state=initialState, action) {
   switch(action.type) {
     case WEEKLIST:
       return {
-        midnights: [...Array(7).keys()].map((day)=>(action.midnights.filter(entry => (new Date(entry.date)).getDay() === day))),
+        midnights: [...Array(7).keys()].map((day)=>(action.midnights.filter(entry => ((new Date(entry.date)).getDay()+1)%7 === day))),
         types: state.types,
         accounts: state.accounts,
         unreviewed: state.unreviewed
