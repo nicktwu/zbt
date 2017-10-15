@@ -162,7 +162,7 @@ router.put('/award', function(req, res, next) {
       reviewed: true
     }, function(err, resp) {
       if (err) return next(err);
-      Midnights.MidnightAccount.findOneAndUpdate({zebe: resp.zebe}, {$inc : req.body.awarded}, function(err, acc) {
+      Midnights.MidnightAccount.findOneAndUpdate({zebe: resp.zebe}, {$inc : {balance: req.body.awarded}}, function(err, acc) {
         if (err) return next(err);
         return res.json(acc);
       })
