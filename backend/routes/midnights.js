@@ -158,7 +158,8 @@ router.put('/award', function(req, res, next) {
         { $or: [ { reviewed: { $exists: false } }, { reviewed: false } ] }
       ]
     }, {
-      awarded: req.body.awarded
+      awarded: req.body.awarded,
+      reviewed: true
     }, function(err, resp) {
       if (err) return next(err);
       return res.json(resp);
