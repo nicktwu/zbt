@@ -162,6 +162,7 @@ router.put('/award', function(req, res, next) {
       reviewed: true
     }, function(err, resp) {
       if (err) return next(err);
+      console.log(resp);
       Midnights.MidnightAccount.findOneAndUpdate({zebe: resp.zebe}, {$inc : {balance: req.body.awarded}}, function(err, acc) {
         if (err) return next(err);
         return res.json(acc);
