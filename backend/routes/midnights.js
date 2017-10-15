@@ -148,7 +148,6 @@ router.get('/reviewed', function(req, res, next) {
 // /midnights/update_assignment/<int:id> PUT
 router.put('/update_assignment/:id', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
-    console.log(req.body);
     Midnights.Midnight.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, new_assignment) {
       if (err) return next(err);
       return res.json(new_assignment);
@@ -170,7 +169,6 @@ router.put('/award', function(req, res, next) {
       reviewed: true
     }, function(err, resp) {
       if (err) return next(err);
-      console.log(resp);
       Midnights.MidnightAccount.findOneAndUpdate({zebe: resp.zebe}, {$inc : {balance: req.body.awarded}}, function(err, acc) {
         if (err) return next(err);
         return res.json(acc);
