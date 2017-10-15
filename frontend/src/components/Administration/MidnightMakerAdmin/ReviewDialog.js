@@ -90,6 +90,7 @@ class RemoveDialog extends Component {
                 <MidnightReviewEntry key={idx} midnight={m} awardOne={this.props.awardOne}/>
               )
             })}
+            { this.props.unreviewed.length ? "No unreviewed midnights!" : null}
           </DialogContent>
           <DialogActions>
             <Button onClick={this.close} color="primary">
