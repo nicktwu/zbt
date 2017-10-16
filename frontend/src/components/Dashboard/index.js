@@ -150,7 +150,7 @@ class Dashboard extends Component {
           >
             <div className={classes.drawerInner}>
               <div className={classes.drawerHeader}>
-                <Typography type="title">ZBT, v1.0.beta</Typography>
+                <Typography type="title">ZBT, v1.0.0</Typography>
                 <IconButton onClick={this.handleDrawerClose}>
                   <ChevronLeftIcon />
                 </IconButton>
