@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getWeekList, getAccountList} from '../../redux/midnight/actions';
+import {getWeekList, getAccountList, getTypeList} from '../../redux/midnight/actions';
 import {getCurrent} from '../../redux/user/actions'
 import {Paper, Divider, Grid, Typography, Table, TableHead, TableRow, TableCell, TableBody, withStyles} from 'material-ui';
 import MidnightEntry from './MidnightEntry';
@@ -16,6 +16,7 @@ function mapStateToProps(state) {
     user: state.user.user,
     midnightList: state.midnight.midnights,
     accounts: state.midnight.accounts,
+    types: state.midnight.types,
   }
 }
 
@@ -24,6 +25,7 @@ function mapDispatchToProps(dispatch) {
     getCurrent: getCurrent(dispatch),
     getMidnights: getWeekList(dispatch),
     getAccounts: getAccountList(dispatch),
+    getTypes: getTypeList(dispatch),
   }
 }
 
@@ -48,10 +50,11 @@ class Midnights extends Component {
 
   componentWillMount() {
     let props = this.props;
-    if (props.token && props.getMidnights && props.getCurrent && props.getAccounts) {
+    if (props.token && props.getMidnights && props.getCurrent && props.getAccounts && props.getTypes) {
       props.getMidnights(props.token);
       props.getCurrent(props.token);
       props.getAccounts(props.token);
+      props.getTypes(props.token);
     }
   }
 
@@ -71,7 +74,8 @@ class Midnights extends Component {
                   <Grid container direction="column">
                     { this.props.midnightList[index].length ? this.props.midnightList[index].map((midnight, idx) => {
                       return (
-                        <MidnightEntry key={idx} midnight={midnight} yours={this.props.user.kerberos === midnight.zebe}/>
+                        <MidnightEntry key={idx} midnight={midnight} types={this.props.types}
+                                       yours={this.props.user.kerberos === midnight.zebe}/>
                       )
                     }) :
                       <Grid item>

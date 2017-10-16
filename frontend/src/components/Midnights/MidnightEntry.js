@@ -27,6 +27,27 @@ const style = theme => ({
   }
 });
 
+const style2 = theme => ({
+  content: {
+    whiteSpace: 'normal',
+    wordWrap: 'break-word'
+  }
+});
+
+class KeyValue extends Component {
+  render() {
+    return (
+      <TableRow>
+        <TableCell><Typography type="subheading">{this.props.label}</Typography></TableCell>
+        <TableCell className={this.props.classes.content}><Typography type="body1">{this.props.value}</Typography></TableCell>
+      </TableRow>
+    )
+  }
+}
+
+let StyledKeyValue = withStyles(style2)(KeyValue);
+
+
 class MidnightEntry extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +68,8 @@ class MidnightEntry extends Component {
 
   render() {
     let midnight = this.props.midnight;
+    let description = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s, v) => v.description, "");
+
     return (
       <Grid item className={this.props.classes.container}>
         <Button raised color={this.props.yours ? "accent" : null}
@@ -55,22 +78,18 @@ class MidnightEntry extends Component {
             {midnight.task}: {midnight.zebe}
           </Typography>
         </Button>
-        <Dialog open={this.state.open}>
+        <Dialog open={this.state.open} onRequestClose={this.close}>
           <DialogTitle>
             {midnight.task + ": " + midnight.zebe}
           </DialogTitle>
           <DialogContent>
             <Table>
               <TableBody>
-                <TableRow>
-                  <TableCell><Typography type="subheading">Possible points:</Typography></TableCell>
-                  <TableCell><Typography type="body1">{midnight.potential}</Typography></TableCell>
-                </TableRow>
+                <StyledKeyValue label="Possible points:" value={midnight.potential}/>
                 { midnight.note ?
-                  <TableRow>
-                    <TableCell><Typography type="title">Special note:</Typography></TableCell>
-                    <TableCell><Typography type="body1">{midnight.note}</Typography></TableCell>
-                  </TableRow>: null}
+                  <StyledKeyValue label="Special note:" value={midnight.note}/> : null }
+                { description ?
+                  <StyledKeyValue label="Description:" value={description}/> : null}
               </TableBody>
             </Table>
           </DialogContent>

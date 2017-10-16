@@ -18,7 +18,6 @@ var midnightAccountSchema = new Schema({
   balance: Number,
   requirement: Number
 });
-
 var midnightTypeSchema = new Schema({
   name: String,
   value: Number,
