@@ -8,7 +8,8 @@ class SessionAPI {
     const request = new Request(session.form, {
       method: 'POST',
       headers: new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       }),
       body: JSON.stringify({username: credentials.username, password: credentials.password})
     });

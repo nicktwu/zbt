@@ -4,7 +4,7 @@ import os
 import json
 import jwt
 
-from flask import Flask, abort, jsonify, request
+from flask import Flask, abort, jsonify, request, make_response
 from secret import crypto_key
 
 app = Flask(__name__)
@@ -39,7 +39,9 @@ def get_token():
     if len(kerberos) < 1:
         abort(401)
     token = generate_token(kerberos, ip).decode('utf-8')
-    return jsonify({"token": token}), 200, CORS_HEADER
+    resp = make_response(jsonify({"token": token}), 200, CORS_HEADER)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 
 # For testing and development use only

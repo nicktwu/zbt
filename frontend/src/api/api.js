@@ -9,6 +9,7 @@ export default class API {
       headers: {
         "Authorization":"Bearer " + token,
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*.mit.edu"
       },
       body: body ? JSON.stringify(body) : null
     })
