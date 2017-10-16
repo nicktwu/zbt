@@ -9,26 +9,26 @@ var midnightSchema = new Schema({
   feedback: String,
   potential: Number,
   awarded: Number,
-  reviewed: Boolean,
+  reviewed: Boolean
 });
 
 var midnightAccountSchema = new Schema({
   semester: String,
   zebe: String,
   balance: Number,
-  requirement: Number,
+  requirement: Number
 });
 
 var midnightTypeSchema = new Schema({
   name: String,
   value: Number,
-  description: String,
+  description: String
 });
 
 var midnightPrefsSchema = new Schema({
   zebe: String,
   daysPreferred: [String], // Days that this zebe prefers to work, ex: ['Monday', 'Thursday']
-  tasksPreferred: [String], // Tasks that this zebe prefers to do, ex: ['Dinings', 'Waitings', 'Commons']
+  tasksPreferred: [String] // Tasks that this zebe prefers to do, ex: ['Dinings', 'Waitings', 'Commons']
 });
 
 var Midnight = mongoose.model('Midnight', midnightSchema);
@@ -40,5 +40,5 @@ module.exports = {
   Midnight: Midnight,
   MidnightAccount: MidnightAccount,
   MidnightType: MidnightType,
-  MidnightPrefs: MidnightPrefs,
+  MidnightPrefs: MidnightPrefs
 };

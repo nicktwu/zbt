@@ -3,9 +3,10 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getWeekList} from '../../redux/midnight/actions';
+import {getWeekList, getAccountList} from '../../redux/midnight/actions';
 import {getCurrent} from '../../redux/user/actions'
-import {Paper, Divider, Grid, Typography, withStyles} from 'material-ui';
+import {Paper, Divider, Grid, Typography, Table, TableHead, TableRow, TableCell, TableBody, withStyles} from 'material-ui';
+import MidnightEntry from './MidnightEntry';
 
 const daysOfTheWeek=['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -14,13 +15,15 @@ function mapStateToProps(state) {
     token: state.session.token,
     user: state.user.user,
     midnightList: state.midnight.midnights,
+    accounts: state.midnight.accounts,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getCurrent: getCurrent(dispatch),
-    getMidnights: getWeekList(dispatch)
+    getMidnights: getWeekList(dispatch),
+    getAccounts: getAccountList(dispatch),
   }
 }
 
@@ -32,8 +35,11 @@ const style = theme => ({
   calendar: {
     marginTop: theme.spacing.unit*3,
   },
-  highlighted: {
-    color: "red",
+  divider: {
+    marginBottom: theme.spacing.unit*3,
+  },
+  cell: {
+    verticalAlign: "middle",
   }
 });
 
@@ -42,9 +48,10 @@ class Midnights extends Component {
 
   componentWillMount() {
     let props = this.props;
-    if (props.token && props.getMidnights && props.getCurrent) {
+    if (props.token && props.getMidnights && props.getCurrent && props.getAccounts) {
       props.getMidnights(props.token);
       props.getCurrent(props.token);
+      props.getAccounts(props.token);
     }
   }
 
@@ -59,13 +66,12 @@ class Midnights extends Component {
             { daysOfTheWeek.map((day, index) => {
               return (
                 <Grid sm={12} md={true} item key={index}>
-                  <Typography type="subheading">{day}</Typography>
+                  <Typography type="title" gutterBottom align="center">{day}</Typography>
+                  <Divider className={this.props.classes.divider} />
                   <Grid container direction="column">
                     { this.props.midnightList[index].length ? this.props.midnightList[index].map((midnight, idx) => {
                       return (
-                        <Grid item key={idx} className={ (this.props.user.kerberos === midnight.zebe) ? this.props.classes.highlighted : "" } >
-                          {midnight.task}: {midnight.zebe}
-                        </Grid>
+                        <MidnightEntry key={idx} midnight={midnight} yours={this.props.user.kerberos === midnight.zebe}/>
                       )
                     }) :
                       <Grid item>
@@ -81,6 +87,24 @@ class Midnights extends Component {
           <Paper className={this.props.classes.paper} elevation={4}>
             <Typography type="headline" gutterBottom>Points</Typography>
             <Divider/>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={this.props.classes.cell}>Zebe</TableCell>
+                  <TableCell className={this.props.classes.cell}>Points</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.props.accounts.sort((a,b)=>(b.balance - a.balance)).map((a, idx) => {
+                  return (
+                    <TableRow key={idx}>
+                      <TableCell className={this.props.classes.cell}>{a.zebe}</TableCell>
+                      <TableCell className={this.props.classes.cell}>{a.balance}</TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
           </Paper>
         </div>
       )
