@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import {withStyles, Snackbar, Typography, Button, TextField, Grid, Paper} from 'material-ui';
 import {session} from '../../api/urls';
+import BrowserDetection from 'react-browser-detection';
 
 const styles = theme => ({
   container: {
@@ -74,6 +75,24 @@ class LoginPage extends Component {
 
   render() {
     const classes = this.props.classes;
+    const browserHandler = {
+      chrome: () => {
+        return (
+          <Button raised color="primary" onClick={this.loginCert}>
+            Login
+          </Button>
+        )
+      },
+      default: () => {
+        return (
+          <Button raised color="primary" onClick={this.loginExternal}>
+            Login
+          </Button>
+        )
+      }
+    }
+
+
     return (
       <div className={classes.container}>
         <div className={classes.root}>
@@ -112,29 +131,12 @@ class LoginPage extends Component {
                   <Grid item xs={12} sm={true}>
                     <div className="vertical-center">
                       <Typography type="title" className={classes.header}>
-                        Login with Certificate (Chrome)
+                        Login with Certificate
                       </Typography>
                       <div className={classes.footer}>
-                        <Button raised color="primary" onClick={this.loginCert}>
-                          Login
-                        </Button>
-                      </div>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={1}>
-                    <div className="vertical-center">
-                      or
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={true}>
-                    <div className="vertical-center">
-                      <Typography type="title" className={classes.header}>
-                        Login with Certificate (Other)
-                      </Typography>
-                      <div className={classes.footer}>
-                        <Button raised color="primary" onClick={this.loginExternal}>
-                          Login
-                        </Button>
+                        <BrowserDetection>
+                          { browserHandler }
+                        </BrowserDetection>
                       </div>
                     </div>
                   </Grid>
