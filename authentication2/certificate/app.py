@@ -4,7 +4,7 @@ import os
 import json
 import jwt
 
-from flask import Flask, abort, jsonify, request
+from flask import Flask, abort, jsonify, request, make_response, redirect
 from secret import crypto_key
 
 app = Flask(__name__)
@@ -39,11 +39,13 @@ def get_token():
     if len(kerberos) < 1:
         abort(401)
     token = generate_token(kerberos, ip).decode('utf-8')
-    return jsonify({"token": token}), 200, CORS_HEADER
+    url = "https://zbt.scripts.mit.edu/todo"
+    resp = make_response(redirect(url, 302))
+    resp.headers['Location'] = url
+    resp.set_cookie("zbtodo-token",value=token)
+    return resp
 
 
 # For testing and development use only
 if __name__ == '__main__':
-    # monkeypatch
-    get_kerberos = lambda: 'testuser'
-    app.run(port=5555)
+    app.run(host='0.0.0.0',port=5555)

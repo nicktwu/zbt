@@ -11,7 +11,8 @@ class SessionAPI {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       }),
-      body: JSON.stringify({username: credentials.username, password: credentials.password})
+      body: JSON.stringify({username: credentials.username, password: credentials.password}),
+      credentials: "include"
     });
     return fetch(request);
   }

@@ -7,6 +7,14 @@ import {Provider} from 'react-redux';
 import store from './redux/store';
 import { MuiThemeProvider,  } from 'material-ui/styles';
 import theme from './theme'
+import {CookiesProvider} from 'react-cookie';
 
-ReactDOM.render(<Provider store={store}><MuiThemeProvider theme={theme}><App /></MuiThemeProvider></Provider>, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
+    </MuiThemeProvider>
+  </Provider>, document.getElementById('root'));
 registerServiceWorker();

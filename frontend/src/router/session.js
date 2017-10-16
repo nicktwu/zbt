@@ -9,12 +9,13 @@ import {
   Redirect
 } from 'react-router-dom';
 import {connect} from 'react-redux';
-import {loginWithForm, loginWithCertificate, logout} from '../redux/session/actions';
+import {loginWithForm, loginWithCertificate, loginWithCookie, logout} from '../redux/session/actions';
 import {HOME, LOGIN} from './paths';
 import LoginPage from '../components/LoginPage';
 import Dashboard from '../components/Dashboard';
 import {ContentRouter} from './content';
 import {Sidebar} from './sidebar';
+import {withCookies} from 'react-cookie';
 
 function mapStateToProps(state) {
   return {
@@ -29,12 +30,18 @@ function mapDispatchToProps(dispatch) {
   return {
     loginWithForm: loginWithForm(dispatch),
     loginWithCertificate: loginWithCertificate(dispatch),
-    logout: logout(dispatch)
+    logout: logout(dispatch),
+    presentToken: loginWithCookie(dispatch),
   }
 }
 
 class SessionRouter extends Component {
   render() {
+    if (this.props.cookies && this.props.cookies.get("zbtodo-token", {path: "/"})) {
+      let token = this.props.cookies.get("zbtodo-token", {path: "/"});
+      this.props.presentToken(token);
+      this.props.cookies.set("zbtodo-token", "", {path: "/"});
+    }
     return (
       <Router>
         <Switch>
@@ -57,5 +64,5 @@ class SessionRouter extends Component {
   }
 }
 
-let ConnectedRouter = connect(mapStateToProps, mapDispatchToProps)(SessionRouter);
+let ConnectedRouter = connect(mapStateToProps, mapDispatchToProps)(withCookies(SessionRouter));
 export default ConnectedRouter

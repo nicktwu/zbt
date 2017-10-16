@@ -7,6 +7,7 @@
 
 // prod backend
 const AUTH_BASE = "https://zbt.scripts.mit.edu:444/authentication/";
+const REDIRECT_AUTH = "https://zbt.scripts.mit.edu:444/authentication2/";
 const BACKEND_BASE = "https://zbt-backend.herokuapp.com";
 
 const API_BASE= BACKEND_BASE + "/api/v1";
@@ -17,6 +18,7 @@ const SEMESTER_BASE = API_BASE + "/semester";
 export const session = {
   certificate: AUTH_BASE,
   form: BACKEND_BASE + "/login",
+  external: REDIRECT_AUTH,
 };
 
 export const user = {

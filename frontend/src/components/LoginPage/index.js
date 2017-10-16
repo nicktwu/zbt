@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import {withStyles, Snackbar, Typography, Button, TextField, Grid, Paper} from 'material-ui';
+import {session} from '../../api/urls';
 
 const styles = theme => ({
   container: {
@@ -67,6 +68,10 @@ class LoginPage extends Component {
     this.props.loginWithForm(this.state);
   }
 
+  loginExternal() {
+    window.location = session.external;
+  }
+
   render() {
     const classes = this.props.classes;
     return (
@@ -82,7 +87,7 @@ class LoginPage extends Component {
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Grid container spacing={24}>
-                  <Grid item xs={12} sm={5}>
+                  <Grid item xs={12} sm={true}>
                     <div className="vertical-center">
                       <Typography type="title" className={classes.header}>
                         Login with Username and Password
@@ -99,18 +104,35 @@ class LoginPage extends Component {
                       </div>
                     </div>
                   </Grid>
-                  <Grid item xs={12} sm={2}>
+                  <Grid item xs={12} sm={1}>
                     <div className="vertical-center">
                       or
                     </div>
                   </Grid>
-                  <Grid item xs={12} sm={5}>
+                  <Grid item xs={12} sm={true}>
                     <div className="vertical-center">
                       <Typography type="title" className={classes.header}>
-                        Login with Certificate
+                        Login with Certificate (Chrome)
                       </Typography>
                       <div className={classes.footer}>
                         <Button raised color="primary" onClick={this.loginCert}>
+                          Login
+                        </Button>
+                      </div>
+                    </div>
+                  </Grid>
+                  <Grid item xs={12} sm={1}>
+                    <div className="vertical-center">
+                      or
+                    </div>
+                  </Grid>
+                  <Grid item xs={12} sm={true}>
+                    <div className="vertical-center">
+                      <Typography type="title" className={classes.header}>
+                        Login with Certificate (Other)
+                      </Typography>
+                      <div className={classes.footer}>
+                        <Button raised color="primary" onClick={this.loginExternal}>
                           Login
                         </Button>
                       </div>

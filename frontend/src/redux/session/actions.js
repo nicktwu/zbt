@@ -43,6 +43,12 @@ export function loginWithForm(dispatch) {
   }
 }
 
+export function loginWithCookie(dispatch) {
+  return (token) => {
+    dispatch({type: LOGIN, token: token});
+  }
+}
+
 export function logout(dispatch) {
   return ()=>{
     return dispatch({type:LOGOUT})
