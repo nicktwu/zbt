@@ -51,7 +51,7 @@ router.delete('/accounts/remove/:id', function(req, res, next) {
   } else {
     res.sendStatus(403);
   }
-})
+});
 
 // /midnights/types GET
 router.get('/types', function(req, res, next) {
@@ -139,11 +139,30 @@ router.get('/unreviewed', function(req, res, next) {
 
 // /midnights/reviewed GET
 router.get('/reviewed', function(req, res, next) {
-  Midnights.Midnight.find( {reviewed: true }, function(err, assignments) {
+  var today = new Date();
+  var lastDay = new Date(today.getFullYear(), today.getMonth(),today.getDate());
+  var firstDay = new Date(lastDay.getFullYear(), lastDay.getMonth(), lastDay.getDate() - 7);
+  Midnights.Midnight.find( {
+    $and: [{reviewed: true},{ date: { $gte: firstDay, $lte: lastDay } }]
+  }, function(err, assignments) {
     if (err) return next(err);
     return res.json(assignments);
   });
 });
+
+// /midnights/bulk_create POST
+router.post('/bulk_create', function(req, res, next) {
+  if (req.user.isMidnightMaker()) {
+    var ms = req.body.midnights;
+    Midnights.Midnight.insertMany(ms, function(err, docs) {
+      if (err) return next(err);
+      return res.json({stored: docs.length});
+    })
+  } else {
+    res.sendStatus(403);
+  }
+});
+
 
 // /midnights/update_assignment/<int:id> PUT
 router.put('/update_assignment/:id', function(req, res, next) {
@@ -199,5 +218,7 @@ router.get('/:id', function(req, res, next) {
     return res.json(midnight);
   });
 });
+
+
 
 module.exports = router;
