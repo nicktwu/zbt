@@ -6,8 +6,9 @@ var emailer = require('./emailer');
 
 remindMidnights = function() {
   var today = new Date();
-  var queryDate = new Date(today.getFullYear(), today.getMonth(),today.getDate());
-  Midnight.Midnight.find({date: queryDate}).cursor()
+  var firstDay = new Date(today.getFullYear(), today.getMonth(),today.getDate());
+  var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate() + 1);
+  Midnight.Midnight.find({date: {$gte: firstDay, $lte: lastDay}}).cursor()
     .on('data', function(doc) {
       console.log("Reminding " + doc.zebe + " about " + doc.task + ".");
       const addr = "nwu" + "@mit.edu";
