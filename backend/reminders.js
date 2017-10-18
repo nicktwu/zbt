@@ -8,7 +8,7 @@ remindMidnights = function() {
   console.log('hi');
   var today = new Date();
   var firstDay = new Date(today.getFullYear(), today.getMonth(),today.getDate());
-  var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate() + 1);
+  var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate() + 2);
   Midnight.Midnight.find({date: {$gte: firstDay, $lte: lastDay}}).cursor()
     .on('data', function(doc) {
       console.log("Reminding " + doc.zebe + " about " + doc.task + ".");
