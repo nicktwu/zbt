@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+
+var db = require('../db');
+var reminder = require('../reminders');
+
+reminder.remindMidnights();

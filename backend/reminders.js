@@ -1,0 +1,25 @@
+/**
+ * Created by nwu on 10/18/17.
+ */
+var Midnight = require('./models/midnights');
+var emailer = require('./emailer');
+
+remindMidnights = function() {
+  var today = new Date();
+  var queryDate = new Date(today.getFullYear(), today.getMonth(),today.getDate());
+  Midnight.Midnight.find({date: queryDate}).cursor()
+    .on('data', function(doc) {
+      const addr = doc.zebe + "@mit.edu";
+      const subj = "[ZBTodo Reminder] Midnight Tonight";
+      const body = "You have " + doc.task + " tonight";
+      emailer.send(addr, subj, body);
+    })
+    .on('error', function(err){
+      console.log("Reminder sending failed.");
+      console.log(err);
+    });
+};
+
+module.exports = {
+  remindMidnights: remindMidnights
+};
