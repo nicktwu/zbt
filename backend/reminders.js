@@ -12,7 +12,7 @@ remindMidnights = function() {
     .on('data', function(doc) {
       console.log("Reminding " + doc.zebe + " about " + doc.task + ".");
       const addr = "nwu" + "@mit.edu";
-      const subj = "[ZBTodo Reminder] Midnight Tonight";
+      const subj = "[ZBTodo Reminder] Midnight Tonight: " + today.toISOString().substring(0, 10);
       const body = "You have " + doc.task + " tonight";
       emailer.send(addr, subj, body);
     })
