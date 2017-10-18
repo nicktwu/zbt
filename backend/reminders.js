@@ -22,6 +22,7 @@ remindMidnights = function() {
     }).on('end', function() {
       console.log("Finished");
   });
+  console.log("Finished reminding all midnights");
 };
 
 module.exports = {
