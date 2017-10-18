@@ -19,7 +19,7 @@ remindMidnights = function() {
     .on('error', function(err){
       console.log("Reminder sending failed.");
       console.log(err);
-    });
+    }).close();
 };
 
 module.exports = {
