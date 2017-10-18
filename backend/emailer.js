@@ -12,7 +12,7 @@ send = function(to, subject, body) {
   var req = sg.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',
-    body: mail.toJSON(),
+    body: mail.toJSON()
   });
 
   if (utils.is_prod()) {
@@ -21,6 +21,7 @@ send = function(to, subject, body) {
         console.log('error: ', err);
         return err;
       }
+      console.log("sent email to " + to);
     });
   } else {
     console.log('not sending email because we are currently in development mode');
