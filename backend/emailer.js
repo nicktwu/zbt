@@ -1,14 +1,16 @@
 var utils = require('./utils');
 var config = require('./config');
 
-var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+var sg = require('@sendgrid/mail');
+sg.setApiKey(process.env.SENDGRID_API_KEY);
 
 send = function(to, subject, body) {
-  var msg = new sg.Email();
-  msg.addTo(to);
-  msg.setFrom(config.from_email);
-  msg.setSubject(subject);
-  msg.setHtml(body);
+  var msg = {
+    to: to,
+    from: config.from_email,
+    subject: subject,
+    text: body
+  };
 
   if (utils.is_prod()) {
     sg.send(msg);
