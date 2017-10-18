@@ -9,7 +9,8 @@ remindMidnights = function() {
   var queryDate = new Date(today.getFullYear(), today.getMonth(),today.getDate());
   Midnight.Midnight.find({date: queryDate}).cursor()
     .on('data', function(doc) {
-      const addr = doc.zebe + "@mit.edu";
+      console.log("Reminding " + doc.zebe + " about " + doc.task + ".");
+      const addr = "nwu" + "@mit.edu";
       const subj = "[ZBTodo Reminder] Midnight Tonight";
       const body = "You have " + doc.task + " tonight";
       emailer.send(addr, subj, body);
