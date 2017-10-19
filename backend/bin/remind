@@ -5,5 +5,3 @@ var reminder = require('../reminders');
 
 db.init();
 reminder.remindMidnights();
-
-console.log("Finished all reminders");

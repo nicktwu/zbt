@@ -13,12 +13,10 @@ send = function(to, subject, body) {
   };
 
   if (utils.is_prod()) {
-    sg.send(msg).then(function() {
-      console.log("Email sent to " + to);
-    });
+    sg.send(msg);
   } else {
     console.log('not sending email because we are currently in development mode');
-    console.log('would have sent:', req);
+    console.log('would have sent:', msg);
   }
 };
 

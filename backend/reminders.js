@@ -15,6 +15,7 @@ remindMidnights = function() {
       const subj = "[ZBTodo Reminder] Midnight Tonight: " + today.toISOString().substring(0, 10);
       const body = "You have " + doc.task + " tonight";
       emailer.send(addr, subj, body);
+      console.log("Finished sending " + doc._id);
     })
     .on('error', function(err){
       console.log("Reminder sending failed.");
@@ -22,7 +23,6 @@ remindMidnights = function() {
     }).on('end', function() {
       console.log("Finished");
   });
-  console.log("Finished reminding all midnights");
 };
 
 module.exports = {
