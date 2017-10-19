@@ -4,7 +4,7 @@
 var Midnight = require('./models/midnights');
 var emailer = require('./emailer');
 
-remindMidnights = function() {
+remindMidnights = function(callback) {
   console.log('hi');
   var today = new Date();
   var firstDay = new Date(today.getFullYear(), today.getMonth(),today.getDate());
@@ -20,9 +20,7 @@ remindMidnights = function() {
     .on('error', function(err){
       console.log("Reminder sending failed.");
       console.log(err);
-    }).on('end', function() {
-      console.log("Finished");
-  });
+    }).on('end', callback);
 };
 
 module.exports = {

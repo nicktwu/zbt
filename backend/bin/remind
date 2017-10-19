@@ -4,4 +4,6 @@ var db = require('../db');
 var reminder = require('../reminders');
 
 db.init();
-reminder.remindMidnights();
+reminder.remindMidnights(function() {
+  process.exit();
+});
