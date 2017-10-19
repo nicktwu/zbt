@@ -3,7 +3,7 @@
  */
 import MidnightAPI from '../../api/midnight';
 import {handle401} from '../session/filter';
-import {WEEKLIST, TYPELIST, ACCOUNTS, UNREVIEWED} from './types';
+import {WEEKLIST, TYPELIST, ACCOUNTS, UNREVIEWED, REVIEWED} from './types';
 
 export function getWeekList(dispatch) {
   return (token)=> {
@@ -175,7 +175,24 @@ export function reviewMidnight(dispatch) {
     MidnightAPI.awardPoints(token, data).then(handle401(dispatch)).then(res=>{
       // TODO: handle err
       return res.json()
-    }).then(()=>token).then(getUnreviewed(dispatch)).then(()=>token).then(getAccountList(dispatch)).catch(err=> {
+    }).then(()=>token).then(getUnreviewed(dispatch))
+      .then(()=>token).then(getAccountList(dispatch))
+      .then(()=>token).then(getReviewed(dispatch))
+      .catch(err=> {
+      // TODO: handle err
+      console.log(err)
+    })
+  }
+}
+
+export function getReviewed(dispatch) {
+  return (token) => {
+    MidnightAPI.getReviewed(token).then(handle401(dispatch)).then(res=>{
+      // TODO: handle err
+      return res.json()
+    }).then(json => {
+      dispatch({type: REVIEWED, midnights: json})
+    }).catch(err=> {
       // TODO: handle err
       console.log(err)
     })

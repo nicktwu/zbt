@@ -61,7 +61,7 @@ export default class MidnightAPI {
     return API.makeCall("PUT", midnight.award, token, data)
   }
 
-  static bulkAwardPoints(token, data) {
-    return API.makeCall("PUT", midnight.bulkAward, token, data)
+  static getReviewed(token) {
+    return API.makeCall("GET", midnight.reviewed, token, null)
   }
 }

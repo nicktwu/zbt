@@ -72,7 +72,7 @@ class MidnightEntry extends Component {
 
     return (
       <Grid item className={this.props.classes.container}>
-        <Button raised color={this.props.yours ? "accent" : null}
+        <Button dense raised color={midnight.reviewed ? "primary" : (this.props.yours ? "accent" : null)}
                 className={this.props.classes.button} onClick={this.open}>
           <Typography type="body1" align="center" className={this.props.classes.text}>
             {midnight.task}: {midnight.zebe}
@@ -90,6 +90,9 @@ class MidnightEntry extends Component {
                   <StyledKeyValue label="Special note:" value={midnight.note}/> : null }
                 { description ?
                   <StyledKeyValue label="Description:" value={description}/> : null}
+                { midnight.reviewed ?
+                  <StyledKeyValue label="Points awarded:" value={midnight.awarded}/> : null
+                }
               </TableBody>
             </Table>
           </DialogContent>

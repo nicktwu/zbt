@@ -72,7 +72,16 @@ class Midnights extends Component {
                   <Typography type="title" gutterBottom align="center">{day}</Typography>
                   <Divider className={this.props.classes.divider} />
                   <Grid container direction="column">
-                    { this.props.midnightList[index].length ? this.props.midnightList[index].map((midnight, idx) => {
+                    { this.props.midnightList[index].length ? this.props.midnightList[index]
+                      .sort((a,b) => {
+                      if (a.task < b.task) {
+                        return -1;
+                      } else if (a.task > b.task) {
+                        return 1;
+                      } else {
+                        return 0;
+                      }})
+                      .map((midnight, idx) => {
                       return (
                         <MidnightEntry key={idx} midnight={midnight} types={this.props.types}
                                        yours={this.props.user.kerberos === midnight.zebe}/>
