@@ -72,7 +72,7 @@ class AdminTable extends Component {
                 this.props.contents.map((entry, index) => {
                   return (
                     <Entry key={index} tableCell={this.props.classes.tableCell}
-                           tableRow={this.props.classes.tableRow} entry={entry}/>
+                           tableRow={this.props.classes.tableRow} entry={entry} extra={this.props.extra}/>
                   )
                 }) :
                 <TableRow><TableCell className={this.props.classes.tableCell}>

@@ -43,18 +43,25 @@ export default class ZebeEntry extends Component {
   }
 
   render() {
+    let entry = this.props.entry;
+    if (this.props.entry.potential) {
+      // do nothing
+    } else if (this.props.extra) {
+      entry.potential = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s,v) => v.value, 0);
+    }
+
     return (
       <TableRow key={this.props.index} className={this.props.tableRow}>
         <TableCell className={this.props.tableCell}>{this.props.entry.date.substring(0, 10)}</TableCell>
         <TableCell className={this.props.tableCell}>{this.props.entry.task}</TableCell>
         <TableCell className={this.props.tableCell}>{this.props.entry.zebe}</TableCell>
         <TableCell className={this.props.tableCell}>{this.props.entry.note}</TableCell>
-        <TableCell className={this.props.tableCell}>{this.props.entry.potential}</TableCell>
+        <TableCell className={this.props.tableCell}>{entry.potential}</TableCell>
         <TableCell>
           <IconButton color="primary" onClick={this.openEdit}>
             <EditIcon/>
           </IconButton>
-          <MidnightForm open={this.state.openEdit} cancel={this.closeEdit} initialState={this.props.entry} />
+          <MidnightForm open={this.state.openEdit} cancel={this.closeEdit} initialState={entry} />
         </TableCell>
         <TableCell>
           <IconButton color="accent" onClick={this.openDialog}>

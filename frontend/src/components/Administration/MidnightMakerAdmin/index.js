@@ -83,7 +83,8 @@ class Admin extends Component {
         <Divider className={this.props.classes.gutterDivider}/>
         <AdminTable contents={this.props.accounts} createMessage="Add a Midnight Account"
                     headings={["Zebe","Balance", "Requirement", "Edit","Remove"]}
-                    form={MidnightAccount} missing="No accounts are open." componentForEntry={MidnightAccountEntry}/>
+                    form={MidnightAccount} missing="No accounts are open." extra={this.props.types}
+                    componentForEntry={MidnightAccountEntry}/>
         <Divider className={this.props.classes.gutterDivider} />
         <ReviewDialog unreviewed={this.props.unreviewed}
                       awardOne={(value)=>this.props.awardOne(this.props.token, value)}

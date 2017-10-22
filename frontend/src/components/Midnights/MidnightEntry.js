@@ -69,7 +69,7 @@ class MidnightEntry extends Component {
   render() {
     let midnight = this.props.midnight;
     let description = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s, v) => v.description, "");
-    let possible = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s,v) => v.description, "");
+    let possible = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s,v) => v.value, 0);
 
     return (
       <Grid item className={this.props.classes.container}>
