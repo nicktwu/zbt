@@ -69,6 +69,7 @@ class MidnightEntry extends Component {
   render() {
     let midnight = this.props.midnight;
     let description = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s, v) => v.description, "");
+    let possible = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s,v) => v.description, "");
 
     return (
       <Grid item className={this.props.classes.container}>
@@ -85,7 +86,7 @@ class MidnightEntry extends Component {
           <DialogContent>
             <Table>
               <TableBody>
-                <StyledKeyValue label="Possible points:" value={midnight.potential}/>
+                <StyledKeyValue label="Possible points:" value={midnight.potential ? midnight.potential : possible}/>
                 { midnight.note ?
                   <StyledKeyValue label="Special note:" value={midnight.note}/> : null }
                 { description ?
