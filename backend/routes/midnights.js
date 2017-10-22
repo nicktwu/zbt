@@ -154,6 +154,7 @@ router.get('/reviewed', function(req, res, next) {
 router.post('/bulk_create', function(req, res, next) {
   if (req.user.isMidnightMaker()) {
     var ms = req.body.midnights;
+    console.log(req);
     Midnights.Midnight.insertMany(ms, function(err, docs) {
       if (err) return next(err);
       return res.json({stored: docs.length});

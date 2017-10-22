@@ -47,7 +47,7 @@ export default class ZebeEntry extends Component {
     if (this.props.entry.potential) {
       // do nothing
     } else if (this.props.extra) {
-      entry.potential = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s,v) => v.value, 0);
+      entry.potential = this.props.types.filter((t) => (t.name === entry.task)).reduce((s,v) => v.value, 0);
     }
 
     return (
