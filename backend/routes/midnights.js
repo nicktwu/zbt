@@ -97,6 +97,15 @@ router.delete('/types/remove/:id', function(req, res, next) {
   }
 });
 
+// /midnights/all GET
+
+router.get('/all', function(req, res, next) {
+  Midnights.Midnight.find({}, function(err, assignments) {
+    if (err) return next(err);
+    return res.json(assignments);
+  })
+});
+
 // /midnights/weeklist GET
 router.get('/weeklist', function(req, res, next) {
   var today = new Date();
