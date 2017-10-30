@@ -55,7 +55,7 @@ router.post('/midnight', function(req, res, next) {
 	//Make sure user has this midnight
 	Midnights.Midnight.find( {
 		_id: mongoose.Types.ObjectId(req.body.midnight_id),
-		//zebe: req.user.kerberos
+		zebe: req.user.kerberos
 	}, function(err, midnight) {
 		if (err) return next(err);
 		if (midnight) { //midnight must exist
