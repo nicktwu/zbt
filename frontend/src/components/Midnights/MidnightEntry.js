@@ -24,13 +24,19 @@ const style = theme => ({
   text: {
     textTransform: "none",
     color: "inherit",
-  }
+  },
 });
 
 const style2 = theme => ({
   content: {
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
     whiteSpace: 'normal',
     wordWrap: 'break-word'
+  },
+  tableCell: {
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit
   }
 });
 
@@ -38,7 +44,7 @@ class KeyValue extends Component {
   render() {
     return (
       <TableRow>
-        <TableCell><Typography type="subheading">{this.props.label}</Typography></TableCell>
+        <TableCell className={this.props.classes.tableCell}><Typography type="subheading">{this.props.label}</Typography></TableCell>
         <TableCell className={this.props.classes.content}><Typography type="body1">{this.props.value}</Typography></TableCell>
       </TableRow>
     )
@@ -70,6 +76,8 @@ class MidnightEntry extends Component {
     let midnight = this.props.midnight;
     let description = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s, v) => v.description, "");
     let possible = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s,v) => v.value, 0);
+    let past = (new Date(midnight.date)) < new Date();
+
 
     return (
       <Grid item className={this.props.classes.container}>
@@ -84,7 +92,7 @@ class MidnightEntry extends Component {
             {midnight.task + ": " + midnight.zebe}
           </DialogTitle>
           <DialogContent>
-            <Table>
+            <Table className={this.props.classes.table}>
               <TableBody>
                 <StyledKeyValue label="Possible points:" value={midnight.potential ? midnight.potential : possible}/>
                 { midnight.note ?
@@ -98,6 +106,11 @@ class MidnightEntry extends Component {
             </Table>
           </DialogContent>
           <DialogActions>
+            {this.props.yours && !past && !midnight.offered ?
+              <Button color="accent">
+                Trade
+              </Button>
+              : null}
             <Button onClick={this.close}>
               Close
             </Button>

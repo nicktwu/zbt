@@ -1,5 +1,5 @@
 /**
- * Created by nwu on 10/4/17.
+ * Created by nwu on 10/29/17.
  */
 import React, {Component} from 'react';
 import Dialog, {
@@ -8,7 +8,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 import {withStyles, Grid, Button, TextField} from 'material-ui';
-import {createMidnight, editMidnight} from '../../../redux/midnight/actions';
+import {createMidnightRefresh, editMidnightRefresh} from '../../../redux/midnight/actions';
 import {connect} from 'react-redux';
 import TypeSelect from './TypeSelect'
 
@@ -22,8 +22,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    create: createMidnight(dispatch),
-    edit: editMidnight(dispatch),
+    create: createMidnightRefresh(dispatch),
+    edit: editMidnightRefresh(dispatch),
   }
 }
 

@@ -3,7 +3,21 @@
  */
 import MidnightAPI from '../../api/midnight';
 import {handle401} from '../session/filter';
-import {WEEKLIST, TYPELIST, ACCOUNTS, UNREVIEWED, REVIEWED} from './types';
+import {ALL, WEEKLIST, TYPELIST, ACCOUNTS, UNREVIEWED, REVIEWED} from './types';
+
+export function getAll(dispatch) {
+  return (token) => {
+    MidnightAPI.getAll(token).then(handle401(dispatch)).then(res=> {
+      // TODO: error handle
+      return res.json()
+    }).then(json=>{
+      dispatch({type: ALL, midnights: json});
+    }).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
 
 export function getWeekList(dispatch) {
   return (token)=> {
@@ -31,6 +45,18 @@ export function createMidnight(dispatch) {
   }
 }
 
+export function createMidnightRefresh(dispatch) {
+  return (token, data) => {
+    MidnightAPI.createMidnight(token, data).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      return res.json()
+    }).then(()=>token).then(getWeekList(dispatch)).then(()=>token).then(getAll(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
 export function editMidnight(dispatch) {
   return (token, data) => {
     MidnightAPI.editMidnight(token, data).then(handle401(dispatch)).then(res=>{
@@ -43,12 +69,36 @@ export function editMidnight(dispatch) {
   }
 }
 
+export function editMidnightRefresh(dispatch) {
+  return (token, data) => {
+    MidnightAPI.editMidnight(token, data).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      return res.json()
+    }).then(()=>token).then(getWeekList(dispatch)).then(()=>token).then(getAll(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
 export function removeMidnight(dispatch) {
   return (token, id) => {
     MidnightAPI.removeMidnight(token, id).then(handle401(dispatch)).then(res=>{
       // TODO: error handle
       return res.json();
     }).then(()=>token).then(getWeekList(dispatch)).catch(err=>{
+      // TODO: handle errors
+      console.log(err);
+    })
+  }
+}
+
+export function removeMidnightRefresh(dispatch) {
+  return (token, id) => {
+    MidnightAPI.removeMidnight(token, id).then(handle401(dispatch)).then(res=>{
+      // TODO: error handle
+      return res.json();
+    }).then(()=>token).then(getWeekList(dispatch)).then(()=>token).then(getAll(dispatch)).catch(err=>{
       // TODO: handle errors
       console.log(err);
     })

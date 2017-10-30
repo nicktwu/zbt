@@ -6,3 +6,4 @@ export const TYPELIST = "MIDNIGHT_TYPE_LIST";
 export const ACCOUNTS = "MIDNIGHT_ACCOUNTS";
 export const UNREVIEWED = "MIDNIGHT_UNREVIEWED";
 export const REVIEWED = "MIDNIGHT_REVIEWED";
+export const ALL = "MIDNIGHT_ALL";

@@ -28,7 +28,11 @@ class MidnightReviewEntry extends Component {
 
   componentWillMount() {
     if (this.props.midnight) {
-      this.setState({ value: this.props.midnight.potential })
+      if (this.props.midnight.potential) {
+        this.setState({ value: this.props.midnight.potential })
+      } else {
+        this.setState({value: this.props.possible })
+      }
     }
   }
 
@@ -86,8 +90,9 @@ class RemoveDialog extends Component {
           <DialogTitle>{"Review Midnights"}</DialogTitle>
           <DialogContent>
             {this.props.unreviewed.map((m,idx) => {
+              let possible = this.props.types.filter((t) => (t.name === m.task)).reduce((s,v) => v.value, 0);
               return (
-                <MidnightReviewEntry key={idx} midnight={m} awardOne={this.props.awardOne}/>
+                <MidnightReviewEntry key={idx} midnight={m} possible={possible} awardOne={this.props.awardOne}/>
               )
             })}
             { this.props.unreviewed.length ? null : "No unreviewed midnights!"}

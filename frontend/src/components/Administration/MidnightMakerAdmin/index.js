@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getCurrent} from '../../../redux/semester/actions';
 import {getAll} from '../../../redux/user/actions';
-import {getWeekList, getTypeList, getAccountList, getUnreviewed, reviewMidnight} from '../../../redux/midnight/actions';
+import {getWeekList, getTypeList, getAccountList, getUnreviewed, reviewMidnight, getAll as getAllMidnights} from '../../../redux/midnight/actions';
 import {Divider, Typography, Paper, withStyles} from 'material-ui';
 import MidnightTypeForm from './MidnightTypeForm';
 import MidnightType from './MidnightType';
@@ -15,6 +15,7 @@ import MidnightEntry from './MidnightEntry';
 import MidnightAccount from './MidnightAccountForm';
 import MidnightAccountEntry from './MidnightAccountEntry';
 import ReviewDialog from './ReviewDialog'
+import AllDialog from "./AllDialog";
 
 function mapStateToProps(state) {
   return {
@@ -25,11 +26,13 @@ function mapStateToProps(state) {
     unreviewed: state.midnight.unreviewed,
     semester: state.semester.semester,
     zebes: state.user.allUsers,
+    allMidnights: state.midnight.all,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    getAll: getAllMidnights(dispatch),
     getMidnights: getWeekList(dispatch),
     getTypes: getTypeList(dispatch),
     getAccounts: getAccountList(dispatch),
@@ -59,6 +62,7 @@ class Admin extends Component {
   componentWillMount() {
     let props = this.props;
     if (props.token && props.getTypes && props.getMidnights && props.getAccounts && props.getUnreviewed && props.getCurrentSemester && props.getAllUsers) {
+      props.getAll(props.token);
       props.getTypes(props.token);
       props.getMidnights(props.token);
       props.getAccounts(props.token);
@@ -86,9 +90,10 @@ class Admin extends Component {
                     form={MidnightAccount} missing="No accounts are open." extra={this.props.types}
                     componentForEntry={MidnightAccountEntry}/>
         <Divider className={this.props.classes.gutterDivider} />
-        <ReviewDialog unreviewed={this.props.unreviewed}
+        <ReviewDialog unreviewed={this.props.unreviewed} types={this.props.types}
                       awardOne={(value)=>this.props.awardOne(this.props.token, value)}
                       refresh={()=>{this.props.getUnreviewed(this.props.token)}}/>
+        <AllDialog midnights={this.props.allMidnights} refresh={()=>{this.props.getAll(this.props.token)}}/>
       </Paper>
     )
   }

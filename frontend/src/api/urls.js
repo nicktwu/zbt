@@ -14,6 +14,7 @@ const API_BASE= BACKEND_BASE + "/api/v1";
 const USER_BASE = API_BASE + "/user";
 const MIDNIGHT_BASE = API_BASE + "/midnights";
 const SEMESTER_BASE = API_BASE + "/semester";
+const TRADES_BASE = API_BASE+"/trades";
 
 export const session = {
   certificate: AUTH_BASE,
@@ -32,6 +33,7 @@ export const user = {
 };
 
 export const midnight = {
+  all: MIDNIGHT_BASE + "/all",
   weekList: MIDNIGHT_BASE + "/weeklist",
   createMidnight: MIDNIGHT_BASE + "/assign",
   editMidnight: MIDNIGHT_BASE + "/update_assignment/",
@@ -54,4 +56,8 @@ export const semester = {
   create: SEMESTER_BASE + "/",
   getAll: SEMESTER_BASE + "/all",
   set: SEMESTER_BASE + "/update_current/",
+};
+
+export const trades = {
+  midnightTrades: TRADES_BASE + "/midnight",
 };

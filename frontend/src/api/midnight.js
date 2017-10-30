@@ -5,6 +5,10 @@ import API from './api';
 import {midnight} from './urls';
 
 export default class MidnightAPI {
+  static getAll(token) {
+    return API.makeCall("GET", midnight.all , token, null)
+  }
+
   static getWeekList(token) {
     return API.makeCall("GET", midnight.weekList, token, null);
   }
