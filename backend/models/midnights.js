@@ -9,6 +9,7 @@ var midnightSchema = new Schema({
   feedback: String,
   potential: Number,
   awarded: Number,
+  offered: Boolean,
   reviewed: Boolean
 });
 

@@ -53,10 +53,10 @@ router.get('/midnight', function(req, res, next) {
 // /trades/midnight POST
 router.post('/midnight', function(req, res, next) {
 	//Make sure user has this midnight
-	Midnights.Midnight.find( {
+	Midnights.Midnight.findOneAndUpdate( {
 		_id: mongoose.Types.ObjectId(req.body.midnight_id),
 		zebe: req.user.kerberos
-	}, function(err, midnight) {
+	}, {offered: true}, function(err, midnight) {
 		if (err) return next(err);
 		if (midnight) { //midnight must exist
 			Trades.MidnightTrade.create(req.body, function(err) {
