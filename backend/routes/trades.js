@@ -46,7 +46,7 @@ router.get('/midnight', function(req, res, next) {
 		}, function(err, cur_trades) {
 			if (err) return next(err);
 			return res.json(cur_trades);
-		});
+		}).populate("midnight_id");
 	});
 });
 
