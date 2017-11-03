@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var moment = require('moment');
+var emailer = require('../emailer');
 
 var Semester = require('../models/semester');
 var Midnights = require('../models/midnights');
@@ -166,6 +167,7 @@ router.post('/bulk_create', function(req, res, next) {
     console.log(req);
     Midnights.Midnight.insertMany(ms, function(err, docs) {
       if (err) return next(err);
+      emailer.send("zbt-residents@mit.edu", "[ZBTodo] New Midnights Posted", "View them now at https://zbt.scripts.mit.edu/todo");
       return res.json({stored: docs.length});
     })
   } else {
