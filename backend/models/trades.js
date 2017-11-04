@@ -2,7 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var midnightTradeSchema = new Schema({
-  midnight_id: Schema.Types.ObjectId,
+  midnight: {
+    type: Schema.Types.ObjectId,
+    ref: 'Midnight'
+  },
   zebe_offering: String,
   offered: Number,
   completed: Boolean,
