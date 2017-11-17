@@ -8,14 +8,14 @@ import MidnightIcon from 'material-ui-icons/Brightness2';
 //import SocialIcon from 'material-ui-icons/Group';
 import BuildIcon from 'material-ui-icons/Build';
 import {Home} from '../components/Home';
-//import {Trades} from '../components/Trades';
+// import {Trades} from '../components/Trades';
 import {Administration} from '../components/Administration';
 import Midnights from '../components/Midnights';
 
 const BASE = "/todo";
 export const HOME=BASE+"/";
 export const LOGIN=BASE+"/login";
-//export const TRADES_HOME=BASE+"/trades";
+// export const TRADES_HOME=BASE+"/trades";
 export const MIDNIGHTS_HOME=BASE+"/midnights";
 //export const WORKDAYS_HOME=BASE+"/workdays";
 //export const SOCIAL_HOME=BASE+"/social";
@@ -46,14 +46,15 @@ export const internalPaths = [
 ];
 /**
 const unimplementedPaths = [
-  {
-    path: TRADES_HOME,
-    exact: false,
-    text: "Trades",
-    icon: TradeIcon,
-    component: Trades
-  },
-  {
+
+ {
+   path: TRADES_HOME,
+   exact: false,
+   text: "Trades",
+   icon: TradeIcon,
+   component: Trades
+ },
+ {
     path: WORKDAYS_HOME,
     exact: false,
     text: "Workdays",

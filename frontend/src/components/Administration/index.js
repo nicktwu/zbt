@@ -6,9 +6,33 @@ import {connect} from 'react-redux';
 import {getCurrent} from '../../redux/user/actions';
 import {withStyles} from 'material-ui';
 import {PresidentAdmin} from './PresidentAdmin';
-import {RushAdmin} from './RushAdmin';
 import {MidnightMaker} from './MidnightMakerAdmin';
 import {ChangePassword} from './ChangePasswordForm';
+import {Loader} from '../Loader';
+
+
+const style = theme => ({
+  panelContainer: {
+  }
+});
+
+
+class Admin extends Component {
+
+  render() {
+    return (
+      <div className={this.props.classes.panelContainer}>
+        <ChangePassword user={this.props.user}/>
+        { this.props.user.president || this.props.user.tech_chair ? <PresidentAdmin/> : null}
+        { this.props.user.president || this.props.user.tech_chair || this.props.user.midnight_maker ?
+          <MidnightMaker/> : null}
+      </div>
+    )
+  }
+}
+
+const StyledAdmin = withStyles(style)(Admin);
+
 
 function mapStateToProps(state) {
   return {
@@ -23,39 +47,32 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-const style = theme => ({
-  panelContainer: {
+class AdminWrapper extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      requests: null,
+    }
   }
-});
-
-
-class Admin extends Component {
 
   componentWillMount() {
     let props = this.props;
-    if (props.token && props.getCurrentUser) {
-      props.getCurrentUser(props.token);
-    }
+    this.setState({
+      requests: Promise.all([
+        props.getCurrentUser(props.token),
+      ])
+    })
   }
 
   render() {
-    if (this.props.user) {
-      return (
-        <div className={this.props.classes.panelContainer}>
-          <ChangePassword user={this.props.user}/>
-          { this.props.user.president || this.props.user.tech_chair ? <PresidentAdmin token={this.props.token}/> : null}
-          { this.props.user.rush_chair || this.props.user.president || this.props.user.tech_chair ? <RushAdmin/> : null}
-          { this.props.user.president || this.props.user.tech_chair || this.props.user.midnight_maker ? <MidnightMaker/> : null}
-        </div>
-      )
-    } else {
-      return (
-        <p>Loading...</p>
-      )
-    }
+    return (
+      <Loader promise={this.state.requests}>
+        <StyledAdmin user={this.props.user}/>
+      </Loader>
+    )
   }
 }
 
-let ConnectedAdmin = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Admin));
+let ConnectedAdmin = connect(mapStateToProps, mapDispatchToProps)(AdminWrapper);
 
 export {ConnectedAdmin as Administration}

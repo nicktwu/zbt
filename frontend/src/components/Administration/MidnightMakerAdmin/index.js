@@ -16,32 +16,8 @@ import MidnightAccount from './MidnightAccountForm';
 import MidnightAccountEntry from './MidnightAccountEntry';
 import ReviewDialog from './ReviewDialog'
 import AllDialog from "./AllDialog";
+import {Loader} from "../../Loader/index";
 
-function mapStateToProps(state) {
-  return {
-    token: state.session.token,
-    midnights: state.midnight.midnights,
-    types: state.midnight.types,
-    accounts: state.midnight.accounts,
-    unreviewed: state.midnight.unreviewed,
-    semester: state.semester.semester,
-    zebes: state.user.allUsers,
-    allMidnights: state.midnight.all,
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    getAll: getAllMidnights(dispatch),
-    getMidnights: getWeekList(dispatch),
-    getTypes: getTypeList(dispatch),
-    getAccounts: getAccountList(dispatch),
-    getUnreviewed: getUnreviewed(dispatch),
-    awardOne: reviewMidnight(dispatch),
-    getCurrentSemester: getCurrent(dispatch),
-    getAllUsers: getAll(dispatch),
-  }
-}
 
 const style = theme => ({
   paper: {
@@ -59,18 +35,6 @@ const style = theme => ({
 
 class Admin extends Component {
 
-  componentWillMount() {
-    let props = this.props;
-    if (props.token && props.getTypes && props.getMidnights && props.getAccounts && props.getUnreviewed && props.getCurrentSemester && props.getAllUsers) {
-      props.getAll(props.token);
-      props.getTypes(props.token);
-      props.getMidnights(props.token);
-      props.getAccounts(props.token);
-      props.getUnreviewed(props.token);
-      props.getCurrentSemester(props.token);
-      props.getAllUsers(props.token);
-    }
-  }
   render() {
     return (
       <Paper className={this.props.classes.paper}>
@@ -99,6 +63,76 @@ class Admin extends Component {
   }
 }
 
-let Connected = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Admin));
+const StyledAdmin = withStyles(style)(Admin);
+
+function mapStateToProps(state) {
+  return {
+    token: state.session.token,
+    midnights: state.midnight.midnights,
+    types: state.midnight.types,
+    accounts: state.midnight.accounts,
+    unreviewed: state.midnight.unreviewed,
+    semester: state.semester.semester,
+    zebes: state.user.allUsers,
+    allMidnights: state.midnight.all,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getAll: getAllMidnights(dispatch),
+    getMidnights: getWeekList(dispatch),
+    getTypes: getTypeList(dispatch),
+    getAccounts: getAccountList(dispatch),
+    getUnreviewed: getUnreviewed(dispatch),
+    awardOne: reviewMidnight(dispatch),
+    getCurrentSemester: getCurrent(dispatch),
+    getAllUsers: getAll(dispatch),
+  }
+}
+
+class MidnightWrapper extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      requests: null,
+    }
+  }
+
+  componentWillMount() {
+    let props = this.props;
+    this.setState({
+      requests: Promise.all([
+        props.getAll(props.token),
+        props.getTypes(props.token),
+        props.getMidnights(props.token),
+        props.getAccounts(props.token),
+        props.getUnreviewed(props.token),
+        props.getCurrentSemester(props.token),
+        props.getAllUsers(props.token)
+      ])
+    })
+  }
+
+  render() {
+    return (
+      <Loader promise={this.state.requests}>
+        <StyledAdmin midnights={this.props.midnights}
+                     allMidnights={this.props.allMidnights}
+                     getUnreviewed={this.props.getUnreviewed}
+                     getAll={this.props.getAll}
+                     unreviewed={this.props.unreviewed}
+                     awardOne={this.props.awardOne}
+                     token={this.props.token}
+                     types={this.props.types}
+                     accounts={this.props.accounts}
+        />
+      </Loader>
+    )
+  }
+}
+
+
+let Connected = connect(mapStateToProps, mapDispatchToProps)(MidnightWrapper);
 
 export {Connected as MidnightMaker}

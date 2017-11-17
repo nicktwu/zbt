@@ -3,8 +3,8 @@
  */
 import React, {Component} from 'react';
 import {Grid, Typography, Button,
-  Dialog, DialogTitle, DialogContent, DialogActions,
-  Table, TableBody, TableRow, TableCell,
+  Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText,
+  Table, TableBody, TableRow, TableCell, TextField,
   withStyles
 } from 'material-ui';
 
@@ -59,9 +59,14 @@ class MidnightEntry extends Component {
     super(props);
     this.state = {
       open: false,
+      tradeOpen: false,
+      tradeIncentive: 0,
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+    this.trade = this.trade.bind(this);
+    this.startTrade = this.startTrade.bind(this);
+    this.cancelTrade = this.cancelTrade.bind(this);
   }
 
   open() {
@@ -72,11 +77,30 @@ class MidnightEntry extends Component {
     this.setState({open: false})
   }
 
+  trade() {
+    this.props.post({
+      midnight: this.props.midnight._id,
+      zebe_offering: this.props.midnight.zebe,
+      offered: this.state.tradeIncentive,
+    }).then(()=>{
+      this.setState({tradeOpen: false, open: false})
+    })
+  }
+
+  startTrade() {
+    this.setState({tradeOpen: true});
+  }
+
+  cancelTrade() {
+    this.setState({tradeOpen: false});
+  }
+
   render() {
     let midnight = this.props.midnight;
     let description = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s, v) => v.description, "");
     let possible = this.props.types.filter((t) => (t.name === midnight.task)).reduce((s,v) => v.value, 0);
-    let past = (new Date(midnight.date)) < new Date();
+    let midnightDate = new Date(midnight.date);
+    let past = (new Date(midnightDate.getFullYear(), midnightDate.getMonth(), midnightDate.getDay()+1)) <= new Date();
 
 
     return (
@@ -107,7 +131,7 @@ class MidnightEntry extends Component {
           </DialogContent>
           <DialogActions>
             {this.props.yours && !past && !midnight.offered ?
-              <Button color="accent">
+              <Button color="accent" onClick={this.startTrade}>
                 Trade
               </Button>
               : null}
@@ -115,6 +139,24 @@ class MidnightEntry extends Component {
               Close
             </Button>
           </DialogActions>
+          <Dialog open={this.state.tradeOpen}>
+            <DialogTitle>{'Give Away Midnight'}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Enter some value if you want to incentivize taking with your own points (otherwise, leave it as 0).
+              </DialogContentText>
+              <TextField type="number" value={this.state.tradeIncentive} margin="normal" fullWidth
+                         label="Trade Incentive" onChange={(evt)=>{this.setState({ tradeIncentive: evt.target.value })}}/>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.cancelTrade}>
+                Cancel
+              </Button>
+              <Button color="primary" onClick={this.trade}>
+                Finalize Offer
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Dialog>
       </Grid>
     )

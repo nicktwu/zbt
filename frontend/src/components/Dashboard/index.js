@@ -15,6 +15,8 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import Button from 'material-ui/Button';
 
 const drawerWidth = 240;
+const versionNumber = "v1.0.2";
+
 
 const styles = theme => ({
   root: {
@@ -150,7 +152,7 @@ class Dashboard extends Component {
           >
             <div className={classes.drawerInner}>
               <div className={classes.drawerHeader}>
-                <Typography type="title">ZBT, v1.0.1</Typography>
+                <Typography type="title">ZBT, {versionNumber}</Typography>
                 <IconButton onClick={this.handleDrawerClose}>
                   <ChevronLeftIcon />
                 </IconButton>

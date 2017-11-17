@@ -3,6 +3,7 @@
  */
 import SessionAPI from '../../api/session';
 import {SESSION_ERROR, LOGIN, LOGOUT} from './types';
+import UserAPI from '../../api/user';
 
 export function loginWithCertificate(dispatch) {
   return ()=>{
@@ -16,9 +17,17 @@ export function loginWithCertificate(dispatch) {
       }
     }).then(json => {
       if (json.hasOwnProperty("token")) {
-        return dispatch({type: LOGIN, token: json.token});
+        dispatch({type: LOGIN, token: json.token});
       }
-      return dispatch({type: SESSION_ERROR, certificateMessage: "Something bad happened."});
+      return json.token
+    }).then((token) => {
+      UserAPI.getCurrentUser(token).then((res)=>{
+        if (res.status >= 500 && res.status < 600) {
+          dispatch({type: SESSION_ERROR, certificateMessage: "Something bad happened."})
+        } else if (res.status >= 400 && res.status < 500) {
+          dispatch({type: SESSION_ERROR, certificateMessage: "You are not authorized. If you think this is an error, contact zbt-webmaster@mit.edu."})
+        }
+      })
     }).catch(err => {
       console.log(err);
     })

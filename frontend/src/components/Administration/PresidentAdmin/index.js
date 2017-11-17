@@ -11,20 +11,8 @@ import ZebeForm from './ZebeForm';
 import ZebeEntry from './ZebeEntry';
 import AdminTable from '../AdminTable';
 import SemesterDialog from './SemesterDialog';
+import {Loader} from "../../Loader/index";
 
-function mapStateToProps(state) {
-  return {
-    all: state.user.allUsers,
-    semester: state.semester.semester
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    getAllUsers: getAll(dispatch),
-    getSemester: getCurrent(dispatch)
-  }
-}
 
 const style = theme => ({
   paper: {
@@ -42,7 +30,7 @@ class Admin extends Component {
     super(props);
     this.state = {
       open: false,
-    }
+    };
     this.closeSemester = this.closeSemester.bind(this);
     this.openSemesters = this.openSemesters.bind(this);
   }
@@ -53,14 +41,6 @@ class Admin extends Component {
 
   closeSemester() {
     this.setState({open: false});
-  }
-
-  componentWillMount() {
-    let props = this.props;
-    if (props.token && props.getAllUsers) {
-      props.getAllUsers(props.token);
-      props.getSemester(props.token);
-    }
   }
 
   render() {
@@ -89,6 +69,55 @@ class Admin extends Component {
   }
 }
 
-let Connected = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Admin));
+const StyledAdmin = withStyles(style)(Admin);
+
+
+function mapStateToProps(state) {
+  return {
+    token: state.session.token,
+    all: state.user.allUsers,
+    semester: state.semester.semester
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getAllUsers: getAll(dispatch),
+    getSemester: getCurrent(dispatch)
+  }
+}
+
+
+class PresidentWrapper extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      requests: null,
+    }
+  }
+
+  componentWillMount() {
+    let props = this.props;
+    this.setState({
+      requests: Promise.all([
+        props.getAllUsers(props.token),
+        props.getSemester(props.token)
+      ])
+    })
+  }
+
+  render() {
+    return (
+      <Loader promise={this.state.requests}>
+        <StyledAdmin all={this.props.all}
+                     semester={this.props.semester}
+        />
+      </Loader>
+    )
+  }
+}
+
+
+let Connected = connect(mapStateToProps, mapDispatchToProps)(PresidentWrapper);
 
 export {Connected as PresidentAdmin}

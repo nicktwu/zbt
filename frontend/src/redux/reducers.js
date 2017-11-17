@@ -6,6 +6,7 @@ import session from './session/reducers';
 import user from './user/reducers';
 import midnight from './midnight/reducers';
 import semester from './semester/reducers';
+import trades from './trades/reducers';
 
 function ready(state={ready: true}, action) {
   return state
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   session,
   user,
   midnight,
-  semester
+  semester,
+  trades
 });
 
 export default rootReducer;
